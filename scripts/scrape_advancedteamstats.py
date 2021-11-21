@@ -25,10 +25,14 @@ def scrape_teamadvanced(fileName, year):
 
 
 
-def scrape_alltotals(fileName):
+def scrape_alladvanced(fileName):
     yearList = range(1980, 2023)
     reset_csv(fileName)
     
-    write_to_csv(fileName, ['Pace', 'Year', 'FTr', '3PAr', 'TS%'])
+    write_to_csv(fileName, ['Pace', 'Season', 'FTr', '3PAr', 'TS%'])
     for year in yearList:
         scrape_teamadvanced(fileName, year)
+
+
+
+scrape_alladvanced(fileName)

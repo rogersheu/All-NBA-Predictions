@@ -11,27 +11,29 @@ def scrape_teamrecords(fileName, year):
     yearSoup = BeautifulSoup(yearPage.content, 'html.parser', from_encoding = 'utf-8')
 
     teamTable = yearSoup.find('table', id="advanced-team")
-    leagueAvg = teamTable.find('tfoot').find_all('td')
-    
+    leagueAvg = teamTable.find('tbody').find_all('tr')
 
-    averages = []
-    for col in leagueAvg:
-        averages.append(col.text)
-    
-    averages = averages[0:1] + averages[2:4]
+    for seasonWL in leagueAvg:
+        eachTeam = seasonWL.find_all('td')
+        teamWL = []
 
-    averages.insert(1, year)
+        for col in eachTeam:
+            teamWL.append(col.text)
 
-    averages.insert(5, round(averages[3]/(averages[3]+averages[4]),3))
-    write_to_csv(fileName, averages)
-    
+        teamWL = teamWL[0:1] + teamWL[2:4]
+
+        teamWL.insert(1, year)
+
+        teamWL.append(round(int(teamWL[2])/(int(teamWL[2])+int(teamWL[3])),3))
+        write_to_csv(fileName, teamWL)
+        
 
 
 def scrape_allrecords(fileName):
     yearList = range(1980, 2023)
     reset_csv(fileName)
 
-    write_to_csv(fileName, ['Team', 'Year', 'Wins', 'Losses'])
+    write_to_csv(fileName, ['Team', 'Year', 'Wins', 'Losses', 'W/L%'])
     for year in yearList:
         # scrape_teamstats(fileName, year)
         # scrape_teamadvanced(fileName, year)
