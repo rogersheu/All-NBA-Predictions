@@ -31,7 +31,7 @@ def scrape_teamstats(fileName, year):
     for col in leagueAvg:
         averages.append(col.text)
     
-    averages.insert(2, year)
+    averages.insert(1, year)
     write_to_csv(fileName, averages)
 
 
