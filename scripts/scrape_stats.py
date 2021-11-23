@@ -37,9 +37,9 @@ def get_singleseason_stats(year, URL, fileName):
             write_to_csv(fileName, header)
             headerExists = True
 
-
-        dataList = dataTable.find_all("tr", class_=["full_table", "italic_text"])
-        # totalsDataList = totalsTable.find_all('tr')
+        # Include "italic text" if you want information from players who switched teams.
+        dataList = dataTable.find_all("tr", class_=["full_table"])
+        # dataList = dataTable.find_all("tr", class_=["full_table", "italic_text"])
 
         # Pull players who got changed teams mid-season and just do a check for
         # them later. TBD how to handle their team records.
@@ -60,7 +60,7 @@ def get_singleseason_stats(year, URL, fileName):
     else:
         return False
 
-
+# Handle weird characters, like Doncic, Zydrunas Ilgauskas, Omer Asik, and more.
 def remove_accents(input_str):
     nfkd_form = unicodedata.normalize("NFKD", input_str)
     return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
@@ -119,13 +119,10 @@ def get_each_season_totals():
         elif statType == "C":
             typeKey = "play-by-play"
 
-        # fileName = "baseData/" + typeKey + "_allyears.csv"
-        # reset_csv(fileName)
-
-        mkdir = "baseData/" + typeKey
-        if not os.path.exists(mkdir):
-            os.makedirs(mkdir)
-
+        # Use this portion to save it all into one file.
+        fileName = "baseData/" + typeKey + "_allyears.csv"
+        reset_csv(fileName)
+        
         for year in yearList:
             URL = (
                 "https://www.basketball-reference.com/leagues/NBA_"
@@ -134,23 +131,41 @@ def get_each_season_totals():
                 + typeKey
                 + ".html"
             )
-
-            fileName = (
-                "baseData/"
-                + typeKey
-                + "/"
-                + typeKey
-                + "_stats_"
-                + str(year - 1)
-                + "_"
-                + str(year)
-                + ".csv"
-            )
-            reset_csv(fileName)
-
-
             get_singleseason_stats(year, URL, fileName)
             print("Finished populating season " + str(year - 1) + "-" + str(year) + ".")
+
+
+        # Use this portion to save all into separate files.
+        # mkdir = "baseData/" + typeKey
+        # if not os.path.exists(mkdir):
+        #     os.makedirs(mkdir)
+
+        # for year in yearList:
+        #     URL = (
+        #         "https://www.basketball-reference.com/leagues/NBA_"
+        #         + str(year)
+        #         + "_"
+        #         + typeKey
+        #         + ".html"
+        #     )
+
+        #     fileName = (
+        #         "baseData/"
+        #         + typeKey
+        #         + "/"
+        #         + typeKey
+        #         + "_stats_"
+        #         + str(year - 1)
+        #         + "_"
+        #         + str(year)
+        #         + ".csv"
+        #     )
+
+            # reset_csv(fileName)
+
+
+            # get_singleseason_stats(year, URL, fileName)
+            # print("Finished populating season " + str(year - 1) + "-" + str(year) + ".")
 
 
 get_each_season_totals()
