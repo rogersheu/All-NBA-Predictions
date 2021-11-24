@@ -18,11 +18,13 @@ def get_singleseason_stats(year, URL, fileName):
     dataSoup = BeautifulSoup(dataPage.content, "html.parser", from_encoding="utf-8")
     dataTable = dataSoup.find("table", class_="sortable")
 
+    # This special i in Omer Asik was the only character in the database not caught by remove_accents.
     turkishCharacters = str.maketrans("ı", "i")
 
     if dataTable is not None:
         dataHeader = dataTable.find("thead").find_all("th")
         header = [headerElement.text for headerElement in dataHeader]
+        # Removes the initial entries for play-by-play.
         if re.search(r"play-by-play", fileName) is not None:
             header = header[9 : len(header)]
         else:
@@ -71,6 +73,7 @@ def get_each_season_totals():
     print("Do you want (A) Total Stats, (B) Advanced Stats, or (C) Play-by-Play Stats?")
     statType = input("A, B, or C?  ")
 
+    # Account for User Error
     if statType not in ["A", "B", "C"]:
         print("Please enter a valid letter.")
 
@@ -82,12 +85,18 @@ def get_each_season_totals():
 
     yearEnd = input("Please provide the last year's worth of data you would like. \nEnding Year:  ")
 
+
+
+    # Limiting user inputs to valid options.
+    # Checks for numeric inputs, followed by valid years.
+    # Could probably be try/except blocked, but these if statements do the trick for now.
     if not yearStart.isdigit() or not yearEnd.isdigit():
         print("Please enter integer values.")
         return False
 
     yearStart = int(yearStart)
     yearEnd = int(yearEnd)
+
 
     if (yearStart or yearEnd) < 1947 or (yearStart or yearEnd) > 2022:
         print("Please enter valid years.")
@@ -106,9 +115,7 @@ def get_each_season_totals():
         return False
 
     else:
-        yearList = range(yearStart, yearEnd + 1)
-        yearList = [num for num in yearList]
-
+        yearList = [range(yearStart, yearEnd + 1)] # Added [] around range to save a line.
 
         if statType == "A":
             typeKey = "totals"
@@ -120,19 +127,13 @@ def get_each_season_totals():
             typeKey = "play-by-play"
 
         # Use this portion to save it all into one file.
-        fileName = "baseData/" + typeKey + "_allyears.csv"
+        fileName = f"baseData/{typeKey}_allyears.csv" # f-stringed
         reset_csv(fileName)
         
         for year in yearList:
-            URL = (
-                "https://www.basketball-reference.com/leagues/NBA_"
-                + str(year)
-                + "_"
-                + typeKey
-                + ".html"
-            )
+            URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html") # f-stringed
             get_singleseason_stats(year, URL, fileName)
-            print("Finished populating season " + str(year - 1) + "-" + str(year) + ".")
+            print(f"Finished populating season {year - 1}-{year}.") # Changed to f-string.
 
 
         # Use this portion to save all into separate files.
@@ -141,31 +142,14 @@ def get_each_season_totals():
         #     os.makedirs(mkdir)
 
         # for year in yearList:
-        #     URL = (
-        #         "https://www.basketball-reference.com/leagues/NBA_"
-        #         + str(year)
-        #         + "_"
-        #         + typeKey
-        #         + ".html"
-        #     )
-
-        #     fileName = (
-        #         "baseData/"
-        #         + typeKey
-        #         + "/"
-        #         + typeKey
-        #         + "_stats_"
-        #         + str(year - 1)
-        #         + "_"
-        #         + str(year)
-        #         + ".csv"
-        #     )
+        #     URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
+        #     fileName = (f"baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv") # f-stringed
 
             # reset_csv(fileName)
 
 
             # get_singleseason_stats(year, URL, fileName)
-            # print("Finished populating season " + str(year - 1) + "-" + str(year) + ".")
+            # print(f"Finished populating season {year - 1}-{year}.") # f-stringed
 
 
 get_each_season_totals()

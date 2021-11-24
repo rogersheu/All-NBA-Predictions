@@ -3,6 +3,7 @@ from csv_functions import write_to_csv
 from csv_functions import reset_csv
 import re
 
+# Looks for 2019-2020, for example.
 yearPattern = re.compile(r"^([0-9]{4})-?([0-9]{4})?$")
 fileName = 'allstar_full.csv'
 
@@ -26,15 +27,9 @@ def process_allstars():
                 for year in range(int(startYear), int(endYear)+1):
                     fullListofYears.append(str(year))
                     write_to_csv(fileName, [df.iloc[row][0], year])
-        # print(fullListofYears)
         
         df.iat[row,1] = fullListofYears
 
     print(df)
-
-
-# def allstar_fulllist():
-
-
 
 process_allstars()
