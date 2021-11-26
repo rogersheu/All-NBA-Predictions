@@ -32,4 +32,10 @@ def process_allstars():
 
     print(df)
 
-process_allstars()
+
+def main():
+    process_allstars()
+
+
+if __name__ == '__main__':
+    main()

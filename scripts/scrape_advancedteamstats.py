@@ -34,5 +34,9 @@ def scrape_alladvanced(fileName):
         scrape_teamadvanced(fileName, year)
 
 
+def main():
+    scrape_alladvanced(fileName)
 
-scrape_alladvanced(fileName)
+
+if __name__ == '__main__':
+    main()

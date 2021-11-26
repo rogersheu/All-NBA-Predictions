@@ -44,4 +44,10 @@ def scrape_alltotals(fileName):
         scrape_teamstats(fileName, year)
 
 
-scrape_alltotals(fileName)
+
+def main():
+    scrape_alltotals(fileName)
+
+
+if __name__ == '__main__':
+    main()

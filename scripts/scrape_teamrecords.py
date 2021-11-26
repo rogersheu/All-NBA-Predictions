@@ -40,4 +40,10 @@ def scrape_allrecords(fileName):
         scrape_teamrecords(fileName, year)
         
 
-scrape_allrecords(fileName)
+        
+def main():
+    scrape_allrecords(fileName)
+
+
+if __name__ == '__main__':
+    main()

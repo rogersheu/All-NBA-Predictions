@@ -19,3 +19,8 @@ def reset_csv(fileName):
 
     except FileNotFoundError:
         return False
+
+
+def make_dir_if_nonexistent(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)

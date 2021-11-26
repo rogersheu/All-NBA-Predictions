@@ -115,7 +115,7 @@ def get_each_season_totals():
         return False
 
     else:
-        yearList = [range(yearStart, yearEnd + 1)] # Added [] around range to save a line.
+        yearList = list(range(yearStart, yearEnd + 1)) # Added [] around range to save a line.
 
         if statType == "A":
             typeKey = "totals"
@@ -127,29 +127,41 @@ def get_each_season_totals():
             typeKey = "play-by-play"
 
         # Use this portion to save it all into one file.
-        fileName = f"baseData/{typeKey}_allyears.csv" # f-stringed
-        reset_csv(fileName)
-        
-        for year in yearList:
-            URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html") # f-stringed
-            get_singleseason_stats(year, URL, fileName)
-            print(f"Finished populating season {year - 1}-{year}.") # Changed to f-string.
 
+        # fileName = f"baseData/{typeKey}_allyears.csv" # f-stringed
+        # reset_csv(fileName)
+        
+        # for year in yearList:
+        #     URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html") # f-stringed
+        #     get_singleseason_stats(year, URL, fileName)
+        #     print(f"Finished populating season {year-1}-{year}.") # Changed to f-string.
+
+
+        ###########################################################################################################
 
         # Use this portion to save all into separate files.
-        # mkdir = "baseData/" + typeKey
-        # if not os.path.exists(mkdir):
-        #     os.makedirs(mkdir)
 
-        # for year in yearList:
-        #     URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
-        #     fileName = (f"baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv") # f-stringed
+        mkdir = "baseData/" + typeKey
+        if not os.path.exists(mkdir):
+            os.makedirs(mkdir)
 
-            # reset_csv(fileName)
+        for year in yearList:
+            URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
+            fileName = (f"baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv") # f-stringed
 
-
-            # get_singleseason_stats(year, URL, fileName)
-            # print(f"Finished populating season {year - 1}-{year}.") # f-stringed
+            reset_csv(fileName)
 
 
-get_each_season_totals()
+            get_singleseason_stats(year, URL, fileName)
+            print(f"Finished populating season {year - 1}-{year}.") # f-stringed
+
+
+
+
+
+def main():
+    get_each_season_totals()
+
+
+if __name__ == '__main__':
+    main()

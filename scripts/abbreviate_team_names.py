@@ -15,4 +15,11 @@ def add_abbreviated_team_names():
 
     df.to_csv('baseData/teamStandingsAbbrev.csv')
 
-add_abbreviated_team_names()
+
+
+def main():
+    add_abbreviated_team_names()
+
+
+if __name__ == '__main__':
+    main()
