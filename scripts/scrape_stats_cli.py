@@ -106,11 +106,9 @@ def years_areValid(statType, yearStart, yearEnd):
 def save_each_season_stats(statType, yearStart, yearEnd):
     if years_areValid(statType, yearStart, yearEnd):
         
-        yearList = list(range(int(yearStart), int(yearEnd) + 1)) # Added [] around range to save a line.
+        yearList = list(range(int(yearStart), int(yearEnd) + 1))
 
         typeKey = get_typeKey(statType)
-
-        # Use this portion to save all into separate files.
 
         mkdir = "baseData/" + typeKey
         make_dir_if_nonexistent(mkdir)
@@ -128,7 +126,7 @@ def save_each_season_stats(statType, yearStart, yearEnd):
 
 def save_all_stats(statType, yearStart, yearEnd):
     if years_areValid(statType, yearStart, yearEnd):
-        yearList = list(range(yearStart, yearEnd + 1)) # Added [] around range to save a line.
+        yearList = list(range(yearStart, yearEnd + 1))
 
         typeKey = get_typeKey(statType)
 
