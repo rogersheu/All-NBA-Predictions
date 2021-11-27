@@ -2,6 +2,7 @@
 /scripts/Unused
 /scripts/OOP
 baseData/
+/R/
 
 # database
 .dbeaver
