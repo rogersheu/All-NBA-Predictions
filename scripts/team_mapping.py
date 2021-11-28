@@ -1,6 +1,7 @@
 activeTeams = {
     "Atlanta Hawks" : "ATL",
     "Boston Celtics": "BOS",
+    "Brooklyn Nets" : "BRK",
     "Charlotte Hornets": "CHO",
     "Chicago Bulls": "CHI",
     "Cleveland Cavaliers" : "CLE",
@@ -27,7 +28,7 @@ activeTeams = {
     "Sacramento Kings" : "SAC",
     "San Antonio Spurs" : "SAS",
     "Toronto Raptors" : "TOR",
-    "Utah Jazz": "UTH",
+    "Utah Jazz": "UTA",
     "Washington Wizards" : "WAS"
 }
 
