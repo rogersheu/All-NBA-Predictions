@@ -33,6 +33,9 @@ def get_singleseason_stats(year: str, URL: str, fileName: str, repeatHeader: boo
         header.insert(1, "PlayerID")
         header.insert(2, "Year")
 
+        if re.search(r"advanced", fileName):
+            header.pop(20)
+            header.pop(24) 
 
         if repeatHeader is False:
             global headerExists
@@ -47,8 +50,8 @@ def get_singleseason_stats(year: str, URL: str, fileName: str, repeatHeader: boo
         dataList = dataTable.find_all("tr", class_=["full_table"])
         # dataList = dataTable.find_all("tr", class_=["full_table", "italic_text"])
 
-        # Pull players who got changed teams mid-season and just do a check for
-        # them later. TBD how to handle their team records.
+        # Pull players who were traded mid-season and just do a check for
+        # them later. TBD how to handle their team records. Currently ignoring them, unfortunately.
         # Perhaps a game log search? Having the player code makes it much
         # easier to do a query in the form of
         # basketball-reference.com/players/a/<playerID>/gamelog/<year>
@@ -61,6 +64,9 @@ def get_singleseason_stats(year: str, URL: str, fileName: str, repeatHeader: boo
             data[0] = remove_accents(data[0])
             data[0] = data[0].translate(turkishCharacters)
             data[0] = data[0].replace("*", "")
+            if re.search(r"advanced", fileName):
+                data.pop(20)
+                data.pop(24)
             write_to_csv(fileName, data)
 
     else:

@@ -19,7 +19,6 @@ activeTeams = {
     "Minnesota Timberwolves" : "MIN",
     "New Orleans Pelicans" : "NOP",
     "New York Knicks" : "NYK",
-    "Brooklyn Nets" : "BKN",
     "Oklahoma City Thunder" : "OKC",
     "Orlando Magic" : "ORL",
     "Philadelphia 76ers" : "PHI",

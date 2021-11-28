@@ -33,7 +33,7 @@ def scrape_allrecords(fileName):
     yearList = range(1980, 2023)
     reset_csv(fileName)
 
-    write_to_csv(fileName, ['Team', 'Year', 'Wins', 'Losses', 'W/L%'])
+    write_to_csv(fileName, ['Team', 'Year', 'Wins', 'Losses', 'Perc'])
     for year in yearList:
         # scrape_teamstats(fileName, year)
         # scrape_teamadvanced(fileName, year)

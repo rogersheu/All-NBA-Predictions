@@ -3,9 +3,10 @@ import team_mapping
 import pandas as pd
 import collections
 
+fileName = 'baseData/teamStandings.csv'
 
-def add_abbreviated_team_names():
-    df = pd.read_csv('baseData/teamStandings.csv', delimiter=',')
+def add_abbreviated_team_names(fileName):
+    df = pd.read_csv(fileName, delimiter=',')
 
     chainMap = collections.ChainMap(team_mapping.activeTeams, team_mapping.tradedPlayers, team_mapping.defunctTeams)
 
@@ -13,12 +14,12 @@ def add_abbreviated_team_names():
 
     df.insert(1, 'Tm', tm)
 
-    df.to_csv('baseData/teamStandingsAbbrev.csv')
+    df.to_csv(fileName.replace("Standings", "StandingsAbbrev"))
 
 
 
 def main():
-    add_abbreviated_team_names()
+    add_abbreviated_team_names(fileName)
 
 
 if __name__ == '__main__':
