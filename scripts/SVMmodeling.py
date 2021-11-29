@@ -8,21 +8,20 @@ from transfer_data import *
 
 def SVM(X, y):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
-    cols = X_train.columns
+    # cols = X_train.columns
     scaler = StandardScaler()
 
     X_train = scaler.fit_transform(X_train)
-
     X_test = scaler.transform(X_test)
-    X_train = pd.DataFrame(X_train, columns=[cols])
-    X_test = pd.DataFrame(X_test, columns=[cols])
+    # X_train = pd.DataFrame(X_train, columns=[cols])
+    # X_test = pd.DataFrame(X_test, columns=[cols])
+
 
     ##### Blueprint for this code is from https://www.kaggle.com/prashant111/svm-classifier-tutorial
-
     # Instantiate classifier with linear kernel and C=100.0
-    lin_svc=svm.SVC(kernel = 'linear', C = 100.0, probability = True, random_state = 0) 
+    lin_svc = SVC(kernel = 'linear', C = 10.0, probability = True, random_state = 0) 
     lin_svc.fit(X_train, y_train)
-    y_pred=lin_svc.predict(X_test)
+    y_pred = lin_svc.predict(X_test)
 
     # Compute and print accuracy score
     print('Model accuracy score with linear kernel and C=100.0 : {0:0.4f}'. format(accuracy_score(y_test, y_pred)))
@@ -40,10 +39,8 @@ def SVM(X, y):
     fileName = pick_file()
 
     X_2022 = get_2022stats(fileName)
+    X_2022 = scaler.transform(X_2022)
     y_2022 = lin_svc.predict(X_2022)
-
-    print(X_2022)
-    print(y_2022)
 
     # classifier = lin_svc.fit(X_2022, y_2022)
     predictions = lin_svc.predict_proba(X_2022)

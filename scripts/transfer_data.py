@@ -35,8 +35,8 @@ def get_2022stats(fileName):
 
 def addandsave_to_CSV(fileName: str, rfcName: str, rfcData: pd.Series, rfcProbName: str, rfcProbData: pd.Series, modelType: str):
     df = pd.read_csv(fileName)
-    df[rfcName] = rfcData
-    df[rfcProbName] = rfcProbData
+    df[rfcName] = rfcData.round(2)
+    df[rfcProbName] = rfcProbData.round(2)
     df.sort_values(by = rfcProbName, ascending = False, inplace = True)
     fileName = fileName.replace(".csv","")
     fileName = f"{fileName}_{modelType}.csv"
