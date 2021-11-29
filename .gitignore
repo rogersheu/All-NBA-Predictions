@@ -3,6 +3,7 @@
 /scripts/OOP
 baseData/
 /R/
+.Rhistory
 
 # database
 .dbeaver
