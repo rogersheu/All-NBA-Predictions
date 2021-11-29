@@ -1,4 +1,3 @@
-from typing import Tuple
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
@@ -6,12 +5,17 @@ from tkinter import filedialog
 # dataSrc_all = "./baseData/ML/allPlayers_paceadjusted_statsfromSQL.csv"
 
 def pick_file():
-    root = tk.Tk()
-    root.withdraw()
+    try:
+        root = tk.Tk()
+        root.withdraw()
 
-    filePathName = filedialog.askopenfilename()
+        filePathName = filedialog.askopenfilename()
 
-    return filePathName
+        print("Thank you for picking a file!")
+        return filePathName
+    except TypeError:
+        print("Please pick a valid file.")
+        return False
 
 def get_allplayerstats():
     print("Pick your file containing stats for all players to train/test the model.")
@@ -22,17 +26,18 @@ def get_allplayerstats():
     return X, y
 
 
-def get_2022stats():
+def get_2022stats(fileName):
     print("Pick your file containing this season's stats for prediction.")
-    df = pd.read_csv(pick_file())
+    df = pd.read_csv(fileName)
     X_predict = df[['RPG','APG','SBPG','PPG','TS','WS48','Perc']]
 
     return X_predict
 
-def addandsave_to_CSV(fileName: str, rfcName: str, rfcData: pd.Series, rfcProbName: str, rfcProbData: pd.Series):
+def addandsave_to_CSV(fileName: str, rfcName: str, rfcData: pd.Series, rfcProbName: str, rfcProbData: pd.Series, modelType: str):
     df = pd.read_csv(fileName)
     df[rfcName] = rfcData
     df[rfcProbName] = rfcProbData
     df.sort_values(by = rfcProbName, ascending = False, inplace = True)
-    print(df)
-    df.to_csv(fileName.replace("forpredicting", "predicted")) # Relies on original file having "_forpredicting" in the file name.
+    fileName = fileName.replace(".csv","")
+    fileName = f"{fileName}_{modelType}.csv"
+    df.to_csv(fileName)

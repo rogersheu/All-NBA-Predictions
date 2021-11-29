@@ -2,9 +2,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
-from transfer_data import get_allplayerstats, get_2022stats, addandsave_to_CSV
+from transfer_data import *
 
-fileName = "./baseData/ML/players2022_paceadjusted_forpredicting.csv"
+fileName = "./baseData/ML/stats_20211128.csv"
 
 def RF(X, y): # Change to take in a csv and output a csv
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
@@ -21,19 +21,14 @@ def RF(X, y): # Change to take in a csv and output a csv
     print(feature_imp)
 
     # Making predictions
-    
-    X_2022 = get_2022stats()
+    fileName = pick_file()  
+
+    X_2022 = get_2022stats(fileName)
     y_2022 = randomforest.predict(X_2022)
 
-    classifier = randomforest.fit(X_2022,y_2022)
-    predictions = classifier.predict_proba(X_2022)
-    
-    # df2022['allLeague'] = y_2022
-    # df2022['probabilityFor'] = predictions[:,1]
-
-    addandsave_to_CSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1])
-
-    # df2022.to_csv("./baseData/ML/players2022_predicted.csv")
+    # classifier = randomforest.fit(X_2022,y_2022)
+    predictions = randomforest.predict_proba(X_2022)
+    addandsave_to_CSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], "RF")
 
 def main():
     X, y = get_allplayerstats()
