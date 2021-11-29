@@ -2,11 +2,11 @@
 WITH Players2022 AS
 (
 	SELECT 
-        stats.Player, 
+        stats.Player,  
+        stats.Year, 
         stats.G,
         stats.MP,
-        ROUND(CAST(stats.MP AS REAL)/stats.G, 1) AS MPG, 
-        stats.Year, 
+        ROUND(CAST(stats.MP AS REAL)/stats.G, 1) AS MPG,
         ROUND(CAST(stats.TRB AS REAL)/stats.G, 1) AS RPG, 
         ROUND(CAST(stats.AST AS REAL)/stats.G, 1) AS APG, 
         ROUND(CAST((stats.STL + stats.BLK) AS REAL)/stats.G, 1) AS SBPG,

@@ -42,14 +42,6 @@ WHERE (MP > 1500 OR (MPG > 20 AND G > 50)) AND Perc > 0;
 
 
 
-
-
-
-
-
-
-
-
 -- Not pace adjusted
 WITH allPlayers AS
 (
