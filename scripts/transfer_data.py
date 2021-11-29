@@ -13,7 +13,7 @@ def pick_file():
 
         print("Thank you for picking a file!")
         return filePathName
-    except TypeError:
+    except FileNotFoundError:
         print("Please pick a valid file.")
         return False
 
