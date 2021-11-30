@@ -124,7 +124,7 @@ def save_each_season_stats(statType, yearStart, yearEnd):
             fileName = (f"baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv") # f-stringed
             reset_csv(fileName)
             get_singleseason_stats(year, URL, fileName, True)
-            print(f"Finished populating season {year - 1}-{year}.") # f-stringed
+            print(f"Finished populating season {year - 1}-{year}, {typeKey} data.") # f-stringed
 
     else:
         return False
@@ -142,7 +142,7 @@ def save_all_stats(statType, yearStart, yearEnd):
         for year in yearList:
             URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html") # f-stringed
             get_singleseason_stats(year, URL, fileName, False)
-            print(f"Finished populating season {year-1}-{year}.") # Changed to f-string.
+            print(f"Finished populating season {year-1}-{year}, {typeKey} data.") # Changed to f-string.
 
     else:
         return True
