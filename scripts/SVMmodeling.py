@@ -17,9 +17,9 @@ def SVM(X, y):
     # system will remember the means and variances and scale by those in future .transform calls.
 
     ##### Blueprint for this code is from https://www.kaggle.com/prashant111/svm-classifier-tutorial
-    lin_svc = SVC(kernel = 'linear', C = 10.0, probability = True, random_state = 0)  # Why use linear vs. Gaussian?
-    lin_svc.fit(X_train, y_train)
-    y_pred = lin_svc.predict(X_test)
+    linSVCmodel = SVC(kernel = 'linear', C = 10.0, probability = True, random_state = 0)  # Why use linear vs. Gaussian?
+    linSVCmodel.fit(X_train, y_train)
+    y_pred = linSVCmodel.predict(X_test)
 
     # Compute and print accuracy score
     print('Model accuracy score with linear kernel and C=100.0 : {0:0.4f}'. format(accuracy_score(y_test, y_pred)))
@@ -32,10 +32,9 @@ def SVM(X, y):
 
     # Must scale prior to use
     X_2022 = scaler.transform(X_2022)
-    y_2022 = lin_svc.predict(X_2022)
+    y_2022 = linSVCmodel.predict(X_2022)
 
-    # classifier = lin_svc.fit(X_2022, y_2022)
-    predictions = lin_svc.predict_proba(X_2022)
+    predictions = linSVCmodel.predict_proba(X_2022)
 
     addandsave_to_CSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], "linearSVM")
 
