@@ -2,6 +2,7 @@ from tkinter.constants import Y
 from SVMmodeling import SVM
 from kNNmodeling import kNN
 from RFmodeling import RF
+from MLPmodeling import MLP
 from transfer_data import *
 
 
@@ -14,6 +15,7 @@ def main():
     probabilityonly_toCSV(destFile, "RF", RF(X, y))
     probabilityonly_toCSV(destFile, "SVM", SVM(X, y))
     probabilityonly_toCSV(destFile, "kNN", kNN(X, y))
+    probabilityonly_toCSV(destFile, "MLP", MLP(X, y))
 
     sortCSV(destFile)
 
