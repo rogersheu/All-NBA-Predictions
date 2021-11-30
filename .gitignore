@@ -1,7 +1,9 @@
 # DATA
 /scripts/Unused
 /scripts/OOP
-baseData/
+
+# Temporarily ignoring data, clutters the repository
+*.csv
 
 # database
 .dbeaver
