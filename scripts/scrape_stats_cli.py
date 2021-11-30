@@ -156,6 +156,8 @@ def get_typeKey(statType):
             typeKey = "advanced"
         case '-pbp':
             typeKey = "play-by-play"
+        case _:
+            return False
 
     return typeKey
 
