@@ -15,13 +15,13 @@ WITH Players2022 AS
         adv.TS, 
         --stats.'3PAr', stats.FTr, 
         adv.WS48,-- stats.BPM, stats.VORP, 
-        teamWL.Perc--,
+        teamWL2022.Perc--,
         --1 - (1 - COALESCE(allstars.Status, 0)) * (1 - COALESCE(allNBA.Status, 0)) AS allLeague
 		FROM totals2022 AS stats
 	LEFT JOIN advanced2022 AS adv ON (stats.Player = adv.Player AND stats.Year = adv.Year)
 	LEFT JOIN allstars ON (stats.Player = allstars.Name AND stats.Year = allstars.Season)
 	LEFT JOIN allNBA ON (stats.Player = allNBA.Name AND stats.Year = allNBA.Season)
-	LEFT JOIN teamWL ON (stats.Tm = teamWL.Tm AND stats.Year = teamWL.Year)
+	LEFT JOIN teamWL2022 ON (stats.Tm = teamWL2022.Tm AND stats.Year = teamWL2022.Year)
 )
 SELECT * FROM Players2022
 WHERE Year = 2022 AND Perc > 0 AND ((MPG > 25 AND G > 8) OR MP > 400);
