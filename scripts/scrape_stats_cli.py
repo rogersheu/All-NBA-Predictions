@@ -147,7 +147,7 @@ def save_all_stats(statType, yearStart, yearEnd):
     else:
         return True
 
-
+# ANACONDA CANNOT RUN PYTHON 3.10 YET, AND SO CANNOT RUN STRUCTURAL PATTERN MATCHING, LIKE BELOW
 def get_typeKey(statType):
     match statType:
         case '-tot':
