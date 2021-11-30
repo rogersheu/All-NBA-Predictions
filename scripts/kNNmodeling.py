@@ -15,7 +15,7 @@ def kNN(X, y):
     X_test = scaler.transform(X_test)
     ## Framework from https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 
-    kNNmodel = KNeighborsClassifier(n_neighbors = 5)
+    kNNmodel = KNeighborsClassifier(n_neighbors = 100)
     kNNmodel.fit(X_train, y_train)
 
     y_testpredicted = kNNmodel.predict(X_test)
@@ -25,7 +25,7 @@ def kNN(X, y):
 
     fileName = pick_file()
 
-    X_2022 = get_2022stats(fileName)
+    X_2022 = get_2022_stats(fileName)
 
     # Must scale prior to use
     X_2022 = scaler.transform(X_2022)
@@ -33,11 +33,13 @@ def kNN(X, y):
 
     predictions = kNNmodel.predict_proba(X_2022)
 
-    addandsave_to_CSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], 'kNN')
+    # return predictions[:,1]
+
+    addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], 'kNN')
 
 
 def main():
-    X, y = get_allplayerstats()
+    X, y = get_all_player_stats()
     kNN(X, y)
 
 if __name__ == "__main__":

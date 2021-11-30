@@ -28,7 +28,7 @@ def SVM(X, y):
     
     fileName = pick_file()
 
-    X_2022 = get_2022stats(fileName)
+    X_2022 = get_2022_stats(fileName)
 
     # Must scale prior to use
     X_2022 = scaler.transform(X_2022)
@@ -36,10 +36,12 @@ def SVM(X, y):
 
     predictions = linSVCmodel.predict_proba(X_2022)
 
-    addandsave_to_CSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], "linearSVM")
+    # addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], "linearSVM")
+
+    return predictions[:,1]
 
 
-    # # Print the scores on training and test set
+    ############# 
     # print('Training set score: {:.4f}'.format(lin_svc.score(X_train, y_train)))
     # print('Test set score: {:.4f}'.format(lin_svc.score(X_test, y_test)))
 
@@ -47,7 +49,7 @@ def SVM(X, y):
     # print('Null accuracy score: {0:0.4f}'. format(null_accuracy))
 
 def main():
-    X, y = get_allplayerstats()
+    X, y = get_all_player_stats()
     SVM(X, y)
 
 if __name__ == "__main__":
