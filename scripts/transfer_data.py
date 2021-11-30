@@ -17,7 +17,7 @@ def pick_file():
         print("Please pick a valid file.")
         return False
 
-def get_allplayerstats():
+def get_all_player_stats():
     print("Pick your file containing stats for all players to train/test the model.")
     df = pd.read_csv(pick_file())
     X = df[['RPG','APG','SBPG','PPG','TS','WS48','Perc']]
@@ -26,18 +26,32 @@ def get_allplayerstats():
     return X, y
 
 
-def get_2022stats(fileName):
+def get_2022_stats(fileName):
     print("Pick your file containing this season's stats for prediction.")
     df = pd.read_csv(fileName)
     X_predict = df[['RPG','APG','SBPG','PPG','TS','WS48','Perc']]
 
     return X_predict
 
-def addandsave_to_CSV(fileName: str, rfcName: str, rfcData: pd.Series, rfcProbName: str, rfcProbData: pd.Series, modelType: str):
+def addtodf_savetoCSV(fileName: str, classifierName: str, classifierData: pd.Series, classifierProbName: str, classifierProbData: pd.Series, modelType: str):
     df = pd.read_csv(fileName)
-    df[rfcName] = rfcData.round(2)
-    df[rfcProbName] = rfcProbData.round(2)
-    df.sort_values(by = rfcProbName, ascending = False, inplace = True)
+    df[classifierName] = classifierData.round(2)
+    df[classifierProbName] = classifierProbData.round(2)
+    df.sort_values(by = classifierProbName, ascending = False, inplace = True)
     fileName = fileName.replace(".csv","")
     fileName = f"{fileName}_{modelType}.csv"
     df.to_csv(fileName)
+
+
+def probabilityonly_toCSV(fileName: str, probName: str, probData: pd.Series):
+    df = pd.read_csv(fileName)
+    df[probName] = probData.round(2)
+    # df.sort_values(by = probName, ascending = False, inplace = True)
+    df.to_csv(fileName)
+
+
+def sortCSV(fileName):
+    df = pd.read_csv(fileName) 
+    df.sort_values(by = df[['RF','SVM','kNN']].mean(axis=0), ascending = False, inplace = True) # df.iloc[:,['RF','SVM','kNN']].mean(axis=0) probably works too
+    df.to_csv(fileName)
+    
