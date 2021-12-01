@@ -37,6 +37,7 @@ def MLP(X, y, X_2022):
     # }
     # clf = GridSearchCV(MLPmodel, parameter_space, n_jobs = -1, cv = 3) 
 
+    # Max_iter was changed from its default of 200 to 1000. May need to be changed in the future.
     clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (10,50,10))
     clf.fit(X_train, y_train)
 
