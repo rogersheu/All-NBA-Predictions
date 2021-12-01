@@ -24,7 +24,7 @@ ggplot(topCandidates, aes(x=Player, y=RF)) +
 
 
 
-allstar_full <- read_csv("~/GitHub/All-Star-Predictions/baseData/allstar_full.csv")
-allstars_2021 <- allstar_full[allstar_full[,"Season"] == 2021,]
+#allstar_full <- read_csv("~/GitHub/All-Star-Predictions/baseData/allstar_full.csv")
+#allstars_2021 <- allstar_full[allstar_full[,"Season"] == 2021,]
 
-topCandidates$allstar2021 <- match(topCandidates$Player, allstars_2021$Name, nomatch = 0) / match(topCandidates$Player, allstars_2021$Name, nomatch = 0)
+#topCandidates$allstar2021 <- match(topCandidates$Player, allstars_2021$Name, nomatch = 0) / match(topCandidates$Player, allstars_2021$Name, nomatch = 0)
