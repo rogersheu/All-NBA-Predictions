@@ -26,13 +26,16 @@ Currently implemented
 
 To be implemented or displayed
 * Data checks to ensure proper data handling, providing confusion matrices and accuracy for cross-validation
-* Naive Bayes Classifier, Stochastic Gradient Descent
 * Tableau dashboard of information
 
 Planned Improvements or Refinements
 * Implementation of other machine learning methods
 * Considering inclusion/exclusion of predictors
 * Smaller scale analysis using 538's RAPTOR, EPM, PIPM, or similar.
+
+Discarded Ideas
+* Naive Bayes Classifier: good classifier, but probability not particularly informative
+* Stochastic Gradient Descent: data set not big enough to justify use over SVM
 
 
 
