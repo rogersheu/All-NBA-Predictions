@@ -1,6 +1,6 @@
 # AllLeague-NBA-Predictions
 
-Use
+Installation/Instructions
 ===========
 Under construction.
 
