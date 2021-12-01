@@ -17,8 +17,8 @@ WITH Players2022 AS
         adv.WS48,-- stats.BPM, stats.VORP, 
         teamWL2022.Perc--,
         --1 - (1 - COALESCE(allstars.Status, 0)) * (1 - COALESCE(allNBA.Status, 0)) AS allLeague
-		FROM totals2022 AS stats
-	LEFT JOIN advanced2022 AS adv ON (stats.Player = adv.Player AND stats.Year = adv.Year)
+		FROM totals AS stats
+	LEFT JOIN advanced AS adv ON (stats.Player = adv.Player AND stats.Year = adv.Year)
 	LEFT JOIN allstars ON (stats.Player = allstars.Name AND stats.Year = allstars.Season)
 	LEFT JOIN allNBA ON (stats.Player = allNBA.Name AND stats.Year = allNBA.Season)
 	LEFT JOIN teamWL2022 ON (stats.Tm = teamWL2022.Tm AND stats.Year = teamWL2022.Year)
