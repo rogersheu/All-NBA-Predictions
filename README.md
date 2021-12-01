@@ -2,7 +2,15 @@
 
 Installation/Instructions
 ===========
-Under construction.
+1. In order to use this program, either ```Clone``` the repository or ```download the ZIP file```. 
+2. Go into python, change directory to the GitHub's folder (not any of the subfolder).
+3. Get the full data by running ```python .\scripts\scrape_stats_cli.py -tot 1980 2022 all```, ```python .\scripts\scrape_stats_cli.py -adv 1980 2022 all```, and ```python .\scripts\scrape_teamrecords.py```.
+4. Then, run the .\scripts\daily_data_script.py program to get the 2022 data.
+5. Install and open ```DBeaver```. Have it open a connection to the database, after which you should import three files you should have gotten in step 3. Drop any outdated tables before import.
+6. Import the 2022 data as well from ```\baseData\dailystats```. Steps 5 and 6 can likely be improved by a Python script that saves directly to a database. This is a future feature.
+7. Run the ```allPlayers.sql``` and ```players2022.sql``` scripts to extract and transform the relevant data and save them to CSV files.
+8. Load these files into Python and the models using ```python .\scripts\daily_modeling.py``` Follow the command line prompts to select files.
+9. Your resulting file should be in the same path as you chose in Step 8.
 
 Objective
 ===========
@@ -18,6 +26,7 @@ Currently implemented
 
 To be implemented or displayed
 * Data checks to ensure proper data handling, providing confusion matrices and accuracy for cross-validation
+* Naive Bayes Classifier, Stochastic Gradient Descent
 * Tableau dashboard of information
 
 Planned Improvements or Refinements
