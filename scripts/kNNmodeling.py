@@ -7,7 +7,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 from transfer_data import *
 
 
-def kNN(X, y):
+def kNN(X, y, X_2022):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
     scaler = StandardScaler()
@@ -20,12 +20,10 @@ def kNN(X, y):
 
     y_testpredicted = kNNmodel.predict(X_test)
 
+    print("k-Nearest Neighbor confusion matrix and classification report.\n")
     print(confusion_matrix(y_test, y_testpredicted))
     print(classification_report(y_test, y_testpredicted))
 
-    fileName = pick_file()
-
-    X_2022 = get_2022_stats(fileName)
 
     # Must scale prior to use
     X_2022 = scaler.transform(X_2022)
@@ -33,14 +31,15 @@ def kNN(X, y):
 
     predictions = kNNmodel.predict_proba(X_2022)
 
-    # return predictions[:,1]
+    return predictions[:,1]
 
-    addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], 'kNN')
+    # addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], 'kNN')
 
 
 def main():
     X, y = get_all_player_stats()
-    kNN(X, y)
+    X_2022 = get_2022_stats()
+    kNN(X, y, X_2022)
 
 if __name__ == "__main__":
     main()

@@ -9,7 +9,7 @@ from transfer_data import *
 from sklearn.metrics import classification_report
 
 # MLP = Multi-layer perceptron
-def MLP(X, y):
+def MLP(X, y, X_2022):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
 
     # MLP are sensitive to feature scaling
@@ -37,7 +37,7 @@ def MLP(X, y):
     # }
     # clf = GridSearchCV(MLPmodel, parameter_space, n_jobs = -1, cv = 3) 
 
-    clf = MLPClassifier(hidden_layer_sizes = (10,50,10))
+    clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (10,50,10))
     clf.fit(X_train, y_train)
 
 
@@ -52,26 +52,24 @@ def MLP(X, y):
 
     y_true, y_pred = y_test, clf.predict(X_test)
 
-    print('Results on the test set:')
+    print('Results on the test set for the multilayer perceptron (MLP):')
     print(classification_report(y_true, y_pred))
 
-    fileName = pick_file()
-
-    X_2022 = get_2022_stats(fileName)
 
     X_2022 = scaler.transform(X_2022)
     y_2022 = clf.predict(X_2022)
 
     predictions = clf.predict_proba(X_2022)
 
-    # return predictions[:,1]
+    return predictions[:,1]
 
-    addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], 'MLP')
+    # addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], 'MLP')
 
 
 def main():
     X, y = get_all_player_stats()
-    MLP(X, y)
+    X_2022 = get_2022_stats()
+    MLP(X, y, X_2022)
 
 if __name__ == "__main__":
     main()

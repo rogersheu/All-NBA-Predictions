@@ -6,7 +6,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 from transfer_data import *
 
-def SVM(X, y):
+def SVM(X, y, X_2022):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
     # Scaling to bring all columns to mean of 0 and unit variance
@@ -22,13 +22,9 @@ def SVM(X, y):
     y_pred = linSVCmodel.predict(X_test)
 
     # Compute and print accuracy score
-    print('Model accuracy score with linear kernel and C=100.0 : {0:0.4f}'. format(accuracy_score(y_test, y_pred)))
+    print('Model accuracy score with Support Vector Machine, linear kernel, and C=10.0 : {0:0.4f}'. format(accuracy_score(y_test, y_pred)))
 
     # Difference in model accuracy between C = 100 and C = 1000 was minimal. Slight improvement from 1 to 100.
-    
-    fileName = pick_file()
-
-    X_2022 = get_2022_stats(fileName)
 
     # Must scale prior to use
     X_2022 = scaler.transform(X_2022)
@@ -50,7 +46,8 @@ def SVM(X, y):
 
 def main():
     X, y = get_all_player_stats()
-    SVM(X, y)
+    X_2022 = get_2022_stats()
+    SVM(X, y, X_2022)
 
 if __name__ == "__main__":
     main()
