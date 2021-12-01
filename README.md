@@ -36,7 +36,7 @@ Planned Improvements or Refinements
 
 
 
-For example, the following figure shows the status of these players through 11/30/2021. We are still quite a ways away from the all-star or all-NBA selections (17-20 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
+For example, the following figure shows the status of these players through 11/30/2021. We are still quite a ways away from the all-star or all-NBA selections (19-23 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
 
 ![allLeague Candidates](https://user-images.githubusercontent.com/78449574/144187461-5f5c0f2a-9eed-4a0d-a35e-7dfcd4c91f9c.png)
 
