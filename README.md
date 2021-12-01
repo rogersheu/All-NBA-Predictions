@@ -2,6 +2,7 @@
 
 Installation/Instructions
 ===========
+Prerequisites: ```Python 3.10```, ```sqlite3```, ```DBeaver```
 1. In order to use this program, either ```Clone``` the repository or ```download the ZIP file```. 
 2. Go into python, change directory to the GitHub's folder (not any of the subfolder).
 3. Get the full data by running ```python .\scripts\scrape_stats_cli.py -tot 1980 2022 all```, ```python .\scripts\scrape_stats_cli.py -adv 1980 2022 all```, and ```python .\scripts\scrape_teamrecords.py```.
