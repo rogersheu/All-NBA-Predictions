@@ -26,9 +26,9 @@ def get_all_player_stats():
     return X, y
 
 
-def get_2022_stats(fileName):
+def get_2022_stats():
     print("Pick your file containing this season's stats for prediction.")
-    df = pd.read_csv(fileName)
+    df = pd.read_csv(pick_file())
     X_predict = df[['RPG','APG','SBPG','PPG','TS','WS48','Perc']]
 
     return X_predict
@@ -51,7 +51,25 @@ def probabilityonly_toCSV(fileName: str, probName: str, probData: pd.Series):
 
 
 def sortCSV(fileName):
-    df = pd.read_csv(fileName) 
-    df.sort_values(by = df[['RF','SVM','kNN']].mean(axis=0), ascending = False, inplace = True) # df.iloc[:,['RF','SVM','kNN']].mean(axis=0) probably works too
-    df.to_csv(fileName)
-    
+    df = pd.read_csv(fileName)
+    df = df.iloc[: , 1:]
+    df['Avg'] = (df['RF'] + df['SVM'] + df['kNN'] + df['MLP'])/4
+    df.sort_values(by = 'Avg', ascending = False, inplace = True)
+    df[['SVM', 'MLP', 'Avg']] = df[['SVM', 'MLP', 'Avg']].round(3)
+    df.to_csv(fileName, index = False)
+
+
+def sortCSV_historical(fileName):
+    df = pd.read_csv(fileName)
+    df = df.iloc[: , 1:]
+    df = average_and_deviation(df)
+    df.sort_values(by = 'Avg', ascending = False, inplace = True)
+    df[['SVM', 'MLP', 'Avg']] = df[['SVM', 'MLP', 'Avg']].round(3)
+    df.to_csv(fileName, index = False)
+
+
+def average_and_deviation(df: pd.DataFrame):
+    df['Avg'] = (df['RF'] + df['SVM'] + df['kNN'] + df['MLP'])/4
+    df['Deviation'] = (df['Avg']-df['allLeague'])
+
+    return df
