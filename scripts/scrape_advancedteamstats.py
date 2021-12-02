@@ -1,12 +1,12 @@
 from bs4 import BeautifulSoup
 import requests
-from csv_functions import write_to_csv
-from csv_functions import reset_csv
+from csv_functions import *
+from transfer_data import *
 
-fileName = 'baseData/teamadvancedstats.csv'
+
 
 def scrape_teamadvanced(fileName, year):
-    yearURL = 'https://www.basketball-reference.com/leagues/NBA_' + str(year) + '.html'
+    yearURL = (f'https://www.basketball-reference.com/leagues/NBA_{year}.html')
     yearPage = requests.get(yearURL)
     yearSoup = BeautifulSoup(yearPage.content, 'html.parser', from_encoding = 'utf-8')
 
@@ -25,17 +25,19 @@ def scrape_teamadvanced(fileName, year):
 
 
 
-def scrape_alladvanced(fileName):
-    yearList = range(1980, 2023)
+def scrape_alladvanced(startYear, endYear):
+    pathName = pick_path()
+    fileName = (f"{pathName}/teamadv.csv")
+    yearList = range(int(startYear), int(endYear) + 1)
     reset_csv(fileName)
-    
     write_to_csv(fileName, ['Pace', 'Season', 'FTr', '3PAr', 'TS%'])
     for year in yearList:
         scrape_teamadvanced(fileName, year)
 
 
 def main():
-    scrape_alladvanced(fileName)
+    scrape_alladvanced(1980, 2022)
+    print("Finished populating {startYear}-{endYear}, team advanced stats.")
 
 
 if __name__ == '__main__':

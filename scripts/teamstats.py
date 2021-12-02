@@ -1,13 +1,12 @@
 from bs4 import BeautifulSoup
 import requests
-from csv_functions import write_to_csv
-from csv_functions import reset_csv
+from csv_functions import *
+from transfer_data import *
 
-fileName = 'baseData/totalteamaverages.csv'
 headerCheck = False
 
 def scrape_teamstats(fileName, year):
-    yearURL = 'https://www.basketball-reference.com/leagues/NBA_' + str(year) + '.html'
+    yearURL = (f'https://www.basketball-reference.com/leagues/NBA_{year}.html')
     yearPage = requests.get(yearURL)
     yearSoup = BeautifulSoup(yearPage.content, 'html.parser', from_encoding = 'utf-8')
 
@@ -36,17 +35,20 @@ def scrape_teamstats(fileName, year):
 
 
 
-def scrape_alltotals(fileName):
-    yearList = range(1980, 2023)
+def scrape_alltotals(startYear, endYear):
+    pathName = pick_path()
+    fileName = (f"{pathName}/teamstats.csv")
+    yearList = range(int(startYear), int(endYear) + 1)
     reset_csv(fileName)
     
     for year in yearList:
         scrape_teamstats(fileName, year)
+    print("Finished populating {startYear}-{endYear}, team stats.")
 
 
 
 def main():
-    scrape_alltotals(fileName)
+    scrape_alltotals(1980, 2022)
 
 
 if __name__ == '__main__':
