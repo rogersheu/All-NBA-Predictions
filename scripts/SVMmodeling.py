@@ -1,10 +1,14 @@
-from sklearn import svm
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
 from transfer_data import *
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score
+import seaborn as sn
+import matplotlib.pyplot as plt
+# from sklearn import svm
 
 def SVM(X, y, X_2022):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
@@ -13,16 +17,21 @@ def SVM(X, y, X_2022):
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
-    # The function fit_transform is intended for training data because the 
-    # system will remember the means and variances and scale by those in future .transform calls.
 
-    ##### Blueprint for this code is from https://www.kaggle.com/prashant111/svm-classifier-tutorial
-    linSVCmodel = SVC(kernel = 'linear', C = 10.0, probability = True, random_state = 0)  # Why use linear vs. Gaussian?
+    # Tried rbf (Gaussian), but linear was still more accurate.
+    # Tried a variety of C from 10^-5 to 1000 and 0.1 was the most accurate
+    linSVCmodel = SVC(kernel = 'linear', C = 0.1, probability = True, random_state = 0)
     linSVCmodel.fit(X_train, y_train)
     y_pred = linSVCmodel.predict(X_test)
 
-    # Compute and print accuracy score
-    print('Model accuracy score with Support Vector Machine, linear kernel, and C=10.0 : {0:0.4f}'. format(accuracy_score(y_test, y_pred)))
+    print('Confusion matrix and classification report for SVM model.\n')
+    print(confusion_matrix(y_test, y_pred))
+    print(classification_report(y_test, y_pred))
+
+    # df_cm = pd.DataFrame(confusion_matrix(y_test, y_pred), range(2), range(2))
+    # sn.set(font_scale=1.4)
+    # sn.heatmap(df_cm, annot=True, annot_kws={"size": 16}) # font size
+    # plt.show()
 
     # Difference in model accuracy between C = 100 and C = 1000 was minimal. Slight improvement from 1 to 100.
 
@@ -32,17 +41,9 @@ def SVM(X, y, X_2022):
 
     predictions = linSVCmodel.predict_proba(X_2022)
 
-    # addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], "linearSVM")
-
     return predictions[:,1]
 
 
-    ############# 
-    # print('Training set score: {:.4f}'.format(lin_svc.score(X_train, y_train)))
-    # print('Test set score: {:.4f}'.format(lin_svc.score(X_test, y_test)))
-
-    # null_accuracy = y_test.value_counts()[0] / (y_test.value_counts()[0] + y_test.value_counts()[1])
-    # print('Null accuracy score: {0:0.4f}'. format(null_accuracy))
 
 def main():
     X, y = get_all_player_stats()
