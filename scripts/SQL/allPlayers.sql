@@ -50,12 +50,12 @@ WITH allPlayers AS
         stats.Year, 
         stats.G,
         stats.MP,
-        ROUND(CAST(stats.MP AS REAL)/stats.G, 1) AS MPG,
-        ROUND(CAST(stats.TRB AS REAL)/stats.G, 1) AS RPG, 
-        ROUND(CAST(stats.AST AS REAL)/stats.G, 1) AS APG, 
-        ROUND(CAST((stats.STL + stats.BLK) AS REAL)/stats.G, 1) AS SBPG,
-        --ROUND(CAST(stats.TOV AS REAL)/stats.G, 1) AS TOPG, 
-        ROUND(CAST(stats.PTS AS REAL)/stats.G, 1) AS PPG, 
+        ROUND(CAST(stats.MP AS REAL)/stats.G * (100 / teamadv.Pace), 1) AS MPG,
+        ROUND(CAST(stats.TRB AS REAL)/stats.G * (100 / teamadv.Pace), 1) AS RPG, 
+        ROUND(CAST(stats.AST AS REAL)/stats.G * (100 / teamadv.Pace), 1) AS APG, 
+        ROUND(CAST((stats.STL + stats.BLK) AS REAL)/stats.G * (100 / teamadv.Pace), 1) AS SBPG,
+        --ROUND(CAST(stats.TOV AS REAL)/stats.G * (100 / teamadv.Pace), 1) AS TOPG, 
+        ROUND(CAST(stats.PTS AS REAL)/stats.G * (100 / teamadv.Pace), 1) AS PPG, 
         stats.TS, 
         --stats.'3PAr', stats.FTr, 
         stats.WS48,-- stats.BPM, stats.VORP, 
@@ -67,6 +67,7 @@ WITH allPlayers AS
 	LEFT JOIN allstars ON (stats.Player = allstars.Name AND stats.Year = allstars.Season)
 	LEFT JOIN allNBA ON (stats.Player = allNBA.Name AND stats.Year = allNBA.Season)
 	LEFT JOIN teamWL ON (stats.Tm = teamWL.Tm AND stats.Year = teamWL.Year)
+	LEFT JOIN teamadv ON (stats.Year = teamadv.Season)
 )
 SELECT
     Player,
