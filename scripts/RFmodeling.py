@@ -1,11 +1,9 @@
-import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
-from sklearn import metrics
 from transfer_data import *
-from sklearn.calibration import calibration_curve
-import matplotlib.pyplot as plt
+# from sklearn.calibration import calibration_curve
+# import matplotlib.pyplot as plt
 
 
 def RF(X, y, X_2022): # Change to take in a csv and output a csv

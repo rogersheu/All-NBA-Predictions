@@ -1,6 +1,5 @@
 import pandas as pd
-from csv_functions import write_to_csv
-from csv_functions import reset_csv
+from csv_functions import *
 import re
 
 # Looks for 2019-2020, for example.
