@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from transfer_data import *
 
 
@@ -14,14 +14,23 @@ def kNN(X, y, X_2022):
     X_test = scaler.transform(X_test)
     ## Framework from https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 
-    kNNmodel = KNeighborsClassifier(n_neighbors = 100)
+    ##### For determining a good number of neighbors. 
+    # for i in range(1,101,2):
+    #     kNNmodel = KNeighborsClassifier(n_neighbors = i)
+    #     kNNmodel.fit(X_train, y_train)
+
+    #     y_pred = kNNmodel.predict(X_test)
+    #     print(f"Accuracy: {accuracy_score(y_test, y_pred)} for {i} neighbors.")
+
+
+    kNNmodel = KNeighborsClassifier(n_neighbors = 75)
     kNNmodel.fit(X_train, y_train)
 
-    y_testpredicted = kNNmodel.predict(X_test)
+    y_pred = kNNmodel.predict(X_test)
 
-    print("k-Nearest Neighbor confusion matrix and classification report.\n")
-    print(confusion_matrix(y_test, y_testpredicted))
-    print(classification_report(y_test, y_testpredicted))
+    print('Confusion matrix and classification report for k-Nearest Neighbor model.\n')
+    print(confusion_matrix(y_test, y_pred))
+    print(classification_report(y_test, y_pred))
 
 
     # Must scale prior to use
@@ -31,8 +40,6 @@ def kNN(X, y, X_2022):
     predictions = kNNmodel.predict_proba(X_2022)
 
     return predictions[:,1]
-
-    # addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], 'kNN')
 
 
 def main():

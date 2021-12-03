@@ -6,11 +6,11 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from transfer_data import *
-from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix, classification_report
 
 # MLP = Multi-layer perceptron
 def MLP(X, y, X_2022):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
     # MLP are sensitive to feature scaling
     scaler = StandardScaler()
@@ -53,7 +53,8 @@ def MLP(X, y, X_2022):
 
     y_true, y_pred = y_test, clf.predict(X_test)
 
-    print('Results on the test set for the multilayer perceptron (MLP):')
+    print('Confusion matrix and classification report for Multilayer Perceptron model.\n')
+    print(confusion_matrix(y_true, y_pred))
     print(classification_report(y_true, y_pred))
 
 
