@@ -26,7 +26,7 @@ def scrape_teamrecords(fileName, year):
 
         teamWL.append(round(int(teamWL[2])/(int(teamWL[2])+int(teamWL[3])),3))
         write_to_csv(fileName, teamWL)
-    print('Finished populating season {year - 1}-{year}, team standings.')
+    print(f'Finished populating season {year - 1}-{year}, team standings.')
         
 
 
