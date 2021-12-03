@@ -3,6 +3,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
 from transfer_data import *
+from sklearn.calibration import calibration_curve
+import matplotlib.pyplot as plt
 
 # fileName = "./baseData/ML/stats_20211128.csv"
 
@@ -17,8 +19,10 @@ def RF(X, y, X_2022): # Change to take in a csv and output a csv
 
     print("Model accuracy with Random Forest model:\n",metrics.accuracy_score(y_test, y_pred))
 
-    feature_imp = pd.Series(randomforest.feature_importances_,index=X.columns.values).sort_values(ascending=False)
-    print(feature_imp)
+    
+    y_means, proba_means = calibration_curve(y_pred, randomforest.predict_proba(X_test), 7, strategy = 'uniform'
+    plt.plot([0, 1], [0, 1], linestyle = '--', label = 'Perfect calibration')
+    plt.plot(proba_means, y_means))
 
     # Making predictions
     y_2022 = randomforest.predict(X_2022)
