@@ -37,4 +37,4 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
 }
 
 
-plot_predictions("2021", "12", "02")
+plot_predictions("2021", "12", "03")
