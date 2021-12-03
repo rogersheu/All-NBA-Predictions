@@ -1,3 +1,5 @@
+library(dplyr)
+library(ggplot2)
 plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as STRINGS
 {
   date <- paste(year, month, day, sep="")
@@ -33,3 +35,6 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
     geom_point(aes(x=Player, y=Avg, color = "Avg"), size = 3, alpha = 1) +
     scale_color_manual(values = c("RF" = "springgreen", "SVM" = "goldenrod", "kNN" = "firebrick1", "MLP" = "royalblue", "Avg" = "gray24"))
 }
+
+
+plot_predictions("2021", "12", "02")
