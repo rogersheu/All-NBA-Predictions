@@ -25,8 +25,8 @@ def scrape_teamadvanced(fileName, year):
 
 
 
-def scrape_alladvanced(startYear, endYear):
-    pathName = pick_path()
+def scrape_alladvanced(pathName, startYear, endYear):
+    # pathName = pick_path()
     fileName = (f"{pathName}/teamadv.csv")
     yearList = range(int(startYear), int(endYear) + 1)
     reset_csv(fileName)
