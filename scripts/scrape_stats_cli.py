@@ -116,15 +116,15 @@ def save_each_season_stats(statType, yearStart, yearEnd):
 
         typeKey = get_typeKey(statType)
 
-        mkdir = "baseData/" + typeKey
+        mkdir = (f"baseData/{typeKey}")
         make_dir_if_nonexistent(mkdir)
 
         for year in yearList:
             URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
-            fileName = (f"baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv") # f-stringed
+            fileName = (f"baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv")
             reset_csv(fileName)
             get_singleseason_stats(year, URL, fileName, True)
-            print(f"Finished populating season {year - 1}-{year}, {typeKey} data.") # f-stringed
+            print(f"Finished populating season {year - 1}-{year}, {typeKey} data.")
 
     else:
         return False
@@ -136,18 +136,20 @@ def save_all_stats(statType, yearStart, yearEnd):
 
         typeKey = get_typeKey(statType)
 
-        fileName = f"baseData/{typeKey}_allyears.csv" # f-stringed
+        fileName = f"baseData/{typeKey}_allyears.csv"
         reset_csv(fileName)
         
         for year in yearList:
-            URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html") # f-stringed
+            URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
             get_singleseason_stats(year, URL, fileName, False)
-            print(f"Finished populating season {year-1}-{year}, {typeKey} data.") # Changed to f-string.
+            print(f"Finished populating season {year-1}-{year}, {typeKey} data.")
 
     else:
         return True
 
-# ANACONDA CANNOT RUN PYTHON 3.10 YET, AND SO CANNOT RUN STRUCTURAL PATTERN MATCHING, LIKE BELOW
+# REQUIRES PYTHON 3.10, EARLIER VERSIONS CANNOT RUN STRUCTURAL PATTERN MATCHING, LIKE BELOW
+# REPLACE WITH IF/ELIF IF NEEDED
+
 def get_typeKey(statType):
     match statType:
         case '-tot':
