@@ -26,6 +26,19 @@ def get_all_player_stats():
     return X, y
 
 
+def pick_path():
+    try:
+        root = tk.Tk()
+        root.withdraw()
+        pathName = filedialog.askdirectory()
+
+        print("Thank you for picking a file path!")
+        return pathName
+
+    except ValueError:
+        print("Please pick a valid path.")
+        return False
+
 def get_2022_stats():
     print("Pick your file containing this season's stats for prediction.")
     df = pd.read_csv(pick_file())
