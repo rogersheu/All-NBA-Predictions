@@ -1,15 +1,15 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, confusion_matrix
 from sklearn import metrics
 from transfer_data import *
 from sklearn.calibration import calibration_curve
 import matplotlib.pyplot as plt
 
-# fileName = "./baseData/ML/stats_20211128.csv"
 
 def RF(X, y, X_2022): # Change to take in a csv and output a csv
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
     randomforest = RandomForestClassifier(n_estimators = 100, random_state = 0)
 
@@ -17,12 +17,17 @@ def RF(X, y, X_2022): # Change to take in a csv and output a csv
 
     y_pred = randomforest.predict(X_test)
 
-    print("Model accuracy with Random Forest model:\n",metrics.accuracy_score(y_test, y_pred))
+    print('Confusion matrix and classification report for Random Forest model.\n')
+    print(confusion_matrix(y_test, y_pred))
+    print(classification_report(y_test, y_pred))
 
     
-    y_means, proba_means = calibration_curve(y_pred, randomforest.predict_proba(X_test), 7, strategy = 'uniform'
-    plt.plot([0, 1], [0, 1], linestyle = '--', label = 'Perfect calibration')
-    plt.plot(proba_means, y_means))
+    # y_means, proba_means = calibration_curve(y_pred, randomforest.predict_proba(X_test)[:,1], n_bins = 7, strategy = 'uniform')
+    # plt.plot([0, 1], [0, 1], linestyle = '--', label = 'Perfect calibration')
+    # plt.plot(proba_means, y_means)
+
+    # feature_imp = pd.Series(randomforest.feature_importances_,index=X.columns.values).sort_values(ascending=False)
+    # print(feature_imp)
 
     # Making predictions
     y_2022 = randomforest.predict(X_2022)
@@ -30,8 +35,6 @@ def RF(X, y, X_2022): # Change to take in a csv and output a csv
     predictions = randomforest.predict_proba(X_2022)
 
     return predictions[:,1]
-
-    # addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], "RF")
 
 def main():
     X, y = get_all_player_stats()
