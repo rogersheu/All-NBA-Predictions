@@ -77,7 +77,7 @@ def sortCSV_historical(fileName):
     df = df.iloc[: , 1:]
     df = average_and_deviation(df)
     df.sort_values(by = 'Avg', ascending = False, inplace = True)
-    df[['SVM', 'MLP', 'Avg']] = df[['SVM', 'MLP', 'Avg']].round(3)
+    df[['SVM', 'kNN', 'MLP', 'Avg']] = df[['SVM', 'kNN', 'MLP', 'Avg']].round(3)
     df.to_csv(fileName, index = False)
 
 
