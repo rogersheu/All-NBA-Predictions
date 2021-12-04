@@ -2,8 +2,8 @@ import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
 
-# dataSrc_all = "./baseData/ML/allPlayers_paceadjusted_statsfromSQL.csv"
 
+# Dialog asks user to pick a file
 def pick_file():
     try:
         root = tk.Tk()
@@ -17,15 +17,7 @@ def pick_file():
         print("Please pick a valid file.")
         return False
 
-def get_all_player_stats():
-    print("Pick your file containing stats for all players to train/test the model.")
-    df = pd.read_csv(pick_file())
-    X = df[['RPG','APG','SBPG','PPG','TS','WS48','Perc']]
-    y = df['allLeague']
-
-    return X, y
-
-
+# Dialog asks user to pick a path
 def pick_path():
     try:
         root = tk.Tk()
@@ -39,6 +31,16 @@ def pick_path():
         print("Please pick a valid path.")
         return False
 
+# Loads stats from all seasons dating back to 1979-1980
+def get_all_player_stats():
+    print("Pick your file containing stats for all players to train/test the model.")
+    df = pd.read_csv(pick_file())
+    X = df[['RPG','APG','SBPG','PPG','TS','WS48','Perc']]
+    y = df['allLeague']
+
+    return X, y
+
+# Loads present season's stats
 def get_2022_stats():
     print("Pick your file containing this season's stats for prediction.")
     df = pd.read_csv(pick_file())
@@ -46,6 +48,7 @@ def get_2022_stats():
 
     return X_predict
 
+# Only used when a single model is run and saved to a CSV
 def addtodf_savetoCSV(fileName: str, classifierName: str, classifierData: pd.Series, classifierProbName: str, classifierProbData: pd.Series, modelType: str):
     df = pd.read_csv(fileName)
     df[classifierName] = classifierData.round(2)
@@ -62,13 +65,13 @@ def probabilityonly_toCSV(fileName: str, probName: str, probData: pd.Series):
     # df.sort_values(by = probName, ascending = False, inplace = True)
     df.to_csv(fileName)
 
-
+# Sorts by best model (by average proba)
 def sortCSV(fileName):
     df = pd.read_csv(fileName)
     df = df.iloc[: , 1:]
     df['Avg'] = (df['RF'] + df['SVM'] + df['kNN'] + df['MLP'])/4
     df.sort_values(by = 'Avg', ascending = False, inplace = True)
-    df[['SVM', 'MLP', 'Avg']] = df[['SVM', 'MLP', 'Avg']].round(3)
+    df[['RF','SVM', 'MLP', 'XGBoost', 'Avg']] = df[['RF','SVM', 'MLP', 'XGBoost', 'Avg']].round(3)
     df.to_csv(fileName, index = False)
 
 
