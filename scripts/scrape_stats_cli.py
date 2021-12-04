@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 import requests
 from csv_functions import write_to_csv, reset_csv, make_dir_if_nonexistent
 import unicodedata
-import os
 import re
 import sys
 
