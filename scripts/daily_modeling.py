@@ -2,6 +2,7 @@ from SVMmodeling import SVM
 from kNNmodeling import kNN
 from RFmodeling import RF
 from MLPmodeling import MLP
+from XGBoostmodeling import XGBoost
 from transfer_data import *
 
 
@@ -17,6 +18,7 @@ def main():
     df['SVM'] = SVM(X, y, X_2022)
     df['kNN'] = kNN(X, y, X_2022)
     df['MLP'] = MLP(X, y, X_2022)
+    df['XGBoost'] = XGBoost(X, y, X_2022)
     df.to_csv(newFileName)
     sortCSV(newFileName)
 
