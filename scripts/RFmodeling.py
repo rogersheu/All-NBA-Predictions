@@ -6,6 +6,9 @@ from transfer_data import *
 # import matplotlib.pyplot as plt
 
 
+# Next thing to implement is GridSearchCV
+# https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74
+
 def RF(X, y, X_2022): # Change to take in a csv and output a csv
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
