@@ -9,9 +9,9 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
   currstats <- read.csv(fullPath)
 
   
-  df <- select(currstats, Player, RF, SVM, kNN, MLP)
+  df <- select(currstats, Player, RF, SVM, kNN, MLP, XGBoost)
   
-  df$Avg <- rowMeans(subset(df, select = c(RF, SVM, MLP)), na.rm = TRUE) # Removed kNN because it is consistently lower than the other models.
+  df$Avg <- rowMeans(subset(df, select = c(RF, SVM, MLP, XGBoost)), na.rm = TRUE) # Removed kNN because it is consistently lower than the other models.
   # Perhaps that's indicating that I need to tune the hyperparameters on the other models?
   topCandidates <- filter(df, Avg > 0.25)
   attach(topCandidates)
@@ -20,7 +20,7 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
   
   
   
-  ggplot(topCandidates, aes(x=Player, y=RF)) + 
+  currPlot <- ggplot(topCandidates, aes(x=Player, y=RF)) + 
     theme_bw() + 
     theme(axis.text.y = element_text(face = "bold")) +
     ylab("Model Probability") +
@@ -32,8 +32,12 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
     geom_point(aes(x=Player, y=SVM, color = "SVM"), position = position_jitter(w=.1), size = 3, alpha = 0.25) + 
     geom_point(aes(x=Player, y=kNN, color = "kNN"), position = position_jitter(w=.1), size = 3, alpha = 0.25) + 
     geom_point(aes(x=Player, y=MLP, color = "MLP"), position = position_jitter(w=.1), size = 3, alpha = 0.25) +
+    geom_point(aes(x=Player, y=XGBoost, color = "XGBoost"), position = position_jitter(w=.1), size = 3, alpha = 0.5) +
     geom_point(aes(x=Player, y=Avg, color = "Avg"), size = 3, alpha = 1) +
-    scale_color_manual(values = c("RF" = "springgreen", "SVM" = "goldenrod", "kNN" = "firebrick1", "MLP" = "royalblue", "Avg" = "gray24"))
+    scale_color_manual(values = c("RF" = "springgreen", "SVM" = "goldenrod", "kNN" = "red4", "MLP" = "royalblue", 
+                                  "XGBoost" = "hotpink", "Avg" = "gray24"))
+
+  currPlot  
 }
 
 
