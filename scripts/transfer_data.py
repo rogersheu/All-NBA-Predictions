@@ -33,8 +33,15 @@ def pick_path():
 
 # Loads stats from all seasons dating back to 1979-1980
 def get_all_player_stats():
-    print("Pick your file containing stats for all players to train/test the model.")
-    df = pd.read_csv(pick_file())
+    ##### For manual selection of file.
+    # print("Pick your file containing stats for all players to train/test the model.")
+    # df = pd.read_csv(pick_file())
+    #####
+
+    fileName = 'C:/Users/Roger/Documents/GitHub/All-Star-Predictions/baseData/ML/all_stats_20211201.csv'
+    df = pd.read_csv(fileName)
+    print('All players data loaded.')
+
     X = df[['RPG','APG','SBPG','PPG','TS','WS48','Perc']]
     y = df['allLeague']
 
