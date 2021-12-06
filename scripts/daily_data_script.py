@@ -24,7 +24,7 @@ def save_each_season_stats_daily(statType, yearStart, yearEnd):
             fileName = (f"{mkdir}/{typeKey}_{shortDate_nodash}.csv") # f-stringed
             reset_csv(fileName)
             get_singleseason_stats(year, URL, fileName, True)
-            print(f"Finished populating season {year - 1}-{year}, {typeKey} data.") # f-stringed
+            print((f"Finished populating season {year - 1}-{year}, {typeKey} data.")) # f-stringed
     else:
         return False
 

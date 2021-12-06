@@ -33,11 +33,11 @@ def scrape_alladvanced(pathName, startYear, endYear):
     write_to_csv(fileName, ['Pace', 'Season', 'FTr', '3PAr', 'TS%'])
     for year in yearList:
         scrape_teamadvanced(fileName, year)
+    print(f"Finished populating {startYear}-{endYear}, team advanced stats.")
 
 
 def main():
     scrape_alladvanced(1980, 2022)
-    print("Finished populating {startYear}-{endYear}, team advanced stats.")
 
 
 if __name__ == '__main__':
