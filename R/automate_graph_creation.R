@@ -19,6 +19,8 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
   detach(topCandidates)
   
   
+  saveFileName = paste("~/GitHub/All-Star-Predictions/R/Graphs/Model Output ", year, month, day, ".png", sep="")
+  
   
   currPlot <- ggplot(topCandidates, aes(x=Player, y=RF)) + 
     theme_bw() + 
@@ -37,7 +39,11 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
     scale_color_manual(values = c("RF" = "springgreen", "SVM" = "goldenrod", "kNN" = "red4", "MLP" = "royalblue", 
                                   "XGBoost" = "hotpink", "Avg" = "gray24"))
 
-  currPlot  
+  
+  ggsave(paste("Model Output ", year, month, day, ".png", sep=""), plot = currPlot, device = "png", path = "~/GitHub/All-Star-Predictions/R/Graphs/")
+  
+  currPlot
+  
 }
 
 
