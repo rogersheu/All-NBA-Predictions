@@ -39,8 +39,15 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
     scale_color_manual(values = c("RF" = "springgreen", "SVM" = "goldenrod", "kNN" = "red4", "MLP" = "royalblue", 
                                   "XGBoost" = "hotpink", "Avg" = "gray24"))
 
-  
-  ggsave(paste("Model Output ", year, month, day, ".png", sep=""), plot = currPlot, device = "png", path = "~/GitHub/All-Star-Predictions/R/Graphs/")
+  ggsave(
+    filename = paste("Model Output ", year, month, day, ".png", sep=""),
+    plot = currPlot,
+    device = "png", 
+    path = "~/GitHub/All-Star-Predictions/R/Graphs/",
+    # width = 12,
+    # height = 9.75,
+    # units = "in"
+  )
   
   currPlot
   
