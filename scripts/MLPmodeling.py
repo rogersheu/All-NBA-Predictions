@@ -27,28 +27,17 @@ def MLP(X, y, X_2022):
     # # Learning rate: adaptive adjusts the learning rate (presumably the impulse generated
     # # from the gradient descent) lower if it is shooting too far.
     # parameter_space = { 
-    #     'hidden_layer_sizes': [(25,20,25), (10,50,10), (100,)],
-    #     'activation': ['tanh', 'relu'], 
-    #     'solver': ['lbfgs', 'sgd', 'adam'],
+    #     'hidden_layer_sizes': [(25,20,25), (10,50,10), (100,)], # does not need to be this large for this particular data set
+    #     'activation': ('tanh', 'relu'), # Relu seems to be the preferred method nowadays
+    #     'solver': ('lbfgs', 'sgd', 'adam'),
     #     'alpha': [0.0001, 0.05],
-    #     'learning_rate': ['constant','adaptive']
+    #     'learning_rate': ('constant','adaptive')
     # }
     # clf = GridSearchCV(MLPmodel, parameter_space, n_jobs = -1, cv = 3) 
 
     # Max_iter was changed from its default of 200 to 1000. May need to be changed in the future.
-    # clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (10,50,10))
     clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (4))
     clf.fit(X_train, y_train)
-
-
-    # Best paramete set
-    # print('Best parameters found:\n', clf.best_params_)
-
-    # # All results
-    # means = clf.cv_results_['mean_test_score']
-    # stds = clf.cv_results_['std_test_score']
-    # for mean, std, params in zip(means, stds, clf.cv_results_['params']):
-    #     print("%0.3f (+/-%0.03f) for %r" % (mean, std * 2, params))
 
     y_true, y_pred = y_test, clf.predict(X_test)
 
