@@ -3,7 +3,8 @@
 /scripts/OOP
 
 # Results in R
-R/
+.RData
+.Rhistory
 
 # Temporarily ignoring data, clutters the repository
 *.csv
