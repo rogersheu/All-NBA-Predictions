@@ -2,6 +2,9 @@
 /scripts/Unused
 /scripts/OOP
 
+# Results in R
+R/
+
 # Temporarily ignoring data, clutters the repository
 *.csv
 
