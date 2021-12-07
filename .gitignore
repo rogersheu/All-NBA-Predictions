@@ -1,10 +1,7 @@
 # DATA
 /scripts/Unused
 /scripts/OOP
-
-# Results in R
-*.RData
-*.Rhistory
+*.db
 
 # Temporarily ignoring data, clutters the repository
 *.csv
