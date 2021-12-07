@@ -11,17 +11,9 @@ def kNN(X, y, X_2022):
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
-    ## Framework from https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 
-    ##### For determining a good number of neighbors. 
-    # for i in range(1,101,2):
-    #     kNNmodel = KNeighborsClassifier(n_neighbors = i)
-    #     kNNmodel.fit(X_train, y_train)
-
-    #     y_pred = kNNmodel.predict(X_test)
-    #     print(f"Accuracy: {accuracy_score(y_test, y_pred)} for {i} neighbors.")
-
-
+    # More neighbors gives predict_proba a bit more nuance, though values will be slightly depressed
+    # because of sparsity of true positives in the training data
     kNNmodel = KNeighborsClassifier(n_neighbors = 75)
     kNNmodel.fit(X_train, y_train)
 

@@ -17,7 +17,7 @@ def kNN(X, y):
     # [n_neighbors, p] = 5, 2 best for recall
     parameter_space = { 
         "n_neighbors" : list(range(1, 101, 1)),
-        "p" : [1, 2],
+        "p" : [1, 2], # p=1 is Manhattan distance, p=2 is Euclidean, p=2 is default
     }
     
     kNNmodel = KNeighborsClassifier()
