@@ -3,7 +3,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from transfer_data import *
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 import matplotlib.pyplot as plt
 
     # As a personal reminder, activation refers to the output function behavior
@@ -33,11 +33,15 @@ def MLP_tuning(X, y):
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
+    # Picked 'relu' instead of 'tanh', very similar results either way
+    # Tried various alpha, reverting to the default of 0.0001
+    # 'sgd' (stochastic gradient descent) had the worst performance out of the three, and learning_rate is dependent on its usage
+
+    # Picked hidden layer of 2 nodes and solver as 'adam' after multiple iterations
+    # Expecting precision near 0.89 and recall near 0.86
     parameter_space = { 
-        "hidden_layer_sizes" : [(2), (3), (4), (5), (6), (2,2), (3,3)],
-        "solver" : ['lbfgs', 'sgd', 'adam'],
-        "alpha" : [0.0001, 0.001, 0.01],
-        "learning_rate" : ['constant', 'invscaling', 'adaptive']
+        "hidden_layer_sizes" : [(2), (3), (4), (5), (2,2), (2,3), (3,3), (2,4), (3,4), (4,4)],
+        "solver" : ['lbfgs', 'adam'],
     }
     
     MLPmodel = MLPClassifier(max_iter = 2000)
@@ -49,6 +53,7 @@ def MLP_tuning(X, y):
         print()
 
         clf = GridSearchCV(MLPmodel, parameter_space, scoring="%s_macro" % score, n_jobs = -1, cv = 3) 
+        # clf = RandomizedSearchCV(MLPmodel, parameter_space, scoring="%s_macro" % score, n_jobs = -1, cv = 3) 
         clf.fit(X_train, y_train)
 
         print("Best parameters set found on development set:")
@@ -77,7 +82,7 @@ def MLP_tuning(X, y):
         print()
 
 
-    plt.plot(precision_means, recall_means)
+    plt.scatter(precision_means, recall_means)
     plt.show()
 
 def main():

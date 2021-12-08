@@ -18,7 +18,7 @@ def MLP(X, y, X_2022):
 
     # Max_iter was changed from its default of 200 to 1000. May need to be changed in the future.
     # Activation of 'tanh' was just a tad better than 'relu'
-    clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (4))
+    clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (2), solver = "adam")
     clf.fit(X_train, y_train)
 
     y_true, y_pred = y_test, clf.predict(X_test)
