@@ -15,27 +15,9 @@ def MLP(X, y, X_2022):
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)    
 
-    # MLPmodel = MLPClassifier()
-    # # As a personal reminder, activation refers to the output function behavior
-    # #   logistic is logistic: 1/(1+e^-x)
-    # #   tanh is just the trig function
-    # #   relu is the piecewise x negative -> 0, x positive -> x
-    # # Solver refers to the algorithm used
-    # # Alpha is the L2 penalty hyperparameter factor. L2 is the penalty assigned
-    # #   to the error term, given by the L2 norm (sqrt of the residual sums squared)
-    # #
-    # # Learning rate: adaptive adjusts the learning rate (presumably the impulse generated
-    # # from the gradient descent) lower if it is shooting too far.
-    # parameter_space = { 
-    #     'hidden_layer_sizes': [(25,20,25), (10,50,10), (100,)], # does not need to be this large for this particular data set
-    #     'activation': ('tanh', 'relu'), # Relu seems to be the preferred method nowadays
-    #     'solver': ('lbfgs', 'sgd', 'adam'),
-    #     'alpha': [0.0001, 0.05],
-    #     'learning_rate': ('constant','adaptive')
-    # }
-    # clf = GridSearchCV(MLPmodel, parameter_space, n_jobs = -1, cv = 3) 
 
     # Max_iter was changed from its default of 200 to 1000. May need to be changed in the future.
+    # Activation of 'tanh' was just a tad better than 'relu'
     clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (4))
     clf.fit(X_train, y_train)
 
