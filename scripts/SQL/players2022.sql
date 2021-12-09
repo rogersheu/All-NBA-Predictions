@@ -26,4 +26,4 @@ WITH Players2022 AS
 	LEFT JOIN teamadv ON (stats.Year = teamadv.Season)
 )
 SELECT * FROM Players2022
-WHERE Year = 2022 AND Perc > 0 AND ((MPG > 25 AND G > 8) OR MP > 400);
+WHERE Year = 2022 AND Perc > 0 AND ((MPG > 25 AND G > 12) OR MP > 500);
