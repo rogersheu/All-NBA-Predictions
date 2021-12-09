@@ -35,15 +35,19 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
     scale_y_continuous(breaks = seq(0,1,0.1)) +
     #coord_cartesian(ylim = c(0,1)) +
     coord_flip() +
-    geom_point(aes(x = Player, y = RF, color = "RF"), position = position_jitter(w=.1), size = 3, alpha = 0.1) + 
+    geom_point(aes(x = Player, y = RF, color = "RF"), position = position_jitter(w=.1), size = 3, alpha = 0.5) + 
     geom_point(aes(x = Player, y = SVM, color = "SVM"), position = position_jitter(w=.1), size = 3, alpha = 0.5) + 
-    geom_point(aes(x = Player, y = kNN, color = "kNN"), position = position_jitter(w=.1), size = 3, alpha = 0.5) + 
+    #geom_point(aes(x = Player, y = kNN, color = "kNN"), position = position_jitter(w=.1), size = 3, alpha = 0.5) + 
     geom_point(aes(x = Player, y = MLP, color = "MLP"), position = position_jitter(w=.1), size = 3, alpha = 0.5) +
     geom_point(aes(x = Player, y = XGBoost, color = "XGBoost"), position = position_jitter(w=.1), size = 3, alpha = 0.5) +
     geom_errorbar(aes(ymin = Avg - SD, ymax = Avg + SD, color = "gray"), width = .5, alpha = 0.5) + 
     geom_point(aes(x = Player, y = Avg, color = "Avg"), size = 3, alpha = 1) +
-    scale_color_manual(values = c("RF" = "springgreen", "SVM" = "goldenrod", "kNN" = "red4", "MLP" = "royalblue", 
-                                  "XGBoost" = "hotpink", "Avg" = "gray24"))
+    scale_color_manual(values = c("RF" = "springgreen", 
+                                  "SVM" = "goldenrod", 
+                                  #"kNN" = "red4", 
+                                  "MLP" = "royalblue4", 
+                                  "XGBoost" = "hotpink", 
+                                  "Avg" = "gray24"))
 
   ggsave(
     filename = paste("Model Output ", year, month, day, ".png", sep=""),
