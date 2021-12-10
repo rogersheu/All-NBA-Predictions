@@ -25,6 +25,7 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
   
   saveFileName = paste("~/GitHub/All-Star-Predictions/R/Graphs/Model Output ", year, month, day, ".png", sep="")
   
+  #dev.off()
   
   currPlot <- ggplot(topCandidates, aes(x = Player, y = RF)) + 
     theme_bw() + 
