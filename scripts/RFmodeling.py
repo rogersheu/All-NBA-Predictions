@@ -12,7 +12,7 @@ from transfer_data import *
 def RF(X, y, X_2022): # Change to take in a csv and output a csv
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-    # Tried changing hyperparameters, see RFhyperparamtuning.py, with default settings having the best accuracy
+    # Tried changing hyperparameters, see RFtuning.py, with default settings having the best accuracy
     randomforest = RandomForestClassifier(n_estimators = 100, random_state = 0)
 
     randomforest.fit(X_train, y_train)
