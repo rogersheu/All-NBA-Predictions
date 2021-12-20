@@ -13,14 +13,16 @@ automate_plotting("2021-12-07", "2021-12-08")
 
 
 #today <- format(Sys.Date(), "%Y %b %d")
-today <- Sys.Date()
-year <- toString(year(today))
-month <- toString(month(today))
-day <- toString(day(today))
-if (month(today) < 10) {
-  month <- paste("0", month, sep = "")
+plot_today <- function() {
+  today <- Sys.Date()
+  year <- toString(year(today))
+  month <- toString(month(today))
+  day <- toString(day(today))
+  if (month(today) < 10) {
+    month <- paste("0", month, sep = "")
+  }
+  if (day(today) < 10) {
+    day <- paste("0", day, sep = "")
+  }
+  plot_predictions(year, month, day)
 }
-if (day(today) < 10) {
-  day <- paste("0", day, sep = "")
-}
-plot_predictions(year, month, day)
