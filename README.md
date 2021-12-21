@@ -7,7 +7,7 @@ Using machine learning and deep learning models, identify players most likely to
 
 Installation/Instructions
 ===========
-Prerequisites: ```Python 3.10```, ```sqlite3```, ```DBeaver```
+Prerequisites: ```Python 3.10```, ```sqlite3```, ```DBeaver```, ```R (RStudio)```
 1. In order to use this program, either ```Clone``` the repository or ```download the ZIP file```. 
 2. Go into python, change directory to this repository's folder in the GitHub folder (not any of the subfolders).
 3. Get the full data by running ```python .\scripts\scrape_stats_cli.py -tot 1980 2022 all```, ```python .\scripts\scrape_stats_cli.py -adv 1980 2022 all```, and ```python .\scripts\scrape_teamrecords.py```.
@@ -49,6 +49,28 @@ Models
 * Stochastic Gradient Descent: data set not big enough to justify use over SVM
 * k-Nearest Neighbors (kNN): Coded in but discarded, its probabilities emphasizes recall less than the other methods
 
+Methodology
+========
+Web Scraping
+--------
+Under construction
+
+
+Feature Selection: Preemptively Identifying Potential Overfitting
+--------
+Under construction
+
+
+* Combining steals and blocks
+* Not including 3PM or any percentages other than TS%
+* Wanted to make sure selection could be made with incomplete season information
+* Selection of minutes played threshold
+* Need to be easily obtainable statistics, must go back as far as possible to increase sample size
+*   Most advanced analytics only go back to mid 2000's at the earliest, if not later
+*   3 point line was not added until 1979
+*   Pace adjustments important
+* Correlation matrix used to decide between BPM/VORP/WS48
+
 
 
 Example Output
@@ -63,12 +85,16 @@ Hyperparameter Tuning
 ===========
 Hyperparameter tuning was conducted on the four models, as can be seen in the files ```MLPtuning.py / MLPgraphing.py```, ```RFtuning.py```, and within ```SVMmodeling.py``` in the scripts folder. A ```GridSearch``` was carried out for RF and MLP. 
 
-Random Forest Tuning
+Random Forest & Random Forest Tuning
 -------------
+Random Forest modeling involves the randomized generation of many decision trees, which sorts objects between two outcomes based on where comparisons between the features in the training set are classified.
+
 The main parameters tested for random forests were ```n_estimators```, ```max_depth``` and ```max_leaf_nodes```. The default values for these are ```n_estimators = 100``` and ```None``` for the other two. Another rule-of-thumb for ```n_estimators``` is the square root of the number of training set items, which was around 75. Through some quick testing, the defaults were all found to be more than sufficient for this analysis.
 
-Multilayer Perceptron Tuning
+Multilayer Perceptron & Multilayer Perceptron Tuning
 ---------
+Multilayer perceptron is a feedforward artificial neural network. The one used here is a "vanilla" neural network, indicating that it has one hidden layer. MLPs have at least three layers: an input layer (here, 7 features: PPG, RPG, APG, SBPG, TS%, WS48, and Team Winning Percentage), one or more hidden layers (here, a single layer of 4 nodes), and an output layer (here, a single node that's either on or off).
+
 For MLP, varied parameters included ```hidden_layer_sizes```, ```solver```, ```activation```, ```alpha```, and ```learning_rate```. 
 
 Hidden layer sizes for the 7 input and 1 output node were varied between a single hidden layer of 1-10 nodes, inclusive, two hidden layers with various sizes, maxing out at (4,4), and three relatively small hidden layers, such as (1,2,1), (1,3,1), (2,2,2), etc. A [rule-of-thumb found on stats stackexchange](https://stats.stackexchange.com/questions/181/how-to-choose-the-number-of-hidden-layers-and-nodes-in-a-feedforward-neural-netw) suggested that a single hidden layer of 4 nodes would be a good starting point, hence the other choices.
