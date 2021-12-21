@@ -55,13 +55,17 @@ Example Output
 ========
 For example, the following figure shows the status of these players through 11/30/2021. We are still quite a ways away from the all-star or all-NBA selections (19-23 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
 
-![allLeague Candidates](https://user-images.githubusercontent.com/78449574/144187461-5f5c0f2a-9eed-4a0d-a35e-7dfcd4c91f9c.png)
+![Model Output 20211220](https://user-images.githubusercontent.com/78449574/146901171-20e7ad9c-f44b-4875-9543-955d0c5b3ca8.png)
 
 It is worth noting that all four of these models are being used as a classifier models and not as regressor models. That means these values are the probability of these player being classified as a 1 (receiving all-star or all-NBA recognition) vs. a 0.
 
 Hyperparameter Tuning
 ===========
 Hyperparameter tuning was conducted on the four models, as can be seen in the files ```MLPtuning.py / MLPgraphing.py```, ```RFtuning.py```, and within ```SVMmodeling.py``` in the scripts folder. A ```GridSearch``` was carried out for RF and MLP. 
+
+Random Forest Tuning
+-------------
+The main parameters tested for random forests were ```n_estimators```, ```max_depth``` and ```max_leaf_nodes```. The default values for these are ```n_estimators = 100``` and ```None``` for the other two. Another rule-of-thumb for ```n_estimators``` is the square root of the number of training set items, which was around 75. Through some quick testing, the defaults were all found to be more than sufficient for this analysis.
 
 Multilayer Perceptron Tuning
 ---------
@@ -71,6 +75,5 @@ Hidden layer sizes for the 7 input and 1 output node were varied between a singl
 
 As for the other parameters, solver were initially varied between ```lbfgs``` (Gaussian) and ```adam```. ```sgd``` was initially considered but discarded because it provided suboptimal results upon validation. The ```learning_rate``` only applies to ```sgd``` models so it was left at default as well. Finally, the ```activation``` was testing between ```tanh``` and ```relu```, but difference in results between these two were minimal, so the default of ```relu``` was selected.
 
-Random Forest Tuning
--------------
-The main parameters tested for random forests were ```n_estimators```, ```max_depth``` and ```max_leaf_nodes```. The default values for these are ```n_estimators = 100``` and ```None``` for the other two. Another rule-of-thumb for ```n_estimators``` is the square root of the number of training set items, which was around 75. Through some quick testing, the defaults were all found to be more than sufficient for this analysis.
+XGBoost Tuning
+--------
