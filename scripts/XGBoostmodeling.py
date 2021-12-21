@@ -5,27 +5,30 @@ from transfer_data import *
 
 
 def XGBoost(X, y, X_2022):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
+    iterations = 10
+    prediction_trials = []
     # No scaling required
+    for i in range(iterations):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify = y)
+        xg = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=1, random_state=0)
 
-    xg = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=1, random_state=0)
+        # Possible hyperparameters
+        # xg = GradientBoostingClassifier(tree_method=hist, grow_policy=lossguide, eta=0.1, gamma=1.0, max_depth=0, max_leaves=255, min_child_weight=100)
 
-    # xg = GradientBoostingClassifier(tree_method=hist, grow_policy=lossguide, eta=0.1, gamma=1.0, max_depth=0, max_leaves=255, min_child_weight=100)
+        xg.fit(X_train, y_train)
 
-    xg.fit(X_train, y_train)
+        y_pred = xg.predict(X_test)
 
-    y_pred = xg.predict(X_test)
 
-    print('Confusion matrix and classification report for XGBoost model.\n')
+        prediction_trials.append(xg.predict_proba(X_2022)[:,1])
+
+
+    print(f'Confusion matrix and classification report for XGBoost model, final iteration.\n')
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
+    df = pd.DataFrame(prediction_trials).transpose()
 
-    
-    y_2022 = xg.predict(X_2022)
-    predictions = xg.predict_proba(X_2022)
-
-    return predictions[:,1]
+    return df.mean(axis=1)
 
 def main():
     X, y = get_all_player_stats()

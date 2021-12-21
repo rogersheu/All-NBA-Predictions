@@ -1,40 +1,48 @@
 # Potential improvements: Refining of hyperparameters, hidden layer sizes, alpha, learning rate, etc.
 from sklearn.neural_network import MLPClassifier
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_predict, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from transfer_data import *
 from sklearn.metrics import confusion_matrix, classification_report
+import pandas as pd
 
 # MLP = Multi-layer perceptron
 def MLP(X, y, X_2022):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-    # MLP are sensitive to feature scaling
+    iterations = 10 # Number of trials
+    prediction_trials = []
     scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)    
-
+    clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (4), solver = "adam")
 
     # Max_iter was changed from its default of 200 to 1000. May need to be changed in the future.
     # Activation of 'tanh' was just a tad better than 'relu'
-    clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (4), solver = "adam")
-    clf.fit(X_train, y_train)
+    for i in range(iterations):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify = y)
 
-    y_true, y_pred = y_test, clf.predict(X_test)
+        # MLP are sensitive to feature scaling
 
-    print('Confusion matrix and classification report for Multilayer Perceptron model.\n')
+        X_train = scaler.fit_transform(X_train)
+        X_test = scaler.transform(X_test)
+
+        X_2022_forfit = scaler.transform(X_2022)
+
+        clf.fit(X_train, y_train)
+
+        # Generating confusion matrix and classification report
+        y_true, y_pred = y_test, clf.predict(X_test)
+
+        prediction_trials.append(clf.predict_proba(X_2022_forfit)[:,1])
+
+    print('Confusion matrix and classification report for Multilayer Perceptron model, final iteration.\n')
     print(confusion_matrix(y_true, y_pred))
     print(classification_report(y_true, y_pred))
 
+    df = pd.DataFrame(prediction_trials).transpose()
 
-    X_2022 = scaler.transform(X_2022)
-    y_2022 = clf.predict(X_2022)
+    return df.mean(axis=1)
 
-    predictions = clf.predict_proba(X_2022)
 
-    return predictions[:,1]
-
+    #####
+    ### If running this function alone
     # addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], 'MLP')
 
 
