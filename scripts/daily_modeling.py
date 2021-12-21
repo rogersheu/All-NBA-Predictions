@@ -1,3 +1,8 @@
+def warn(*args, **kwargs):
+    pass
+import warnings
+warnings.warn = warn
+
 from SVMmodeling import SVM
 from kNNmodeling import kNN
 from RFmodeling import RF
