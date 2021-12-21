@@ -9,7 +9,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 # import matplotlib.pyplot as plt
 
 def SVM(X, y, X_2022):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0, stratify = y)
 
     # Scaling to bring all columns to mean of 0 and unit variance
     scaler = StandardScaler()
