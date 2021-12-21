@@ -53,7 +53,7 @@ Models
 
 Example Output
 ========
-For example, the following figure shows the status of these players through 11/30/2021. We are still quite a ways away from the all-star or all-NBA selections (19-23 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
+For example, the following figure shows the status of these players through 12/21/2021. We are still quite a ways away from the all-star or all-NBA selections (almost 30 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
 
 ![Model Output 20211220](https://user-images.githubusercontent.com/78449574/146901171-20e7ad9c-f44b-4875-9543-955d0c5b3ca8.png)
 
