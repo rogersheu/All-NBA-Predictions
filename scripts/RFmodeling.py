@@ -33,7 +33,7 @@ def calcurve(randomforest : RandomForestClassifier, X_test, y_pred):
     plt.plot([0, 1], [0, 1], linestyle = '--', label = 'Perfect calibration')
     plt.plot(proba_means, y_means)
 
-def featureimportance(randomforest):
+def featureimportance(randomforest, X):
     feature_imp = pd.Series(randomforest.feature_importances_,index=X.columns.values).sort_values(ascending=False)
     print(feature_imp)
 
