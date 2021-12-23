@@ -14,7 +14,7 @@ def import_playerIDs():
     bdays, ages = map(list, zip(*[get_bdays(id) for id in playerIDs]))
 
     df.insert(2, 'Birth Date', bdays)
-    df.insert(2, 'Age', ages)
+    df['Age'] = ages
 
     df.to_csv('C:/Users/Roger/Documents/GitHub/All-Star-Predictions/baseData/player_birthdates_2022.csv')
 
