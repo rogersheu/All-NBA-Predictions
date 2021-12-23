@@ -3,9 +3,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 from transfer_data import *
 
+iterations = 10
 
 def XGBoost(X, y, X_2022):
-    iterations = 10
+
     prediction_trials = []
     # No scaling required
     for i in range(iterations):
