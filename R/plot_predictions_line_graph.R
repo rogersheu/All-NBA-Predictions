@@ -88,7 +88,6 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   colnames(bestAvgs) <- playernames
   currplot <- ggplot(data = bestAvgs, aes(x = Date, y = 'Giannis_Antetokounmpo', group = 1)) + theme_bw() + ylim(0,1) + scale_x_date(date_breaks = "1 week")
   
-  
   for (col in 2:ncol(bestAvgs)) {
     currPlayer <- colnames(bestAvgs)[col]
     currplot <- currplot + geom_line(aes_string(x = 'Date', y = currPlayer, group = 1))# + geom_point(aes_string(x = 'Date', y = currPlayer, group = 1))
