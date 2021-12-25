@@ -50,19 +50,20 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
                                   "XGBoost" = "hotpink", 
                                   "Avg" = "gray24"))
 
+  dev.new(width=12, height=9.75, unit="in", noRStudioGD = TRUE)
+  
   ggsave(
     filename = paste("Model Output ", year, month, day, ".png", sep=""),
     plot = currPlot,
     device = "png", 
     path = "~/GitHub/All-Star-Predictions/R/Graphs/",
-    # width = 12,
-    # height = 9.75,
-    # units = "in"
+    width = 12,
+    height = 9.75,
+    units = "in",
+    dpi = 500,
   )
   
   currPlot
   
 }
 
-
-plot_predictions("2021", "12", "08")
