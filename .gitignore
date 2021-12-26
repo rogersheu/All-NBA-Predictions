@@ -6,6 +6,9 @@
 # Temporarily ignoring data, clutters the repository
 *.csv
 
+# Temporarily ignoring pictures, clutters repository
+*.png
+
 # database
 .dbeaver
 
