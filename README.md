@@ -130,6 +130,8 @@ Under construction
 
 Example Output
 ========
+Example #1, plot_predictions.R
+--------
 For example, the following figure shows the status of these players through 12/21/2021. We are still quite a ways away from the all-star or all-NBA selections (almost 30 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
 
 <p align="center" width="100%">
@@ -138,6 +140,8 @@ For example, the following figure shows the status of these players through 12/2
 
 It is worth noting that all four of these models are being used as a classifier models and not as regressor models. That means these values are the probability of these player being classified as a 1 (receiving all-star or all-NBA recognition) vs. a 0.
 
+Example #2, plot_predictions_line_graph.R
+--------
 Here's another example, showing the likelihood of being classified as an all-League players in 2022 over time. They're grouped in 5's, from the highest probability to the lowest down to a minimum threshold.
 
 For example, here are the trends for the 21st-27th highest players as of 12/25/2021.
