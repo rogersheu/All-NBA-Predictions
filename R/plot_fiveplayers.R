@@ -18,7 +18,8 @@ plot_Nplayers <- function(startIndex, endIndex) {
   lineplot <<- lineplot
   
   ggsave(
-    filename = paste("Model Output ", year, month, day, ".png", sep=""),
+    #filename = paste("AverageFilter - Top ", startIndex-1, "-", endIndex-1, " players.png", sep=""),
+    filename = paste("Top ", startIndex-1, "-", endIndex-1, " players.png", sep=""),
     plot = lineplot,
     device = "png", 
     path = "~/GitHub/All-Star-Predictions/R/Graphs/",
