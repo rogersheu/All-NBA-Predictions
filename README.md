@@ -46,21 +46,38 @@ Using machine learning and deep learning models, identify players most likely to
 Installation/Instructions
 ===========
 Prerequisites: ```Python 3.10```, ```sqlite3```, ```DBeaver```, ```R (RStudio)```
-1. In order to use this program, either ```Clone``` the repository or ```download the ZIP file```. 
-2. Go into python, change directory to this repository's folder in the GitHub folder (not any of the subfolders).
-3. Get the full data by running ```python .\scripts\scrape_stats_cli.py -tot 1980 2022 all```, ```python .\scripts\scrape_stats_cli.py -adv 1980 2022 all```, and ```python .\scripts\scrape_teamrecords.py```.
-4. Every day you want data, run the .\scripts\daily_data_script.py program to get the 2022 data.
-5. Install and open ```DBeaver``` for your operating system. Have it open a connection to the database in this repository, after which you should import the files you scraped in step 3. Drop any outdated tables before import.
-6. Import the 2022 data as well from ```\baseData\dailystats```. Steps 5 and 6 can likely be improved by a Python script that saves directly to a database. This is a future feature.
-7. Run the ```allPlayers.sql``` and ```players2022.sql``` (or the ```_dbeaver```-suffixed) scripts to extract and transform the relevant data and save them to CSV files.
-8. Load these files into Python and the models using ```python .\scripts\daily_modeling.py``` Follow the command line prompts to select files.
-9. Your resulting file should be in the same path as you chose in Step 8. Open RStudio, set your data folder as your working directory and change any paths you need to change in the relevant functions. Like any other R function, load the libraries, copy the functions into the Console and run them, and then run your function.
+
+Scraping data (```Python 3.10```)
+-------
+1. In order to use this program, either ```Clone``` the repository or ```download the ZIP file```.
+2. Windows instructions: Go into ```Command Prompt```, change directory to this repository's folder in the GitHub folder (not any of the subfolders) using ```cd <this repository's path>```.
+3. Go into your virtualenv. Install any missing packages using ```pip install```.
+4. Get the full historical data set (back to 1979-1980) by running ```python .\scripts\scrape_stats_cli.py -tot 1980 2022 all```, ```python .\scripts\scrape_stats_cli.py -adv 1980 2022 all```, and ```python .\scripts\scrape_teamrecords.py```. Warning: This script and the one in Step 5 use Structural Python Matching, which was introduced in Python 3.10. If you do not have Python 3.10, either update to it or change lines 152-163 in ```scrape_stats_cli.py``` to be a series of ```if-elif```.
+5. Every day you want data, run the ```.\scripts\daily_data_script.py``` program to get the 2022 data. 
+
+Database (```DBeaver```, ```SQLite3```)
+--------
+6. Install and open ```DBeaver``` for your operating system. Have it open a connection to the database ```allPlayerStats.db``` in this repository, after which you should import the files containing historical stats you scraped in step 4. Drop any outdated tables before import if they exist.
+7. Import the 2022 data as well by importing from ```\baseData\dailystats```. Steps 6 and 7 can likely be improved by a Python script that saves directly to a database.
+8. Run the ```allPlayers.sql``` and ```players2022_dbeaver.sql``` scripts, and ```table_modifiers_dbeaver.sql``` to extract and transform the relevant data and save them to CSV files. I personally like saving CSV files to the ```\baseData\dailystats\<date>``` folder under the name ```stats_${date}```.
+9. (Optional) If you are running this on consecutive days, you can run the ```auxiliary_functions.sql``` to drop relevant tables and ```table_modifiers_dbeaver.sql``` to keep table names and column names consistent.
+
+Machine Learning (```Python```, ```scikit-learn```)
+---------
+10. Load these files into Python and the models using ```python .\scripts\daily_modeling.py``` Follow the command line prompts.
+
+Visualization (```RStudio```)
+----------
+11. Your resulting file should be in the same path as you chose in Step 8. Open RStudio, set your your working directory (I would recommend ```~/GitHub/All-Star-Predictions/All-Star-Predictions/R``` and change any paths you need to change in the relevant functions. 
+12. Install and load the necessary libraries, copy the functions into the Console and run them, and then run your function. I would recommend ```plot_predictions``` and ```plot_predictions_line_graph```.
 
 ```plot_predictions(year, month, day)``` - Plots the machine learning modeling output in a convenient-to-read form.
 
 ```automate_plotting("startDate", "endDate")``` - Runs plot predictions for every date between startDate and endDate, inclusive.
 
 ```plot_today()``` - Instead of running plot_predictions and manually entering in today's date, if you're just plotting today's data, run this.
+
+```plot_predictions_line_graph(startDate, endDate)``` and ```plot_Nplayers(startIndex, endIndex)``` - Creates a line graph time series across from the ```startDate``` to the ```endDate```.
 
 
 Models
