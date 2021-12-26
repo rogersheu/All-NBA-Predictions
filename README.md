@@ -33,6 +33,10 @@ Helper Functions
 * SQL functions: ```/rogersheu/NBA-ML-Predictions/scripts/SQL/```
 * ```players2022_dbeaver.sql``` (common table expressions, multiple joins, data filters via subqueries and LIMIT 1, aliases, and ensuring accuracy/readability of data using ROUND/CAST)
 
+**Visualizations**
+
+Under construction, both locally in R (locally referring to within this repository) and elsewhere in Tableau Public. Graphs will be shared at discretion.
+
 
 Objective
 ===========
