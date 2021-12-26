@@ -50,8 +50,6 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
                                   "XGBoost" = "hotpink", 
                                   "Avg" = "gray24"))
 
-  dev.new(width=12, height=9.75, unit="in", noRStudioGD = TRUE)
-  
   ggsave(
     filename = paste("Model Output ", year, month, day, ".png", sep=""),
     plot = currPlot,
@@ -63,7 +61,7 @@ plot_predictions <- function(year, month, day) # Enter in yyyy, mm, dd format as
     dpi = 500,
   )
   
-  currPlot
+  print(currPlot)
   
 }
 
