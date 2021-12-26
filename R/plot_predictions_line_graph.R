@@ -81,18 +81,31 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   
   # bestAvg_noAvg <- subset(bestAvg, select = -c(Avg))
   
-  bestAvgs <- bestAvg_noAvg
-  playernames <- bestAvgs[,1]
-  bestAvgs <- bestAvgs[,-1]
-  bestAvgs <- data.frame(t(bestAvgs))
-  playernames <- c('Date', playernames)
-  bestAvgs <- tibble::rownames_to_column(data.frame(bestAvgs), "Date")
-  bestAvgs$Date <- as.Date(bestAvgs$Date)
-  playernames <- str_replace_all(playernames, " ", "_")
-  playernames <- str_replace_all(playernames, "'", "")
-  playernames <- str_replace_all(playernames, "-", "")
-  colnames(bestAvgs) <- playernames
-  currplot <- ggplot(data = bestAvgs, aes(x = Date, y = 'Giannis_Antetokounmpo', group = 1)) + theme_bw() + ylim(0,1) + scale_x_date(date_breaks = "1 week")
+  # bestAvgs <- bestAvg_noAvg
+  # playernames <- bestAvgs[,1]
+  # bestAvgs <- bestAvgs[,-1]
+  # bestAvgs <- data.frame(t(bestAvgs))
+  # playernames <- c('Date', playernames)
+  # bestAvgs <- tibble::rownames_to_column(data.frame(bestAvgs), "Date")
+  # bestAvgs$Date <- as.Date(bestAvgs$Date)
+  # playernames <- str_replace_all(playernames, " ", "_")
+  # playernames <- str_replace_all(playernames, "'", "")
+  # playernames <- str_replace_all(playernames, "-", "")
+  # colnames(bestAvgs) <- playernames
+  # currplot <- ggplot(data = bestAvgs, aes(x = Date, y = 'Giannis_Antetokounmpo', group = 1)) + theme_bw() + ylim(0,1) + scale_x_date(date_breaks = "1 week")
+  # 
+  # #colorpal <- c(hue_pal()(30))
+  # 
+  # for (col in 2:ncol(bestAvgs)) {
+  #   currPlayer <- colnames(bestAvgs)[col]
+  #   currColor <- colorpal[col]
+  #   currplot <- currplot + geom_line(aes_string(x = 'Date', y = currPlayer, group = 1))# + geom_point(aes_string(x = 'Date', y = currPlayer, group = 1))
+  # }
+  # 
+  # currplot <- currplot + scale_color_manual(values = c('black', 'red'))
+  # 
+  # currplot
+  # 
   
   for (col in 2:ncol(bestAvgs)) {
     currPlayer <- colnames(bestAvgs)[col]
