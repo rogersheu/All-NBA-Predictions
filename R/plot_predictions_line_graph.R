@@ -6,6 +6,8 @@ library(janitor)
 library(stringr)
 
 plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
+  options(warn=-1)
+  
   df_RF <- data.frame(Player = "")
   df_SVM <- data.frame(Player = "")
   df_MLP <- data.frame(Player = "")
