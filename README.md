@@ -135,8 +135,9 @@ Example #1, plot_predictions.R
 For example, the following figure shows the status of these players through 12/21/2021. We are still quite a ways away from the all-star or all-NBA selections (almost 30 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
 
 <p align="center" width="100%">
-    <img width="75%" src="https://user-images.githubusercontent.com/78449574/146901171-20e7ad9c-f44b-4875-9543-955d0c5b3ca8.png">
+    <img width="75%" src="https://user-images.githubusercontent.com/78449574/147403271-d12f8d7d-3799-4e56-944d-f927989cf22e.png">
 </p>
+
 
 It is worth noting that all four of these models are being used as a classifier models and not as regressor models. That means these values are the probability of these player being classified as a 1 (receiving all-star or all-NBA recognition) vs. a 0.
 
