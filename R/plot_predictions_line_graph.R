@@ -86,6 +86,7 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   
   ### or filtering by highest probability throughout time interval indicated
   bestAvg <- filter(df_Avg, rowMaxs(as.matrix(df_Avg[,2:17])) > 0.5)
+  
   ### Sort by Average
   #bestAvg <- bestAvg[order(bestAvg[,-Avg]),]
   ###
