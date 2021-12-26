@@ -132,7 +132,9 @@ Example Output
 ========
 For example, the following figure shows the status of these players through 12/21/2021. We are still quite a ways away from the all-star or all-NBA selections (almost 30 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
 
-![Model Output 20211220](https://user-images.githubusercontent.com/78449574/146901171-20e7ad9c-f44b-4875-9543-955d0c5b3ca8.png)
+<p align="center" width="100%">
+    <img width="75%" src="https://user-images.githubusercontent.com/78449574/146901171-20e7ad9c-f44b-4875-9543-955d0c5b3ca8.png">
+</p>
 
 It is worth noting that all four of these models are being used as a classifier models and not as regressor models. That means these values are the probability of these player being classified as a 1 (receiving all-star or all-NBA recognition) vs. a 0.
 
@@ -140,7 +142,9 @@ Here's another example, showing the likelihood of being classified as an all-Lea
 
 For example, here are the trends for the 21st-27th highest players as of 12/25/2021.
 
-![Top 21-27 players](https://user-images.githubusercontent.com/78449574/147403025-482f60ee-1407-4520-87e4-3792f8794876.png)
+<p align="center" width="100%">
+    <img width="75%" src="https://user-images.githubusercontent.com/78449574/147403025-482f60ee-1407-4520-87e4-3792f8794876.png">
+</p>
 
 Hyperparameter Tuning
 ===========
