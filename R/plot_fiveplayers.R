@@ -1,3 +1,17 @@
+  bestAvg <- bestAvg[startIndex:endIndex,]
+  topten <- c(bestAvg[startIndex:endIndex,1])
+  melted_players <- melt(bestAvg, id='Player')
+  lineplot <- ggplot(data=melted_players, aes(x=as.Date(variable), y=value, color=Player, group=Player)) + 
+    geom_line(size=1) + 
+    geom_point(size=3) +
+    theme_bw() + 
+    theme(panel.grid.minor.x = element_blank()) +
+    theme(panel.grid.minor.y = element_blank()) +
+    ylim(0,1) + 
+    ylab("Avg Probability") +
+    scale_x_date(date_breaks = "3 days"
+    )
+  
   ggsave(
     filename = paste("Model Output ", year, month, day, ".png", sep=""),
     plot = lineplot,
