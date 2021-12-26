@@ -9,7 +9,7 @@ plot_Nplayers <- function(startIndex, endIndex) {
     theme_bw() + 
     theme(panel.grid.minor.x = element_blank()) +
     theme(panel.grid.minor.y = element_blank()) +
-    xlab("Date") + 
+    xlab("") + 
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
     ylim(0,1) + 
     ylab("Avg Probability") +
