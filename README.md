@@ -136,6 +136,12 @@ For example, the following figure shows the status of these players through 12/2
 
 It is worth noting that all four of these models are being used as a classifier models and not as regressor models. That means these values are the probability of these player being classified as a 1 (receiving all-star or all-NBA recognition) vs. a 0.
 
+Here's another example, showing the likelihood of being classified as an all-League players in 2022 over time. They're grouped in 5's, from the highest probability to the lowest down to a minimum threshold.
+
+For example, here are the trends for the 21st-27th highest players as of 12/25/2021.
+
+![Top 21-27 players](https://user-images.githubusercontent.com/78449574/147403025-482f60ee-1407-4520-87e4-3792f8794876.png)
+
 Hyperparameter Tuning
 ===========
 Hyperparameter tuning was conducted on the four models, as can be seen in the files ```MLPtuning.py / MLPgraphing.py```, ```RFtuning.py```, and within ```SVMmodeling.py``` in the scripts folder. A ```GridSearch``` was carried out for RF and MLP. 
@@ -158,3 +164,4 @@ As for the other parameters, solver were initially varied between ```lbfgs``` (G
 
 XGBoost Tuning
 --------
+Under construction.
