@@ -80,11 +80,6 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   df_XGBoost <<- df_XGBoost
   df_Avg <<- df_Avg
   
-  #bestAvg <- filter(df_Avg, Avg >= .05)
-  bestAvg <- filter(df_Avg, rowMaxs(as.matrix(df_Avg[,2:17])) > 0.5)
-  attach(bestAvg)
-  bestAvg <- bestAvg[order(-Avg),]
-  detach(bestAvg)
   
   ### Choice between filtering by average probability
   #bestAvg <- filter(df_Avg, Avg >= .1)
