@@ -132,5 +132,4 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
     fileIndex <= fileIndex+1
   }
   
-  currplot
 }
