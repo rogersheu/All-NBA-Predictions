@@ -9,6 +9,11 @@
 # Temporarily ignoring pictures, clutters repository
 *.png
 
+# R files
+*.Rdata
+*.project
+*.Rhistory
+
 # database
 .dbeaver
 
