@@ -2,7 +2,7 @@
 
 For Recruiters
 -------
-If you are here because you want to get an example of my work, please go to the following.
+If you are here because you want to get an example of my work, please peruse the following files.
 
 In ```/rogersheu/NBA-ML-Predictions/scripts/```:
 
