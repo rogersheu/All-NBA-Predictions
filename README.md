@@ -1,5 +1,39 @@
 # Predicting All-Star/All-NBA Selections
 
+For Recruiters
+-------
+If you are here because you are a recruiter and you are interested in my work, please go to the following.
+
+In ```/rogersheu/NBA-ML-Predictions/scripts/```:
+
+**Web scraping**
+
+* ```scrape_stats_cli.py``` (BeautifulSoup, data cleaning, text manipulation and basic NLP, test cases, functions with arguments)
+* ```get_player_birthdates.py``` (Scraping data and manipulating web elements with Selenium)
+
+**Machine Learning**
+
+Modeling
+* ```daily_modeling.py```
+* ```RFmodeling.py SVMmodeling.py MLPmodeling.py XGBoostmodeling.py``` (scikit-learn, model execution, called from ```daily_modeling.py```, some matplotlib)
+
+Tuning (Training, Validating, Testing)
+* ```RFtuning.py MLPtuning.py``` (scikit-learn, GridSearchCV to tune hyperparameters, train_test_split)
+* ```MLPgraphing.py``` (scikit-learn, matplotlib of recall vs. precision)
+
+**Code Management**
+
+Helper Functions
+* ```csv_functions.py``` (writes to CSV files, deletes a CSV file to ensure clean start)
+* ```transfer_data.py``` (pandas and tkinter to pick paths/files from directory, includes quick data operations)
+
+**Databases**
+
+* Relational database of players: ```/rogersheu/NBA-ML-Predictions/baseData/allPlayerStats.db```
+* SQL functions: ```/rogersheu/NBA-ML-Predictions/scripts/SQL/```
+* ```players2022_dbeaver.sql``` (common table expressions, multiple joins, data filters via subqueries and LIMIT 1, aliases, and ensuring accuracy/readability of data using ROUND/CAST)
+
+
 Objective
 ===========
 Using machine learning and deep learning models, identify players most likely to be selected onto either the NBA all-star team (halfway through the season) or an all-NBA team (at the end of the season). Inspiration and/or methodology from [here](https://www.reddit.com/r/nba/comments/bcdpls/oc_using_machine_learning_to_predict_the_2019_mvp/). Only the overarching information in that post was used. The code was written from scratch or sourced from unrelated analyses found online, especially scikit-learn's documentation.
