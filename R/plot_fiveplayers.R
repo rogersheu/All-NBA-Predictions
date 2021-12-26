@@ -1,3 +1,4 @@
+plot_fiveplayers <- function(startIndex, endIndex, fileIndex) {
   bestAvg <- bestAvg[startIndex:endIndex,]
   topten <- c(bestAvg[startIndex:endIndex,1])
   melted_players <- melt(bestAvg, id='Player')
