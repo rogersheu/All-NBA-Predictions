@@ -22,9 +22,9 @@ plot_Nplayers <- function(startIndex, endIndex) {
     filename = paste("Top ", startIndex-1, "-", endIndex-1, " players.png", sep=""),
     plot = lineplot,
     device = "png", 
-    path = "~/GitHub/All-Star-Predictions/R/Graphs/",
-    width = 12,
-    height = 9.75,
+    path = "~/GitHub/All-Star-Predictions/R/Graphs/lineplots/",
+    width = 8,
+    height = 6,
     units = "in",
     dpi = 500,
   )
