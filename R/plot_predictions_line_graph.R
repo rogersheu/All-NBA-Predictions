@@ -75,9 +75,11 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   bestAvg <- bestAvg[order(-Avg),]
   detach(bestAvg)
   
+  bestAvg <- subset(bestAvg, select = -c(Avg))
+  
   bestAvg <<- bestAvg
   
-  bestAvg_noAvg <- subset(bestAvg, select = -c(Avg))
+  # bestAvg_noAvg <- subset(bestAvg, select = -c(Avg))
   
   bestAvgs <- bestAvg_noAvg
   playernames <- bestAvgs[,1]
