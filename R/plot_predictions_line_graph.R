@@ -4,6 +4,8 @@ library(reshape2)
 library(tibble)
 library(janitor)
 library(stringr)
+library(directlabels)
+library(scales)
 
 plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   options(warn=-1)
