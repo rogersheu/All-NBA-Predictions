@@ -107,9 +107,29 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   # currplot
   # 
   
-  for (col in 2:ncol(bestAvgs)) {
-    currPlayer <- colnames(bestAvgs)[col]
-    currplot <- currplot + geom_line(aes_string(x = 'Date', y = currPlayer, group = 1))# + geom_point(aes_string(x = 'Date', y = currPlayer, group = 1))
+  ####### 
+  ## Alternative to everything from bestAvg <<- bestAvg down
+  #######
+  # for(startIndex in seq(2, nrow(bestAvg), 5)) {
+  #   endIndex <- startIndex + 4
+  #   if(endIndex > nrow(bestAvg)) {
+  #     endIndex = nrow(bestAvg)
+  #   }
+  #   plot_fiveplayers(startIndex, endIndex)
+  #   currplot
+  # }
+  increment <- 5
+  fileIndex <- 1
+  for(startIndex in seq(2, nrow(bestAvg), increment)) {
+    endIndex <- startIndex + 4
+    if(endIndex > nrow(bestAvg) - increment) {
+      endIndex = nrow(bestAvg)
+    }
+    plot_fiveplayers(startIndex, endIndex, fileIndex)
+    if(endIndex > nrow(bestAvg) - increment) {
+      break
+    }
+    fileIndex <= fileIndex+1
   }
   
   currplot
