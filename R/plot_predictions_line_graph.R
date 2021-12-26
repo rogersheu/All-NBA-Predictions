@@ -101,7 +101,6 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
 
   ### Plot gets messy if too many players are shown at once
   increment <- 5
-  fileIndex <- 1
   for(startIndex in seq(2, nrow(bestAvg), increment)) {
     endIndex <- startIndex + 4
     ### Plot is awkward if only one or two players is tacked on at the end
