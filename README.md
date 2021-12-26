@@ -35,7 +35,7 @@ Helper Functions
 
 **Visualizations**
 
-Under construction, both locally in R (locally referring to within this repository) and elsewhere in Tableau Public. Graphs will be shared at discretion.
+Under construction, both locally in R (locally referring to within this repository) and elsewhere in Tableau Public. Graphs can be shared upon request.
 
 
 Objective
