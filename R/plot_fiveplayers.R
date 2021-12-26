@@ -12,8 +12,8 @@ plot_Nplayers <- function(startIndex, endIndex) {
     xlab("Date") + 
     ylim(0,1) + 
     ylab("Avg Probability") +
-    scale_x_date(date_breaks = "3 days"
-    )
+    scale_x_date(date_breaks = "3 days") + 
+    scale_color_discrete(limits = top_picks)
   
   ggsave(
     filename = paste("Model Output ", year, month, day, ".png", sep=""),
