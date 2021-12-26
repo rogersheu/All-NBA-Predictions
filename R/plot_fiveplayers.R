@@ -22,3 +22,6 @@ plot_fiveplayers <- function(startIndex, endIndex, fileIndex) {
     height = 9.75,
     units = "in",
     dpi = 500,
+  )
+  print(lineplot)
+}
