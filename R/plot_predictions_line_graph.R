@@ -107,7 +107,8 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
     if(endIndex > nrow(bestAvg) - increment) {
       endIndex = nrow(bestAvg)
     }
-    plot_fiveplayers(startIndex, endIndex, fileIndex)
+    # See plot_Nplayers.R
+    plot_Nplayers(startIndex, endIndex)
     if(endIndex > nrow(bestAvg) - increment) {
       break
     }
