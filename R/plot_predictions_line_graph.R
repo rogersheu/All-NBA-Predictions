@@ -112,7 +112,6 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
     if(endIndex > nrow(bestAvg) - increment) {
       break
     }
-    fileIndex <= fileIndex+1
   }
   
 }
