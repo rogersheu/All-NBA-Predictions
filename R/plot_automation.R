@@ -7,7 +7,7 @@ automate_plotting <- function(startDate, endDate) { #YYYY-MM-DD format
 }
 
 
-automate_plotting("2021-12-07", "2021-12-08")
+#automate_plotting("2021-12-07", "2021-12-08")
 
 
 
