@@ -89,14 +89,15 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   #bestAvg <- bestAvg[order(bestAvg[,-Avg]),]
   ###
   
-  ### Sort by most recent date
-  bestAvg <- bestAvg[order(bestAvg[,ncol(bestAvg)], decreasing = TRUE),]
-  
   ### Removes Average column, only used to filter.
   bestAvg <- subset(bestAvg, select = -c(Avg))
   
-  ### Sends bestAvg to the global environment
+  ### Sort by most recent date
+  bestAvg <- bestAvg[order(bestAvg[,ncol(bestAvg)], decreasing = TRUE),]
+  
+  ### Sends bestAvg to the global environment, for testing purposes
   bestAvg <<- bestAvg
+  
 
   ### Plot gets messy if too many players are shown at once
   increment <- 5
@@ -112,5 +113,5 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
       break
     }
   }
-  
+
 }
