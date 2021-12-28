@@ -8,6 +8,8 @@ install.packages("directlabels")
 install.packages("scales")
 install.packages("lubridate")
 install.packages("matrixStats")
+install.packages("RColorBrewer")
+install.packages("stats")
 
 
 library(dplyr)
@@ -20,6 +22,8 @@ library(directlabels)
 library(scales)
 library(lubridate)
 library(matrixStats)
+library(RColorBrewer)
+library(stats)
 
 #Optional
 #setwd("~/GitHub/All-Star-Predictions/")
