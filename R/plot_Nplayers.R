@@ -12,8 +12,6 @@ library(randomcoloR)
     scale_x_date(date_breaks = "3 days") + 
     scale_color_discrete(limits = top_picks)
   
-  lineplot <<- lineplot
-  
   ggsave(
     #filename = paste("Over 0.1 - Top ", startIndex, "-", endIndex, " players.png", sep=""),
     filename = paste("Top ", startIndex, "-", endIndex, " players.png", sep=""),
