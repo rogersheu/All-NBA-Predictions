@@ -6,6 +6,9 @@
 # Temporarily ignoring data, clutters the repository
 *.csv
 
+# Ignore Excel
+*.xlsx
+
 # Temporarily ignoring pictures, clutters repository
 *.png
 
