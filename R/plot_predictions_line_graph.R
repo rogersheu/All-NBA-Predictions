@@ -3,6 +3,8 @@ library(ggplot2)
 library(tibble)
 library(janitor)
 library(stringr)
+library(lubridate)
+library(matrixStats)
 
 plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   ### reshape2 provides a pretty big warning with the melt function...
