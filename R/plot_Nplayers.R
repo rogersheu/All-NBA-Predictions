@@ -3,6 +3,12 @@ library(scales)
 library(RColorBrewer)
 library(randomcoloR)
 
+plot_Nplayers <- function(data, startIndex, endIndex, endDate) {
+  data_subset <- data[startIndex:endIndex,]
+  names <- data[startIndex:endIndex,1]
+
+  top_picks <- factor(c(names), levels = c(names)) #automatically alphabetizes so you need to avoid it
+  
   melted_players <- melt(data_subset, id='Player')
   
   
