@@ -73,11 +73,11 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   df_Avg$Avg <- rowMeans(subset(df_Avg, select = c(-Player)), na.rm = TRUE)
   
   # Send to global environment
-  df_RF <<- df_RF
-  df_SVM <<- df_SVM
-  df_MLP <<- df_MLP
-  df_XGBoost <<- df_XGBoost
-  df_Avg <<- df_Avg
+  # df_RF <<- df_RF
+  # df_SVM <<- df_SVM
+  # df_MLP <<- df_MLP
+  # df_XGBoost <<- df_XGBoost
+  # df_Avg <<- df_Avg
   
   
   ### Choice between filtering by average probability
