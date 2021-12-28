@@ -1,11 +1,3 @@
-plot_Nplayers <- function(startIndex, endIndex) {
-  bestAvg_subset <- bestAvg[startIndex:endIndex,]
-  top_picks <- factor(c(bestAvg[startIndex:endIndex,1]), levels = c(bestAvg[startIndex:endIndex,1])) #automatically alphabetizes so you need to avoid it
-  
-  melted_players <- melt(bestAvg_subset, id='Player')
-  lineplot <- ggplot(data=melted_players, aes(x=as.Date(variable), y=value, color=Player, group=Player)) + 
-    geom_line(size=1) + 
-    geom_point(size=3) +
 library(directlabels)
 library(scales)
 library(RColorBrewer)
