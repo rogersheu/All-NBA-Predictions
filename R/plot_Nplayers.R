@@ -10,8 +10,14 @@ library(randomcoloR)
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size = 12)) +
     xlab("") + 
     ylab("Avg Probability") +
-    scale_x_date(date_breaks = "3 days") + 
-    scale_color_discrete(limits = top_picks)
+    theme(axis.title.y = element_text(size = 14)) + 
+    theme(axis.text.y = element_text(size = 12)) + 
+    scale_x_date(date_breaks = "3 days", limits = range) + 
+    geom_dl(aes(label = Player), color = melted_players$color, group=melted_players$Player, method = list(dl.trans(x = x + 0.2), "last.bumpup", cex = .9))
+
+  #These global assignments are for sanity checking and could just as easily be removed.
+  lineplot <<- lineplot 
+  print(lineplot)
   
   ggsave(
     #filename = paste("Over 0.1 - Top ", startIndex, "-", endIndex, " players.png", sep=""),
