@@ -99,19 +99,12 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   bestAvg <<- bestAvg
   
 
-  ### Plot gets messy if too many players are shown at once
-  increment <- 5
-  for(startIndex in seq(2, nrow(bestAvg), increment)) {
-    endIndex <- startIndex + 4
-    ### Plot is awkward if only one or two players is tacked on at the end
-    if(endIndex > nrow(bestAvg) - increment) {
-      endIndex = nrow(bestAvg)
-    }
-    # See plot_Nplayers.R
-    plot_Nplayers(startIndex, endIndex)
-    if(endIndex > nrow(bestAvg) - increment) {
-      break
-    }
+  cluster_sizes <- cluster_recent(bestAvg)
+  startIndex <- 1
+  for(i in 1:length(cluster_sizes)) {
+    endIndex <- startIndex + (cluster_sizes[i] - 1)
+    plot_Nplayers(bestAvg, startIndex, endIndex, endDate)
+    startIndex <- endIndex + 1
   }
 
 }
