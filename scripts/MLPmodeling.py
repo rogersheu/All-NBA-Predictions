@@ -1,4 +1,5 @@
 # Potential improvements: Refining of hyperparameters, hidden layer sizes, alpha, learning rate, etc.
+# Tried implementing MLP in Keras/Tensorflow BUT Python 3.10 not supported for Tensorflow yet (only up to 3.8)
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split, cross_val_predict, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
