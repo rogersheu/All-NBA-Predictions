@@ -3,6 +3,11 @@ library(scales)
 library(RColorBrewer)
 library(randomcoloR)
 
+  melted_players <- melt(data_subset, id='Player')
+  
+  
+  player_names <- melted_players['Player']
+
   col_vector <- rep(NA, nrow(melted_players))
   melted_names <- melted_players[,1]
   for(index in 1:nrow(melted_players)) {
@@ -13,6 +18,19 @@ library(randomcoloR)
   }
   col_vector <<- col_vector
   melted_players['color'] <- col_vector
+  
+
+  for(i in 1:nrow(player_names)) {
+    player_names[i,1] <- convert_name(player_names[i,1])
+  }
+  
+  melted_players['Player'] <- player_names
+  
+  melted_players <<- melted_players
+  
+  lastDate <- melted_players[nrow(melted_players),2]
+  range <-  c(as.Date("2021-12-01"), as.Date(endDate) + 3)
+  
   lineplot <- ggplot(data=melted_players, aes(x=as.Date(variable), y=value, group=Player)) +
     geom_line(size=1, color = melted_players$color, group=melted_players$Player) + 
     geom_point(size=2, color = melted_players$color, group=melted_players$Player) +
