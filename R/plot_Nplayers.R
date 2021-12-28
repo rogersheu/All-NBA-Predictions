@@ -6,8 +6,8 @@ library(randomcoloR)
     theme_bw() + 
     theme(panel.grid.minor.x = element_blank()) +
     theme(panel.grid.minor.y = element_blank()) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size = 12)) +
     xlab("") + 
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
     ylab("Avg Probability") +
     scale_x_date(date_breaks = "3 days") + 
     scale_color_discrete(limits = top_picks)
