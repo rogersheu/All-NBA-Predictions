@@ -3,6 +3,19 @@ library(scales)
 library(RColorBrewer)
 library(randomcoloR)
 
+  col_vector <- rep(NA, nrow(melted_players))
+  melted_names <- melted_players[,1]
+  for(index in 1:nrow(melted_players)) {
+    currName <- melted_names[index]
+    teamCode <- players2022$Tm[which(players2022$Player == currName)]
+    currColor <- teamcolors$Color[which(teamcolors$Abbrev == teamCode)]
+    col_vector[index] <- currColor
+  }
+  col_vector <<- col_vector
+  melted_players['color'] <- col_vector
+  lineplot <- ggplot(data=melted_players, aes(x=as.Date(variable), y=value, group=Player)) +
+    geom_line(size=1, color = melted_players$color, group=melted_players$Player) + 
+    geom_point(size=2, color = melted_players$color, group=melted_players$Player) +
     theme_bw() + 
     theme(panel.grid.minor.x = element_blank()) +
     theme(panel.grid.minor.y = element_blank()) +
