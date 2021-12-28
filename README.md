@@ -135,7 +135,7 @@ Example #1, plot_predictions.R
 For example, the following figure shows the status of these players through 12/21/2021. We are still quite a ways away from the all-star or all-NBA selections (almost 30 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
 
 <p align="center" width="100%">
-    <img width="75%" src="https://user-images.githubusercontent.com/78449574/147403271-d12f8d7d-3799-4e56-944d-f927989cf22e.png">
+    <img width="75%" src="https://user-images.githubusercontent.com/78449574/147544645-a8bdab79-d8da-407b-8a7a-f857308c12f9.png">
 </p>
 
 
@@ -145,11 +145,12 @@ Example #2, plot_predictions_line_graph.R
 --------
 Here's another example, showing the likelihood of being classified as an all-League players in 2022 over time. They're grouped in 5's, from the highest probability to the lowest down to a minimum threshold.
 
-For example, here are the trends for the 21st-27th highest players as of 12/25/2021.
+For example, here are the trends for the 24st-28th highest players as of 12/27/2021.
 
 <p align="center" width="100%">
-    <img width="75%" src="https://user-images.githubusercontent.com/78449574/147403025-482f60ee-1407-4520-87e4-3792f8794876.png">
+    <img width="75%" src="https://user-images.githubusercontent.com/78449574/147544678-f48e0933-ea62-4897-8e42-63d41bf24ee2.png">
 </p>
+
 
 Hyperparameter Tuning
 ===========
