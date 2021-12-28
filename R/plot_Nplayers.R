@@ -1,7 +1,6 @@
 library(directlabels)
 library(scales)
 library(RColorBrewer)
-library(randomcoloR)
 library(reshape2)
 
 plot_Nplayers <- function(data, startIndex, endIndex, endDate) {
@@ -11,8 +10,6 @@ plot_Nplayers <- function(data, startIndex, endIndex, endDate) {
   # Melt, converts a data.frame from rows of players and columns as dates to:
   # | Player | variable (Dates) | value (Probabilities) |
   melted_players <- melt(data_subset, id='Player')
-  
-
   
   # Creates a color vector, which is then saved to the melt data frame
   col_vector <- rep(NA, nrow(melted_players))
