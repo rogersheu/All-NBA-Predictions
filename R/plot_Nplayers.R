@@ -6,6 +6,11 @@ plot_Nplayers <- function(startIndex, endIndex) {
   lineplot <- ggplot(data=melted_players, aes(x=as.Date(variable), y=value, color=Player, group=Player)) + 
     geom_line(size=1) + 
     geom_point(size=3) +
+library(directlabels)
+library(scales)
+library(RColorBrewer)
+library(randomcoloR)
+
     theme_bw() + 
     theme(panel.grid.minor.x = element_blank()) +
     theme(panel.grid.minor.y = element_blank()) +
@@ -19,15 +24,15 @@ plot_Nplayers <- function(startIndex, endIndex) {
   lineplot <<- lineplot
   
   ggsave(
-    #filename = paste("AverageFilter - Top ", startIndex-1, "-", endIndex-1, " players.png", sep=""),
-    filename = paste("Top ", startIndex-1, "-", endIndex-1, " players.png", sep=""),
+    #filename = paste("Over 0.1 - Top ", startIndex, "-", endIndex, " players.png", sep=""),
+    filename = paste("Top ", startIndex, "-", endIndex, " players.png", sep=""),
     plot = lineplot,
-    device = "png", 
+    device = "png",
     path = "~/GitHub/All-Star-Predictions/R/Graphs/lineplots/",
-    width = 8,
-    height = 6,
+    width = 12,
+    height = 9,
     units = "in",
     dpi = 500,
   )
-  print(lineplot)
 }
+
