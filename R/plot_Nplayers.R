@@ -48,8 +48,8 @@ plot_Nplayers <- function(data, startIndex, endIndex, endDate) {
     xlab("") + 
     ylab("Ensemble Average Probability") +
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size = 12)) +
-    theme(axis.title.y = element_text(size = 14)) + 
-    theme(axis.text.y = element_text(size = 12)) + 
+    theme(axis.title.y = element_text(size = 16)) + 
+    theme(axis.text.y = element_text(size = 14)) + 
     scale_x_date(date_breaks = "3 days", limits = range) + # Major axis (x) every three days, limits as set above
     geom_dl(aes(label = Player), color = melted_players$color, group=melted_players$Player, method = list(dl.trans(x = x + 0.2), "last.bumpup", cex = .9))
 
