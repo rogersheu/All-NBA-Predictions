@@ -39,7 +39,7 @@ plot_Nplayers <- function(data, startIndex, endIndex, endDate) {
   range <-  c(as.Date("2021-12-01"), as.Date(endDate) + 3)
   
   lineplot <- ggplot(data=melted_players, aes(x=as.Date(variable), y=value, group=Player)) +
-    geom_line(size=1, color = melted_players$color, group=melted_players$Player) + 
+    geom_line(size=0.75, color = melted_players$color, group=melted_players$Player) + 
     geom_point(size=2, color = melted_players$color, group=melted_players$Player) +
     theme_bw() + # Removes gray
     theme(panel.grid.minor.x = element_blank()) + # no minor axis lines
@@ -51,7 +51,8 @@ plot_Nplayers <- function(data, startIndex, endIndex, endDate) {
     theme(axis.title.y = element_text(size = 16)) + 
     theme(axis.text.y = element_text(size = 14)) + 
     scale_x_date(date_breaks = "3 days", limits = range) + # Major axis (x) every three days, limits as set above
-    geom_dl(aes(label = Player), color = melted_players$color, group=melted_players$Player, method = list(dl.trans(x = x + 0.2), "last.bumpup", cex = .9))
+    scale_y_continuous(breaks = seq(0, 1, 0.05)) + 
+    geom_dl(aes(label = Player), color = melted_players$color, group=melted_players$Player, method = list(dl.trans(x = x + 0.2), "last.bumpup", cex = 1))
 
   #These global assignments are for sanity checking and could just as easily be removed.
   lineplot <<- lineplot 
