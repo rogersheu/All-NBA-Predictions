@@ -8,13 +8,13 @@ In ```/rogersheu/NBA-ML-Predictions/scripts/```:
 
 **Web scraping**
 
-* ```scrape_stats_cli.py``` (BeautifulSoup, data cleaning, text manipulation and basic NLP, test cases, functions with arguments)
+* ```daily_data_scrape.py``` and ```scrape_stats_cli.py``` (BeautifulSoup, data cleaning, text manipulation and basic NLP, test cases, functions with arguments)
 * ```get_player_birthdates.py``` (Scraping data and manipulating web elements with Selenium)
 
 **Machine Learning**
 
 Modeling
-* ```daily_modeling.py```
+* ```daily_modeling.py``` (Runs the four models in the next bullet point)
 * ```RFmodeling.py SVMmodeling.py MLPmodeling.py XGBoostmodeling.py``` (scikit-learn, model execution, called from ```daily_modeling.py```, some matplotlib)
 
 Tuning (Training, Validating, Testing)
