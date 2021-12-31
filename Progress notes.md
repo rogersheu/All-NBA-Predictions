@@ -18,3 +18,9 @@ Player Birthdays for more accurate ages
 Objective: Use player codes to grab birth dates to get a more accurate age-weighted distribution of minutes
 
 Progress: This code, using Selenium, can be found at rogersheu/NBA-ML-Predictions/scripts/get_player_birthdates.py
+
+
+Completed
+---------------
+* Data checks to ensure proper data handling, providing confusion matrices and accuracy for cross-validation
+* A time-lapse of these model outputs as players play more games

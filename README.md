@@ -8,13 +8,13 @@ In ```/rogersheu/NBA-ML-Predictions/scripts/```:
 
 **Web scraping**
 
-* ```scrape_stats_cli.py``` (BeautifulSoup, data cleaning, text manipulation and basic NLP, test cases, functions with arguments)
+* ```daily_data_scrape.py``` and ```scrape_stats_cli.py``` (BeautifulSoup, data cleaning, text manipulation and basic NLP, test cases, functions with arguments)
 * ```get_player_birthdates.py``` (Scraping data and manipulating web elements with Selenium)
 
 **Machine Learning**
 
 Modeling
-* ```daily_modeling.py```
+* ```daily_modeling.py``` (Runs the four models in the next bullet point)
 * ```RFmodeling.py SVMmodeling.py MLPmodeling.py XGBoostmodeling.py``` (scikit-learn, model execution, called from ```daily_modeling.py```, some matplotlib)
 
 Tuning (Training, Validating, Testing)
@@ -38,9 +38,11 @@ Helper Functions
 Under construction, both locally in R (locally referring to within this repository) and elsewhere in Tableau Public. Graphs can be shared upon request.
 
 
-Objective
+Objective/Motivation
 ===========
 Using machine learning and deep learning models, identify players most likely to be selected onto either the NBA all-star team (halfway through the season) or an all-NBA team (at the end of the season). Inspiration and/or methodology from [here](https://www.reddit.com/r/nba/comments/bcdpls/oc_using_machine_learning_to_predict_the_2019_mvp/). Only the overarching information in that post was used. The code was written from scratch or sourced from unrelated analyses found online, especially scikit-learn's documentation.
+
+Plenty of NBA aficionados try to predict who they think will be all-stars and all-NBA players. However, opinions vary widely between fans, and they often use any number of metrics (or lack thereof). People fall into various biases, including recency bias and letting their emotions cloud their better judgment. On the other hand, the human element is critical for accurate evaluation of performance, since while data collection is extensive, the big picture may still remain incomplete. In this project, I take inspiration from a previous attempt at this endeavor and make some improvements of my own. I hope to provide a statistical foundation upon which opinions can then be tweaked and crystallzied. I also wish to track each candidate's progress over time, since time is an important dimension to these analyses.
 
 
 Installation/Instructions
@@ -91,8 +93,6 @@ Models
 * Hyperparameter tuning
 
 **To be implemented or displayed**
-* Data checks to ensure proper data handling, providing confusion matrices and accuracy for cross-validation
-* A time-lapse of these model outputs as players play more games
 * Tableau dashboard of information
 
 **Planned Improvements or Refinements**
@@ -108,14 +108,15 @@ Methodology
 ========
 Web Scraping
 --------
-Under construction
+Explanation under construction
 
 
 Feature Selection: Preemptively Identifying Potential Overfitting
 --------
-Under construction
+Explanation under construction
 
 
+Some topics to cover
 * Combining steals and blocks
 * Not including 3PM or any percentages other than TS%
 * Wanted to make sure selection could be made with incomplete season information
@@ -174,4 +175,4 @@ As for the other parameters, solver was initially varied between ```lbfgs``` (Ga
 
 XGBoost Tuning
 --------
-Under construction.
+To be implemented.
