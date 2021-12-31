@@ -8,7 +8,7 @@ library(matrixStats)
 
 plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   ### reshape2 provides a pretty big warning with the melt function...
-  options(warn=-1)
+  # options(warn=-1)
   
   # Need to initialize these data frames or else you'll get an error later
   # when you try to put data into them.
@@ -107,5 +107,9 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
     plot_Nplayers(bestAvg, startIndex, endIndex, endDate)
     startIndex <- endIndex + 1
   }
+  
+  # for(i in 1:nrow(bestAvg)) {
+  #   plot_Nplayers(bestAvg, i, i, endDate)
+  # }  
 
 }

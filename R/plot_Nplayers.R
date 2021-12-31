@@ -59,16 +59,14 @@ plot_Nplayers <- function(data, startIndex, endIndex, endDate) {
   print(lineplot)
   
   ggsave(
-    ### Decomment this first line and comment the second line if you're doing the Avg > 0.1 filter instead of the Max > 0.5 filter
-    #filename = paste("Over 0.1 - Top ", startIndex, "-", endIndex, " players.png", sep=""),
     filename = paste("Top ", startIndex, "-", endIndex, " players.png", sep=""),
+    #filename = paste("All-League Probability - ", data_subset[1, 1], ".png", sep=""),
     plot = lineplot,
     device = "png",
-    path = "~/GitHub/All-Star-Predictions/R/Graphs/lineplots/",
+    path = "~/GitHub/All-Star-Predictions/R/Graphs/lineplots/By player/",
     width = 12,
     height = 9,
     units = "in",
     dpi = 500,
   )
 }
-
