@@ -113,21 +113,27 @@ Explanation under construction
 
 Feature Selection: Preemptively Identifying Potential Overfitting
 --------
-Explanation under construction
+Features were chosen in an easily accessible and easily calculable way.
 
+Feature requirements:
 
-Some topics to cover
-* Combining steals and blocks
-* Not including 3PM or any percentages other than TS%
-* Wanted to make sure selection could be made with incomplete season information
-* Selection of minutes played threshold
-* Need to be easily obtainable statistics, must go back as far as possible to increase sample size
-*   Most advanced analytics only go back to mid 2000's at the earliest, if not later
-*   3 point line was not added until 1979
-*   Pace adjustments important
-* Correlation matrix used to decide between BPM/VORP/WS48
+* Easily accessible. Provide as big of a sample size as possible. Advanced analytics, i.e., PIPM, RAPM, RAPTOR, EPM, LEBRON, etc., only have data since the 2000's, if not even more recent. For some of these, it's because Tracking data only became more sophisticated in the 21st century.
+* Rate metrics only. Because these metrics would be actively updated partway through the season, it makes no sense to compare these to other players' full season stats. Other options included using per 36 minute numbers or per 75 possession numbers. However, I ended up going with per game values. These can be made more volatile if a player has high game-to-game variance (i.e., foul trouble, playing fewer minutes in blowouts, etc.), but voters take most stock in per game numbers.
+* Still, these statistics must be pace adjustable. The pace of play in the NBA has changed a decent amount across the decades. While some of the models eventually normalize the data, pace should still be adjusted to account for high or low volume environments. These pace adjustments are made in SQLite.
+* Minimal collinearity. Other measures such as Value Over Replacement Player (VORP), Box Plus Minus (BPM), and Win Shares (WS) were considered, but had high correlation (r^2 > 0.7) with WS/48, so they were discarded for the models.
+* Use as few, but as descriptive metrics as possible. Other similar models excised steals/blocks, since these defensive statistics can be misleading. An argument can also be made to include team seeding. However, I believed that steals/blocks add a new dimension to the analysis that voters do take into account that are not already covered by other features.
 
+The statistics used were the following.
 
+| Features | 
+| --- |
+| Points Per Game (PPG) |
+| Rebounds Per Game (RPG) |
+| Assists Per Game (APG) |
+| Steals + Blocks Per Game (SBPG) |
+| True Shooting percentage (TS%) |
+| Win Shares per 48 minutes (WS/48) |
+| Team Winning Percentage (Perc) |
 
 Example Output
 ========
