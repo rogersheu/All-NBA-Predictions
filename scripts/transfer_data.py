@@ -48,9 +48,8 @@ def get_all_player_stats():
     return X, y
 
 # Loads present season's stats
-def get_2022_stats():
-    print("Pick your file containing this season's stats for prediction.")
-    df = pd.read_csv(pick_file())
+def get_2022_stats(filePath):
+    df = pd.read_csv(filePath)
     X_predict = df[['RPG','APG','SBPG','PPG','TS','WS48','Perc']]
 
     return X_predict
@@ -73,13 +72,21 @@ def probabilityonly_toCSV(fileName: str, probName: str, probData: pd.Series):
     df.to_csv(fileName)
 
 # Sorts by best model (by average proba)
-def sortCSV(fileName):
+def postprocessing(fileName):
     df = pd.read_csv(fileName)
     df = df.iloc[: , 1:]
-    df['Avg'] = (df['RF'] + df['SVM'] + df['kNN'] + df['MLP'])/4
-    df.sort_values(by = 'Avg', ascending = False, inplace = True)
+    df = calculateAvg(df)
+    df = sortbyAvg(df)
     df[['RF','SVM', 'MLP', 'XGBoost', 'Avg']] = df[['RF','SVM', 'MLP', 'XGBoost', 'Avg']].round(3)
     df.to_csv(fileName, index = False)
+
+def calculateAvg(df):
+    df['Avg'] = (df['RF'] + df['SVM'] + df['kNN'] + df['MLP'])/4
+    return df
+
+def sortbyAvg(df):
+    df.sort_values(by = 'Avg', ascending = False, inplace = True)
+    return df
 
 
 def sortCSV_historical(fileName):
