@@ -63,7 +63,7 @@ plot_Nplayers <- function(data, startIndex, endIndex, endDate) {
     #filename = paste("All-League Probability - ", data_subset[1, 1], ".png", sep=""),
     plot = lineplot,
     device = "png",
-    path = "~/GitHub/All-Star-Predictions/R/Graphs/lineplots/By player/",
+    path = "~/GitHub/All-Star-Predictions/R/Graphs/lineplots/",
     width = 12,
     height = 9,
     units = "in",
