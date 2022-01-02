@@ -2,6 +2,7 @@
 /scripts/Unused
 /scripts/OOP
 *.db
+/baseData/
 
 # Temporarily ignoring data, clutters the repository
 *.csv
