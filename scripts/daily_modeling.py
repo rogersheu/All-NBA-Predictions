@@ -42,11 +42,12 @@ def automated_modeling(startDate, endDate):
         date_str = date.strftime("%Y-%m-%d")
         date_nodash = date_str.replace("-", "")
         filePath = f"C:/Users/Roger/Documents/GitHub/All-Star-Predictions/baseData/dailystats/{date_str}/stats_{date_nodash}.csv"
-        print(f"Starting ensemble learning for {date_str}.")
         try:
             X, y, X_2022 = file_load(filePath)
         except FileNotFoundError:
             continue
+        
+        print(f"Starting ensemble learning for {date_str}.")
         df = ensemble_modeling(filePath, X, y, X_2022)
         
         newFileName = filePath.replace(".csv","")
