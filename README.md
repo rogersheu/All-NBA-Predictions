@@ -135,6 +135,8 @@ The statistics used were the following.
 | Win Shares per 48 minutes (WS/48) |
 | Team Winning Percentage (Perc) |
 
+Predictor: I call it ```All-League Selection```, which is the intersection of All-Star picks and All-NBA picks. This makes sure some players who made one or the other are not excluded. 24 All-Star are picked every season (with possibility a few more with injury replacements), while 15 players are selected for All-NBA. Most of the time, All-NBA players are selected as All-Stars in the same season, while the opposite occurs less often (e.g., Rudy Gobert in 2017 and 2019). Soemtimes, this discrepancy occurs because of positional limits. All-Stars have since shifted to a frontcourt/backcourt voting approach, while All-NBA selections remain on the guards/forwards/centers categories. Other times, it's a result of the relevant schedule period. All-Stars are picked around halfway into the season, so players who get injured or falter later on can miss the All-NBA teams. Alternatively, players who outperform their first half can elevate into an All-NBA pick if others fade.
+
 Example Output
 ========
 Example #1, plot_predictions.R
