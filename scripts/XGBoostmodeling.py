@@ -19,7 +19,9 @@ iterations = 10
 def XGBoost(X, y, X_2022):
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify = y)
-    xgb_model = xgb.XGBClassifier()
+    xgb_model = xgb.XGBClassifier(tree_method = "hist") # Histogram-based boosting makes XGBoost much faster
+    # Other speed-up options include using your CPU with CUDA (Nvidia)  xgb.XGBClassifier(tree_method = "gpu_hist")
+    # and using single precision xgb.XGBClassifier(tree_method = "gpu_hist", single_precision_histogram=True)
 
     xgb_model.fit(X_train, y_train)
     y_pred = xgb_model.predict(X_test)
