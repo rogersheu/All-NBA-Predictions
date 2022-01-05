@@ -2,7 +2,9 @@ from SVMmodeling import SVM
 from kNNmodeling import kNN
 from RFmodeling import RF
 from MLPmodeling import MLP
+from GBMmodeling import GBM
 from XGBoostmodeling import XGBoost
+
 from transfer_data import *
 import sys
 import warnings
@@ -23,7 +25,8 @@ def ensemble_modeling(srcFile, X, y, X_2022):
     df['SVM'] = SVM(X, y, X_2022)
     df['kNN'] = kNN(X, y, X_2022)
     df['MLP'] = MLP(X, y, X_2022)
-    df['XGBoost'] = XGBoost(X, y, X_2022)
+    df['GBM'] = GBM(X, y, X_2022)
+    df['XGB'] = XGBoost(X, y, X_2022)
     return df
 
 def model_one_file():
