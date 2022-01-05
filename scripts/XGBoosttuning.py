@@ -1,8 +1,9 @@
+import pandas as pd
 import xgboost as xgb
-from xgboost import XGBClassifier
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
 from sklearn.metrics import classification_report, confusion_matrix
 from transfer_data import *
+import matplotlib.pyplot as plt
 
 
 # Most important hyperparameters, according to https://towardsdatascience.com/mastering-xgboost-2eb6bce6bc76
@@ -14,35 +15,53 @@ from transfer_data import *
 # (5) the complexity control (gamma=γ), a pseudo- regularization hyperparameter; 
 # (6) minimum child weight
 
-iterations = 10
 
-def XGBoost(X, y, X_2022):
+### objective
+# multi:softmax and multi:softprob seem to be popular, but this is not a multiclass problem
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify = y)
-    xgb_model = xgb.XGBClassifier()
 
-# https://xgboost.readthedocs.io/en/latest/parameter.html#learning-task-parameters
-    parameter_space = {
-        "objective" : [],
-        "eval_metric" : [],
-# 'gpu-hist' fastest, requires CUDA
-# 'exact' most accurate but slowest
-# 'approx' for larger datasets
-# 'auto' is default (picks one)
-# 'hist' is much faster, good for large datasets
-        "tree_method" : ['hist'], 
-        "n_estimators" : [100], #1
-        "max_depth" : [], #2
+### tree_method
+    # 'gpu-hist' fastest, requires CUDA
+    # 'exact' most accurate but slowest
+    # 'approx' for larger datasets
+    # 'auto' is default (picks one)
+    # 'hist' is much faster, good for large datasets
+
+
 # 3. eta, aka learning rate, default is 0.3
 # too high and you risk overfitting and bypassing minima
 # too low and it takes longer to learn, aka more iterations
-        "eta" : [0.01, 0.015, 0.025, 0.05, 0.1, 0.2, 0.3, 0.5, 1],
-        "alpha" : [],
-        "lambda" : [],
-        "gamma" :  [], #5, min_split_loss
+
+# 4. Increasing alpha or lambda will make the model more conservative.
+
+# 5, min_split_loss
 # 6. Minimum child weight, a child needs the threshold weight (Hessian) to continue being considered
-        "min_child_weight" : [1, 3, 5, 7]
+
+
+iterations = 10
+
+def XGBoost(X, y):
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify = y)
+    xgb_model = xgb.XGBClassifier(objective = 'binary:logistic', eval_metric = 'logloss', n_estimators = 50, tree_method = 'hist', use_label_encoder = False)
+
+    # https://xgboost.readthedocs.io/en/latest/parameter.html#learning-task-parameters
+    parameter_space = {
+        # "eval_metric" : ['rmse', 'logloss', 'error', 'aucpr'],
+        # "n_estimators" : [25, 50, 100], #1
+        # "max_depth" : [5, 10], #2
+        "eta" : [0.05, 0.1, 0.3, 0.5, 1], #3
+        "alpha" : [0, 0.1, 0.25, 0.5, 1], #4
+        "lambda" : [0.05, 0.1, 0.5, 1], #4
+        "gamma" :  [0.05, 0.25] #5
+        # "min_child_weight" : [1, 3, 5, 7, 9] #6
     }
+
+    # Through tuning these parameters in GridSearch
+    # alpha = 0 (default)
+    # eta = 0.3 (default)
+    # gamma = 0.05 (not default, default = 0)
+    # lambda = 1 (default)
 
     scores = ["precision", "recall"]
 
@@ -51,7 +70,7 @@ def XGBoost(X, y, X_2022):
         print()
 
         clf = GridSearchCV(xgb_model, parameter_space, scoring="%s_macro" % score, n_jobs = -1, cv = 3) 
-        # clf = RandomizedSearchCV(MLPmodel, parameter_space, scoring="%s_macro" % score, n_jobs = -1, cv = 3) 
+        # clf = RandomizedSearchCV(xgb_model, parameter_space, n_iter = 100, scoring="%s_macro" % score, n_jobs = -1, cv = 3) 
         clf.fit(X_train, y_train)
 
         print("Best parameters set found on development set:")
@@ -60,29 +79,49 @@ def XGBoost(X, y, X_2022):
         print()
         print("Grid scores on development set:")
         print()
+
         means = clf.cv_results_["mean_test_score"]
-        if score == "precision":
+        stds = clf.cv_results_["std_test_score"]
+        params = clf.cv_results_["params"]
+
+        if score == 'precision':
             precision_means = means
         else:
             recall_means = means
-        stds = clf.cv_results_["std_test_score"]
-        for mean, std, params in zip(means, stds, clf.cv_results_["params"]):
-            print("%0.3f (+/-%0.03f) for %r" % (mean, std * 2, params))
-        print()
 
-        print("Detailed classification report:")
-        print()
-        print("The model is trained on the full development set.")
-        print("The scores are computed on the full evaluation set.")
-        print()
-        y_true, y_pred = y_test, clf.predict(X_test)
-        print(classification_report(y_true, y_pred))
-        print()
+        # df = pd.DataFrame({'means' : means, 'stds' : stds, 'params' : params})
+        # df.sort_values(by = ["means"], ascending = False, inplace = True)
+
+        # means = df['means']
+        # stds = df['stds']
+        # params = df['params']
+
+    f1scores = 2 * precision_means * recall_means / (precision_means + recall_means)
+    df = pd.DataFrame({'f1scores': f1scores, 'params' : params})
+    df.sort_values(by = ["f1scores"], ascending = False, inplace = True)
+
+    for f1score, params in zip(f1scores, params):
+        print("%0.3f for %r" % (f1score, params))
+    
+    # for mean, std, params in zip(means, stds, params):
+    #     print("%0.3f (+/-%0.03f) for %r" % (mean, std * 2, params))
+    # print()
+
+    print("Detailed classification report:")
+    print()
+    print("The model is trained on the full development set.")
+    print("The scores are computed on the full evaluation set.")
+    print()
+    y_true, y_pred = y_test, clf.predict(X_test)
+    print(classification_report(y_true, y_pred))
+    print()
+
+    plt.plot(precision_means, recall_means, 'o')
+    plt.show()
 
 def main():
     X, y = get_all_player_stats()
-    X_2022 = get_2022_stats()
-    XGBoost(X, y, X_2022)
+    XGBoost(X, y)
 
 if __name__ == "__main__":
     main()
