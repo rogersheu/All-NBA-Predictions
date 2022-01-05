@@ -77,11 +77,11 @@ def postprocessing(fileName):
     df = df.iloc[: , 1:]
     df = calculateAvg(df)
     df = sortbyAvg(df)
-    df[['RF','SVM', 'MLP', 'XGBoost', 'Avg']] = df[['RF','SVM', 'MLP', 'XGBoost', 'Avg']].round(3)
+    df[['RF','SVM', 'MLP', 'GBM', 'XGB', 'Avg']] = df[['RF','SVM', 'MLP', 'GBM', 'XGB', 'Avg']].round(3)
     df.to_csv(fileName, index = False)
 
 def calculateAvg(df):
-    df['Avg'] = (df['RF'] + df['SVM'] + df['kNN'] + df['MLP'])/4
+    df['Avg'] = (df['RF'] + df['SVM'] + df['GBM'] + df['XGB'] + df['MLP'])/5
     return df
 
 def sortbyAvg(df):
