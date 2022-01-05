@@ -17,7 +17,8 @@ def gradientboosted_tuning(X, y):
         "min_samples_leaf" : [],
         "max_depth" : [],
         "max_leaf_nodes" : [],
-        "max_features" : []
+        "max_features" : [],
+        "n_estimators": []
     }
     
     gb_model = GradientBoostingClassifier(max_iter = 2000)
