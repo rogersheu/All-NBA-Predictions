@@ -20,12 +20,14 @@ def XGBoost(X, y, X_2022):
         xgb_model.fit(X_train, y_train)
         y_pred = xgb_model.predict(X_test)
 
-        print('Confusion matrix and classification report for XGBoost model.\n')
-        print(confusion_matrix(y_test, y_pred))
-        print(classification_report(y_test, y_pred))
-
         predictions = xgb_model.predict_proba(X_2022)
         prediction_trials.append(predictions[:,1])
+
+
+    print('Confusion matrix and classification report for XGBoost model, final iteration.\n')
+    print(confusion_matrix(y_test, y_pred))
+    print(classification_report(y_test, y_pred))
+
 
     df = pd.DataFrame(prediction_trials).transpose()
     return df.mean(axis=1)
