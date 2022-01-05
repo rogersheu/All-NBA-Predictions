@@ -2,8 +2,13 @@ from bs4 import BeautifulSoup
 import requests
 from csv_functions import *
 from transfer_data import *
+from datetime import datetime
 
+shortDate = datetime.today().strftime('%Y-%m-%d')
+shortDate_nodash = shortDate.replace("-","")
 
+directory= "./baseData/dailystats"
+mkdir = (f"{directory}/{shortDate}")
 
 def scrape_teamadvanced(fileName, year):
     yearURL = (f'https://www.basketball-reference.com/leagues/NBA_{year}.html')
@@ -12,7 +17,6 @@ def scrape_teamadvanced(fileName, year):
 
     teamTable = yearSoup.find('table', id="advanced-team")
     leagueAvg = teamTable.find('tfoot').find_all('td')
-    
 
     averages = []
     for col in leagueAvg:
@@ -37,7 +41,8 @@ def scrape_alladvanced(pathName, startYear, endYear):
 
 
 def main():
-    scrape_alladvanced(1980, 2022)
+    scrape_alladvanced(f"{mkdir}", '1980', '2022')
+
 
 
 if __name__ == '__main__':
