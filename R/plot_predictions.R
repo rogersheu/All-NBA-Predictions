@@ -13,11 +13,11 @@ plot_predictions <- function(year, month, day)
   currstats <- read.csv(fullPath)
 
   
-  df <- select(currstats, Player, RF, SVM, kNN, MLP, XGBoost)
+  df <- select(currstats, Player, RF, SVM, kNN, GBM, MLP, XGB)
   
   # Removed kNN because it is consistently lower than the other models.
-  df$Avg <- rowMeans(subset(df, select = c(RF, SVM, MLP, XGBoost)), na.rm = TRUE) 
-  df$SD <- rowSds(as.matrix(subset(df, select = c(RF, SVM, MLP, XGBoost))), na.rm = TRUE) 
+  df$Avg <- rowMeans(subset(df, select = c(RF, SVM, MLP, GBM, XGB)), na.rm = TRUE) 
+  df$SD <- rowSds(as.matrix(subset(df, select = c(RF, SVM, MLP, GBM, XGB))), na.rm = TRUE) 
   topCandidates <- filter(df, Avg > 0.25)
   attach(topCandidates)
   topCandidates <- topCandidates[order(-Avg),]
@@ -30,7 +30,7 @@ plot_predictions <- function(year, month, day)
   
   currPlot <- ggplot(topCandidates, aes(x = Player, y = RF)) + 
     theme_bw() + 
-    ggtitle(paste("Predicted All-League Classifications (", date, ")", sep = "")) + 
+    ggtitle(paste("All-League Classifications Predictions (", year, "-", month, "-", day, ")", sep = "")) + 
     theme(axis.text.y = element_text(face = "bold")) +
     ylab("Model Probability") +
     xlab("") + 
@@ -40,13 +40,14 @@ plot_predictions <- function(year, month, day)
     geom_point(aes(x = Player, y = RF, color = "RF"), position = position_jitter(w=.1), size = 3, alpha = 0.5) + 
     geom_point(aes(x = Player, y = SVM, color = "SVM"), position = position_jitter(w=.1), size = 3, alpha = 0.5) + 
     geom_point(aes(x = Player, y = MLP, color = "MLP"), position = position_jitter(w=.1), size = 3, alpha = 0.5) +
-    geom_point(aes(x = Player, y = XGBoost, color = "XGBoost"), position = position_jitter(w=.1), size = 3, alpha = 0.5) +
+    geom_point(aes(x = Player, y = GBM, color = "GBM"), position = position_jitter(w=.1), size = 3, alpha = 0.5) +
+    geom_point(aes(x = Player, y = XGB, color = "XGB"), position = position_jitter(w=.1), size = 3, alpha = 0.5) +
     geom_point(aes(x = Player, y = Avg, color = "Avg"), size = 3, alpha = 1) +
     scale_color_manual(values = c("RF" = "springgreen", 
                                   "SVM" = "goldenrod", 
-                                  #"kNN" = "red4", 
                                   "MLP" = "royalblue4", 
-                                  "XGBoost" = "hotpink", 
+                                  "GBM" = "pink2",
+                                  "XGB" = "maroon3", 
                                   "Avg" = "gray24"))
 
   ggsave(
