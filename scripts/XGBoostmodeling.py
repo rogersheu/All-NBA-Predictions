@@ -29,13 +29,28 @@ def XGBoost(X, y, X_2022):
     print('Confusion matrix and classification report for XGBoost model.\n')
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
+    iterations = 10 # Number of trials
+    prediction_trials = []
 
+    for i in range(iterations):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify = y)
+        xgb_model = xgb.XGBClassifier(objective = 'binary:logistic', eval_metric = 'logloss', use_label_encoder = False, n_estimators = 50, tree_method = 'hist', eta = 0.3, alpha = 0, gamma = 0.05)
+        # Histogram-based boosting makes XGBoost much faster
+        # Other speed-up options include using your CPU with CUDA (Nvidia)  xgb.XGBClassifier(tree_method = "gpu_hist")
+        # and using single precision xgb.XGBClassifier(tree_method = "gpu_hist", single_precision_histogram=True)
 
+        xgb_model.fit(X_train, y_train)
+        y_pred = xgb_model.predict(X_test)
 
-    predictions = xgb_model.predict_proba(X_2022)
+        print('Confusion matrix and classification report for XGBoost model.\n')
+        print(confusion_matrix(y_test, y_pred))
+        print(classification_report(y_test, y_pred))
 
-    return predictions[:,1]
+        predictions = xgb_model.predict_proba(X_2022)
+        prediction_trials.append(predictions[:,1])
 
+    df = pd.DataFrame(prediction_trials).transpose()
+    return df.mean(axis=1)
 
 def main():
     X, y = get_all_player_stats()
