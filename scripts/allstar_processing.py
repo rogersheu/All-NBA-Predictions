@@ -7,7 +7,7 @@ yearPattern = re.compile(r"^([0-9]{4})-?([0-9]{4})?$")
 fileName = 'allstar_full.csv'
 
 def process_allstars():
-    df = pd.read_csv(r'C:\Users\Roger\Documents\GitHub\All-Star-Predictions\baseData\allstar_raw.csv', delimiter = ',', engine = 'python', encoding = 'utf-8')
+    df = pd.read_csv(r'.\baseData\allstar_raw.csv', delimiter = ',', engine = 'python', encoding = 'utf-8')
     
     for row in range(len(df)):
         yearsRaw = str(df.iloc[row][1])

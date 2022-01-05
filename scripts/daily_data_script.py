@@ -9,7 +9,7 @@ from scrape_advancedteamstats import scrape_alladvanced
 shortDate = datetime.today().strftime('%Y-%m-%d')
 shortDate_nodash = shortDate.replace("-","")
 
-directory= "C:/Users/Roger/Documents/GitHub/All-Star-Predictions/baseData/dailystats"
+directory= "./baseData/dailystats"
 mkdir = (f"{directory}/{shortDate}")
 make_dir_if_nonexistent(mkdir)
 

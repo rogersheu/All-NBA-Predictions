@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 def import_playerIDs():
 
-    df = pd.read_csv('C:/Users/Roger/Documents/GitHub/All-Star-Predictions/baseData/dailystats/2021-12-22/totals_20211222.csv')
+    df = pd.read_csv('./baseData/dailystats/2021-12-22/totals_20211222.csv')
     
     playerIDs = df['PlayerID']
 
@@ -16,7 +16,7 @@ def import_playerIDs():
     df.insert(2, 'Birth Date', bdays)
     df['Age'] = ages
 
-    df.to_csv('C:/Users/Roger/Documents/GitHub/All-Star-Predictions/baseData/player_birthdates_2022.csv')
+    df.to_csv('./baseData/player_birthdates_2022.csv')
 
 def get_bdays(playerID):
     initial = playerID[0]

@@ -44,7 +44,7 @@ def automated_modeling(startDate, endDate):
     for date in pd.date_range(start=startDate, end=endDate): # pd.date_range is inclusive
         date_str = date.strftime("%Y-%m-%d")
         date_nodash = date_str.replace("-", "")
-        filePath = f"C:/Users/Roger/Documents/GitHub/All-Star-Predictions/baseData/dailystats/{date_str}/stats_{date_nodash}.csv"
+        filePath = f"./baseData/dailystats/{date_str}/stats_{date_nodash}.csv"
         try:
             X, y, X_2022 = file_load(filePath)
         except FileNotFoundError:

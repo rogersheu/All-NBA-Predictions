@@ -38,7 +38,7 @@ def get_all_player_stats():
     # df = pd.read_csv(pick_file())
     #####
 
-    fileName = 'C:/Users/Roger/Documents/GitHub/All-Star-Predictions/baseData/ML/all_stats_20211201.csv'
+    fileName = './baseData/ML/all_stats_20211201.csv'
     df = pd.read_csv(fileName)
     print('All players data loaded.')
 
