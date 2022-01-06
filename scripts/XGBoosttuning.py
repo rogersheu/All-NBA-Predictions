@@ -47,13 +47,13 @@ def XGBoost(X, y):
 
     # https://xgboost.readthedocs.io/en/latest/parameter.html#learning-task-parameters
     parameter_space = {
-        # "eval_metric" : ['rmse', 'logloss', 'error', 'aucpr'],
-        # "n_estimators" : [25, 50, 100], #1
-        # "max_depth" : [5, 10], #2
-        "eta" : [0.05, 0.1, 0.3, 0.5, 1], #3
-        "alpha" : [0, 0.1, 0.25, 0.5, 1], #4
-        "lambda" : [0.05, 0.1, 0.5, 1], #4
-        "gamma" :  [0.05, 0.25] #5
+        "eval_metric" : ['rmse', 'logloss', 'error', 'aucpr'],
+        "n_estimators" : [25, 50, 100], #1
+        "max_depth" : [3, 4, 5, 6], #2
+        "eta" : [0.1, 0.2, 0.3], #3
+        # "alpha" : [0, 0.1, 0.25, 0.5, 1], #4
+        # "lambda" : [0.05, 0.1, 0.5, 1], #4
+        "gamma" :  [0, 0.1, 0.2, 0.5, 1] #5
         # "min_child_weight" : [1, 3, 5, 7, 9] #6
     }
 
@@ -63,49 +63,28 @@ def XGBoost(X, y):
     # gamma = 0.05 (not default, default = 0)
     # lambda = 1 (default)
 
-    scores = ["precision", "recall"]
 
-    for score in scores:
-        print("# Tuning hyper-parameters for %s" % score)
-        print()
+    print("# Tuning hyper-parameters.")
+    print()
 
-        clf = GridSearchCV(xgb_model, parameter_space, scoring="%s_macro" % score, n_jobs = -1, cv = 3) 
-        # clf = RandomizedSearchCV(xgb_model, parameter_space, n_iter = 100, scoring="%s_macro" % score, n_jobs = -1, cv = 3) 
-        clf.fit(X_train, y_train)
+    clf = GridSearchCV(xgb_model, parameter_space, scoring="recall_macro", n_jobs = -1, cv = 3) 
+    # clf = RandomizedSearchCV(xgb_model, parameter_space, n_iter = 100, scoring="%s_macro" % score, n_jobs = -1, cv = 3) 
+    clf.fit(X_train, y_train)
 
-        print("Best parameters set found on development set:")
-        print()
-        print(clf.best_params_)
-        print()
-        print("Grid scores on development set:")
-        print()
+    print("Best parameters set found on development set:")
+    print()
+    print(clf.best_params_)
+    print()
+    print("Grid scores on development set:")
+    print()
 
-        means = clf.cv_results_["mean_test_score"]
-        stds = clf.cv_results_["std_test_score"]
-        params = clf.cv_results_["params"]
-
-        if score == 'precision':
-            precision_means = means
-        else:
-            recall_means = means
-
-        # df = pd.DataFrame({'means' : means, 'stds' : stds, 'params' : params})
-        # df.sort_values(by = ["means"], ascending = False, inplace = True)
-
-        # means = df['means']
-        # stds = df['stds']
-        # params = df['params']
-
-    f1scores = 2 * precision_means * recall_means / (precision_means + recall_means)
-    df = pd.DataFrame({'f1scores': f1scores, 'params' : params})
-    df.sort_values(by = ["f1scores"], ascending = False, inplace = True)
-
-    for f1score, params in zip(f1scores, params):
-        print("%0.3f for %r" % (f1score, params))
+    means = clf.cv_results_["mean_test_score"]
+    stds = clf.cv_results_["std_test_score"]
+    params = clf.cv_results_["params"]
     
-    # for mean, std, params in zip(means, stds, params):
-    #     print("%0.3f (+/-%0.03f) for %r" % (mean, std * 2, params))
-    # print()
+    for mean, std, params in zip(means, stds, params):
+        print("%0.3f (+/-%0.03f) for %r" % (mean, std * 2, params))
+    print()
 
     print("Detailed classification report:")
     print()
@@ -116,8 +95,7 @@ def XGBoost(X, y):
     print(classification_report(y_true, y_pred))
     print()
 
-    plt.plot(precision_means, recall_means, 'o')
-    plt.show()
+
 
 def main():
     X, y = get_all_player_stats()
