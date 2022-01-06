@@ -6,6 +6,9 @@ from transfer_data import *
 import matplotlib.pyplot as plt
 
 
+from sklearn.metrics import PrecisionRecallDisplay
+
+
 # Most important hyperparameters, according to https://towardsdatascience.com/mastering-xgboost-2eb6bce6bc76
 
 # (1) how many sub-trees to train; 
@@ -43,40 +46,49 @@ iterations = 10
 def XGBoost(X, y):
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify = y)
-    xgb_model = xgb.XGBClassifier(objective = 'binary:logistic', eval_metric = 'logloss', n_estimators = 50, tree_method = 'hist', use_label_encoder = False)
-
+    xgb_model = xgb.XGBClassifier( 
+        use_label_encoder = False, 
+        objective = 'binary:logistic',
+        eval_metric = 'logloss', 
+        n_estimators = 100, 
+        tree_method = 'hist', 
+        eta = 0.2, 
+        # alpha = 0.1
+    )
     # https://xgboost.readthedocs.io/en/latest/parameter.html#learning-task-parameters
     parameter_space = {
-        "eval_metric" : ['rmse', 'logloss', 'error', 'aucpr'],
-        "n_estimators" : [25, 50, 100], #1
-        "max_depth" : [3, 4, 5, 6], #2
-        "eta" : [0.1, 0.2, 0.3], #3
-        # "alpha" : [0, 0.1, 0.25, 0.5, 1], #4
-        # "lambda" : [0.05, 0.1, 0.5, 1], #4
+        # "objective" : ['reg:squarederror', 'reg:squaredlogerror', 'reg:logistic', 'binary:logistic', 'binary:logitraw'],
+        # "eval_metric" : ['rmse', 'logloss', 'error', 'aucpr'],
+        # "n_estimators" : [25, 50, 100], #1
+        # "max_depth" : [3, 4, 5, 6], #2
+        # "eta" : [0.1, 0.15, 0.2, 0.25, 0.3], #3
+        "alpha" : [0, 0.1], #4
+        "lambda" : [0.1, 0.5, 1, 2, 5, 10], #4
         "gamma" :  [0, 0.1, 0.2, 0.5, 1] #5
         # "min_child_weight" : [1, 3, 5, 7, 9] #6
     }
 
     # Through tuning these parameters in GridSearch
-    # alpha = 0 (default)
-    # eta = 0.3 (default)
-    # gamma = 0.05 (not default, default = 0)
+
+    # max_depth got worse as it increased. 3 was better than the default of 6.
+    # eta = 0.25 (default is 0.3)
+    # alpha = 0.1 (default is 0)
+    # gamma = 0 (default)
     # lambda = 1 (default)
 
+    # gamma has almost no effect on recall
+    # n_estimators, more leads to higher recall in test set
 
-    print("# Tuning hyper-parameters.")
-    print()
+    print("# Tuning hyper-parameters.\n")
 
-    clf = GridSearchCV(xgb_model, parameter_space, scoring="recall_macro", n_jobs = -1, cv = 3) 
+    clf = GridSearchCV(xgb_model, parameter_space, scoring="f1_macro", cv = 5) 
     # clf = RandomizedSearchCV(xgb_model, parameter_space, n_iter = 100, scoring="%s_macro" % score, n_jobs = -1, cv = 3) 
     clf.fit(X_train, y_train)
 
-    print("Best parameters set found on development set:")
-    print()
+    print("Best parameters set found on development set:\n")
     print(clf.best_params_)
     print()
-    print("Grid scores on development set:")
-    print()
+    print("Grid scores on development set:\n")
 
     means = clf.cv_results_["mean_test_score"]
     stds = clf.cv_results_["std_test_score"]
@@ -86,14 +98,12 @@ def XGBoost(X, y):
         print("%0.3f (+/-%0.03f) for %r" % (mean, std * 2, params))
     print()
 
-    print("Detailed classification report:")
-    print()
+    print("Detailed classification report:\n")
     print("The model is trained on the full development set.")
-    print("The scores are computed on the full evaluation set.")
-    print()
+    print("The scores are computed on the full evaluation set.\n")
     y_true, y_pred = y_test, clf.predict(X_test)
     print(classification_report(y_true, y_pred))
-    print()
+
 
 
 

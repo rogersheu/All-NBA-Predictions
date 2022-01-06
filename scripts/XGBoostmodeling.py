@@ -12,7 +12,17 @@ def XGBoost(X, y, X_2022):
 
     for i in range(iterations):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify = y)
-        xgb_model = xgb.XGBClassifier(objective = 'binary:logistic', eval_metric = 'logloss', use_label_encoder = False, n_estimators = 50, tree_method = 'hist', eta = 0.3, alpha = 0, gamma = 0.05)
+        xgb_model = xgb.XGBClassifier(
+            objective = 'binary:logistic',
+            tree_method = 'hist',
+            eval_metric = 'logloss',  
+            use_label_encoder = False, 
+            n_estimators = 100, 
+            learning_rate = 0.2, 
+            gamma = 1,
+            reg_lambda = 10,
+            reg_alpha = 0.1,
+        )
         # Histogram-based boosting makes XGBoost much faster
         # Other speed-up options include using your CPU with CUDA (Nvidia)  xgb.XGBClassifier(tree_method = "gpu_hist")
         # and using single precision xgb.XGBClassifier(tree_method = "gpu_hist", single_precision_histogram=True)
