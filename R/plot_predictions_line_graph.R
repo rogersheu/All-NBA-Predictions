@@ -87,14 +87,20 @@ plot_predictions_line_graph <- function(startDate, endDate) { #YYYY-MM-DD format
   # df_Avg <<- df_Avg
   
   
-  ### Choice between filtering by average probability
-  bestAvg <- filter(df_Avg, df_Avg[ncol(df_Avg)] >= .25)
+  ### Filtering by average probability
+  # bestAvg <- filter(df_Avg, df_Avg[ncol(df_Avg)] >= .25)
+  ###
   
-  ### or filtering by highest probability throughout time interval indicated
-  #bestAvg <- filter(df_Avg, rowMaxs(as.matrix(df_Avg[,2:ncol(df_Avg)])) > 0.5)
+  ### Filter by highest probability throughout time interval indicated
+  # bestAvg <- filter(df_Avg, rowMaxs(as.matrix(df_Avg[,2:ncol(df_Avg)])) > 0.5)
+  ###
   
   ### Sort by Average
-  #bestAvg <- bestAvg[order(bestAvg[,-Avg]),]
+  # bestAvg <- bestAvg[order(bestAvg[,-Avg]),]
+  ###
+  
+  ### Filter by most recent probability
+  bestAvg <- filter(df_Avg, df_Avg[ncol(df_Avg)-1] >= .25)
   ###
   
   ### Removes Average column, only used to filter.
