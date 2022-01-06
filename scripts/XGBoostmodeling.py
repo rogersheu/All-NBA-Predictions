@@ -23,7 +23,6 @@ def XGBoost(X, y, X_2022):
         predictions = xgb_model.predict_proba(X_2022)
         prediction_trials.append(predictions[:,1])
 
-
     print('Confusion matrix and classification report for XGBoost model, final iteration.\n')
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
