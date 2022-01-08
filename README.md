@@ -181,6 +181,23 @@ Hidden layer sizes for the 7 input and 1 output node were varied between a singl
 
 As for the other parameters, solver was initially varied between ```lbfgs``` (Gaussian) and ```adam```. ```sgd``` was initially considered but discarded because it provided suboptimal results upon validation. The ```learning_rate``` only applies to ```sgd``` models so it was left at default as well. Finally, the ```activation``` was testing between ```tanh``` and ```relu```, but difference in results between these two were minimal, so the default of ```relu``` was selected.
 
+Gradient Boosted Classifier (Gradient Boosted Machines, GBM) Tuning
+--------------
+The [GradientBoostingClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html) has quite a few hyperparameters. For the purpose of simplicity, I looked at three of the most important hyperparameters: ```learning_rate```, ```max_depth```, and ```n_estimators```. These have defaults of ```0.1```, ```3```, and ```100```, respectively. After using ```GridSearchCV``` to look at the recall and f1score outputs of these parameters with various other values, I came to the conclusion that the defaults were perfectly fine.
+
 XGBoost Tuning
 --------
-To be implemented.
+[XGBoost](https://xgboost.readthedocs.io/en/stable/parameter.html), on the other hand, has at least nine parameters that play a major role in the XGBoost output: ```objective```, ```eval_metric```, ```n_estimators```, ```max_depth```, ```eta```, ```alpha```, ```lambda```, ```gamma```, and ```min_child_weight```. A great resource for this can be found at [this site](https://shengyg.github.io/repository/machine%20learning/2017/02/25/Complete-Guide-to-Parameter-Tuning-xgboost.html). From the GBM classifier, I figured ```n_estimators=100``` and ```max_depth=3``` would be decent settings to begin with. ```eta```, the learning rate, is a significant metric, since it can prevent large jumps in descent that may skip the global loss minimum. However, I varied that last, since I wanted to make sure other parameters were fixed, lest ```GridSearchCV``` have too many conditions to check. I also implemented ```RandomSearchCV```, but there were too many variables and trends in recall to keep track of. The general order should go something like the following list, from the page called [Complete Guide to Parameter Tunning xgboost](https://shengyg.github.io/repository/machine%20learning/2017/02/25/Complete-Guide-to-Parameter-Tuning-xgboost.html).
+
+1. Choose a relatively high learning rate. Generally a learning rate of 0.1 works but somewhere between 0.05 to 0.3 should work for different problems. Determine the optimum number of trees for this learning rate. XGBoost has a very useful function called as “cv” which performs cross-validation at each boosting iteration and thus returns the optimum number of trees required.
+2. Tune tree-specific parameters ( max_depth, min_child_weight, gamma, subsample, colsample_bytree) for decided learning rate and number of trees. Note that we can choose different parameters to define a tree and I’ll take up an example here.
+3. Tune regularization parameters (lambda, alpha) for xgboost which can help reduce model complexity and enhance performance.
+4. Lower the learning rate and decide the optimal parameters.
+
+I tried a few different ```objective```s, including ```reg:squarederror```, ```reg:squaredlogerror```, `reg:logistic`, `binary:logistic` (the default), and `binary:logitraw`. Descriptions of these can be found at the XGBoost link above or [here](https://xgboost.readthedocs.io/en/stable/parameter.html). After a few permutations of other parameters and these objectives, I decided the default of `binary:logistic` was sufficient.
+
+I also tried a few different `eval_metric`s, including `rmse`, `logloss`, `error`, and `aucpr`. The default, `logloss`, was selected for superior performance.
+
+With those out of the way, I then did a GridSearch on ```eta```, ```alpha```, ```lambda```, and ```gamma```, which stand for the learning rate, L1 regularization parameter, the L2 regularization parameter, and the ```min_split_loss```, respectively, and have defaults of 0.3 (eta), 0 (alpha), 1 (lambda), and 0 (gamma), respectively. 
+
+An increase in ```alpha``` or ```lambda``` makes the model more conservative, which means such a model is less likely to deviate from safe majority choices.
