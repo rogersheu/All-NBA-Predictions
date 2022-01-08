@@ -56,7 +56,8 @@ plot_Nplayers <- function(data, startIndex, endIndex, endDate) {
     theme(axis.title.y = element_text(size = 16)) + 
     theme(axis.text.y = element_text(size = 14)) + 
     scale_x_date(date_breaks = "3 days", limits = range) + # Major axis (x) every three days, limits as set above
-    scale_y_continuous(expand = expansion(mult = .1), breaks = seq(0, 1, 0.05)) + 
+    scale_y_continuous(breaks = seq(0, 1, 0.05)) + 
+    #scale_y_continuous(expand = expansion(mult = .1), breaks = seq(0, 1, 0.05)) + # If the y axis needs expanding
     geom_dl(aes(label = Player), color = melted_players$color, group=melted_players$Player, method = list(dl.trans(x = x + 0.2), "last.bumpup", cex = 1)) +
     geom_dl(aes(label = Player), color = melted_players$color, group=melted_players$Player, method = list(dl.trans(x = x - 0.2), "first.bumpup", cex = 1))
   
