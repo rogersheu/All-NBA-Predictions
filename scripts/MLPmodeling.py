@@ -12,7 +12,8 @@ def MLP(X, y, X_2022):
     iterations = 10 # Number of trials
     prediction_trials = []
     scaler = StandardScaler()
-    clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (2,2), solver = "adam")
+    clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (4), solver = "adam")
+    # By default, the output activator is a logistic (i.e., sigmoid)
 
     # Max_iter was changed from its default of 200 to 1000. May need to be changed in the future.
     # Activation of 'tanh' was just a tad better than 'relu'
