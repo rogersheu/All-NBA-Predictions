@@ -20,8 +20,8 @@ def XGBoost(X, y, X_2022):
             n_estimators = 100, 
             learning_rate = 0.2, 
             gamma = 1,
-            reg_lambda = 10,
-            reg_alpha = 0.1,
+            reg_lambda = 5,
+            reg_alpha = 0,
         )
         # Histogram-based boosting makes XGBoost much faster
         # Other speed-up options include using your CPU with CUDA (Nvidia)  xgb.XGBClassifier(tree_method = "gpu_hist")

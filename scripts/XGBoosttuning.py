@@ -47,13 +47,13 @@ def XGBoost(X, y):
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify = y)
     xgb_model = xgb.XGBClassifier( 
-        use_label_encoder = False, 
         objective = 'binary:logistic',
-        eval_metric = 'logloss', 
+        tree_method = 'hist',
+        eval_metric = 'logloss',  
+        use_label_encoder = False, 
         n_estimators = 100, 
-        tree_method = 'hist', 
-        eta = 0.2, 
-        # alpha = 0.1
+        # eta = 0.2, 
+        # reg_alpha = 0
     )
     # https://xgboost.readthedocs.io/en/latest/parameter.html#learning-task-parameters
     parameter_space = {
@@ -61,9 +61,9 @@ def XGBoost(X, y):
         # "eval_metric" : ['rmse', 'logloss', 'error', 'aucpr'],
         # "n_estimators" : [25, 50, 100], #1
         # "max_depth" : [3, 4, 5, 6], #2
-        # "eta" : [0.1, 0.15, 0.2, 0.25, 0.3], #3
-        "alpha" : [0, 0.1], #4
-        "lambda" : [0.1, 0.5, 1, 2, 5, 10], #4
+        "learning_rate" : [0.1, 0.15, 0.2, 0.25, 0.3], #3
+        # "reg_alpha" : [0, 0.1], #4
+        "reg_lambda" : [0.1, 0.5, 1, 2, 5, 10], #4
         "gamma" :  [0, 0.1, 0.2, 0.5, 1] #5
         # "min_child_weight" : [1, 3, 5, 7, 9] #6
     }
