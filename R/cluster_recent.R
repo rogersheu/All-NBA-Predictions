@@ -21,7 +21,7 @@ cluster_recent <- function(data) {
     centers <- sort(clusterresults$centers)
     centers <- sort(clusterresults$centers, decreasing = TRUE)
     clusterresults <- kmeans(mostrecent[,2], num_clusters, centers = centers)
-    if(max(clusterresults$size) < (7.5 + cluster_size_offset) & min(clusterresults$size > (7.5 - (cluster_size_offset/1.5)))) {
+    if(max(clusterresults$size) < (7.5 + cluster_size_offset) & min(clusterresults$size > (6.5 - (cluster_size_offset/1.5)))) {
       clusterresults <<- clusterresults
       return(clusterresults$size)
     }
