@@ -12,7 +12,7 @@ def GBM(X, y, X_2022):
     # No scaling required
     for i in range(iterations):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify = y)
-        gbm_model = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0)
+        gbm_model = GradientBoostingClassifier(n_estimators=100)
         gbm_model.fit(X_train, y_train)
         y_pred = gbm_model.predict(X_test)
 
