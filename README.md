@@ -108,8 +108,7 @@ Methodology
 ========
 Web Scraping
 --------
-Explanation under construction
-
+Beautiful Soup, a Python web scraper, was used to scrape data from various [Basketball Reference](https://www.basketball-reference.com/) pages. Usage of Beautiful Soup can be best seen in `scrape_stats_cli.py`, but other scripts, including `scrape_advancedteamstats.py` and `teamstats.py` contain examples.
 
 Feature Selection: Preemptively Identifying Potential Overfitting
 --------
@@ -187,7 +186,7 @@ The [GradientBoostingClassifier](https://scikit-learn.org/stable/modules/generat
 
 XGBoost Tuning
 --------
-[XGBoost](https://xgboost.readthedocs.io/en/stable/parameter.html), on the other hand, has at least nine parameters that play a major role in the XGBoost output: ```objective```, ```eval_metric```, ```n_estimators```, ```max_depth```, ```eta```, ```alpha```, ```lambda```, ```gamma```, and ```min_child_weight```. A great resource for this can be found at [this site](https://shengyg.github.io/repository/machine%20learning/2017/02/25/Complete-Guide-to-Parameter-Tuning-xgboost.html). From the GBM classifier, I figured ```n_estimators=100``` and ```max_depth=3``` would be decent settings to begin with. ```eta```, the learning rate, is a significant metric, since it can prevent large jumps in descent that may skip the global loss minimum. However, I varied that last, since I wanted to make sure other parameters were fixed, lest ```GridSearchCV``` have too many conditions to check. I also implemented ```RandomSearchCV```, but there were too many variables and trends in recall to keep track of. The general order should go something like the following list, from the page called [Complete Guide to Parameter Tunning xgboost](https://shengyg.github.io/repository/machine%20learning/2017/02/25/Complete-Guide-to-Parameter-Tuning-xgboost.html).
+[XGBoost](https://xgboost.readthedocs.io/en/stable/parameter.html), on the other hand, has at least nine parameters that play a major role in the XGBoost output: ```objective```, ```eval_metric```, ```n_estimators```, ```max_depth```, ```eta```, ```alpha```, ```lambda```, ```gamma```, and ```min_child_weight```. A great resource for this can be found at [this site](https://shengyg.github.io/repository/machine%20learning/2017/02/25/Complete-Guide-to-Parameter-Tuning-xgboost.html). From the GBM classifier, I figured ```n_estimators=100``` and ```max_depth=3``` would be decent settings to begin with. ```eta```, the learning rate, is a significant metric, since it can prevent large jumps in descent that may skip the global loss minimum. However, I looked at that last, since I wanted to make sure other parameters were fixed, lest ```GridSearchCV``` have too many conditions to check. I also implemented ```RandomSearchCV```, but there were too many variables and trends in recall to keep track of. The general order should go something like the following list, from the page called [Complete Guide to Parameter Tunning xgboost](https://shengyg.github.io/repository/machine%20learning/2017/02/25/Complete-Guide-to-Parameter-Tuning-xgboost.html).
 
 1. Choose a relatively high learning rate. Generally a learning rate of 0.1 works but somewhere between 0.05 to 0.3 should work for different problems. Determine the optimum number of trees for this learning rate. XGBoost has a very useful function called as “cv” which performs cross-validation at each boosting iteration and thus returns the optimum number of trees required.
 2. Tune tree-specific parameters ( max_depth, min_child_weight, gamma, subsample, colsample_bytree) for decided learning rate and number of trees. Note that we can choose different parameters to define a tree and I’ll take up an example here.
@@ -200,4 +199,8 @@ I also tried a few different `eval_metric`s, including `rmse`, `logloss`, `error
 
 With those out of the way, I then did a GridSearch on ```eta```, ```alpha```, ```lambda```, and ```gamma```, which stand for the learning rate, L1 regularization parameter, the L2 regularization parameter, and the ```min_split_loss```, respectively, and have defaults of 0.3 (eta), 0 (alpha), 1 (lambda), and 0 (gamma), respectively. 
 
-An increase in ```alpha``` or ```lambda``` makes the model more conservative, which means such a model is less likely to deviate from safe majority choices.
+An increase in ```alpha``` or ```lambda``` makes the model more conservative, which means such a model is less likely to deviate from safe majority choices. Surprisingly, while changing both of these had little effect, a higher `lambda` was incrementally better than its default of 1. Thus, a `lambda` of 5 was chosen. An `alpha` of 0 was kept as the default.
+
+I also looked at `gamma`, the `min_split_loss`. A tree would only split a leaf if the loss was higher than this threshold set by `gamma`. Therefore, raising this threshold would lead to less splitting, discouraging potential overfitting, but potentially reducing the accuracy of the model. `Gamma` is defaulted at 0, implying no such threshold. However, I found that a higher gamma was slightly better than a gamma of 0, which may potentially be because of the nature of the data (imbalanced toward 0 in a binary classification), which would reward conservative models.
+
+Finally, I looked at ```eta```. I had tried a wide range of values for `eta`, ranging from 0.01 to 1. The danger of too high an `eta` is completely skipping over the desired minimum loss. However, in the other direction, too low of a learning rate may lead to performance issues and much slower training speeds. A good middle ground was found at the default of 0.3, though pretty much any value between 0.1 and 0.3 was perfectly valid.
