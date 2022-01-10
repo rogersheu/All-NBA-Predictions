@@ -3,15 +3,15 @@ library(ggplot2)
 library(matrixStats)
 library(lubridate)
 
-# Enter in yyyy, mm, dd format as STRINGS
-plot_predictions <- function(year, month, day) 
-{
-  date <- paste(year, month, day, sep="")
-  filename <- paste("stats_", date, "_modeled", sep="")
+get_top_candidates <- function(date) {
+  year <- substr(as_date(date), 1, 4)
+  month <- substr(as_date(date), 6, 7)
+  day <- substr(as_date(date), 9, 10)
+  date_nospace <- paste(year, month, day, sep="")
+  filename <- paste("stats_", date_nospace, "_modeled", sep="")
   folderName <- paste(year, "-", month, "-", day, "/", sep="")
   fullPath <- paste("~/GitHub/All-Star-Predictions/baseData/dailystats/", folderName, filename, ".csv", sep="")
   currstats <- read.csv(fullPath)
-
   
   df <- select(currstats, Player, RF, SVM, kNN, GBM, MLP, XGB)
   
@@ -23,12 +23,32 @@ plot_predictions <- function(year, month, day)
   topCandidates <- topCandidates[order(-Avg),]
   detach(topCandidates)
   
+  return(topCandidates)
+}
+
+run_predictions <- function(date) {
+  year <- substr(as_date(date), 1, 4)
+  month <- substr(as_date(date), 6, 7)
+  day <- substr(as_date(date), 9, 10)
   
-  saveFileName = paste("~/GitHub/All-Star-Predictions/R/Graphs/Model Output ", year, month, day, ".png", sep="")
+  topCandidates <- get_top_candidates(date)
+  
+  saveFileName <- paste("~/GitHub/All-Star-Predictions/R/Graphs/Model Output ", year, month, day, ".png", sep="")
+  
+  plot_predictions(topCandidates, date)
+}
+
+
+
+# Enter in yyyy-mm-dd as a string, e.g. "2021-12-10"
+plot_predictions <- function(topCandidates, date) 
+{
+  year <- substr(as_date(date), 1, 4)
+  month <- substr(as_date(date), 6, 7)
+  day <- substr(as_date(date), 9, 10)
   
   #dev.off()
-  
-  currPlot <- ggplot(topCandidates, aes(x = Player, y = RF)) + 
+  currPlot <- ggplot(data = topCandidates, aes(x = Player, y = RF)) + 
     theme_bw() + 
     ggtitle(paste("All-League Classifications Predictions (", year, "-", month, "-", day, ")", sep = "")) + 
     theme(axis.text.y = element_text(face = "bold")) +
@@ -62,6 +82,7 @@ plot_predictions <- function(year, month, day)
   )
   
   print(currPlot)
+  return(currPlot)
   
 }
 

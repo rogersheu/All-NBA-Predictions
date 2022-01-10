@@ -24,5 +24,5 @@ plot_today <- function() {
   if (day(today) < 10) {
     day <- paste("0", day, sep = "")
   }
-  plot_predictions(year, month, day)
+  run_predictions(today)
 }
