@@ -2,7 +2,7 @@ library(lubridate)
 
 automate_plotting <- function(startDate, endDate) { #YYYY-MM-DD format
   for(date in seq(as_date(startDate), as_date(endDate), by = "day")) {
-    plot_predictions(substr(as_date(date), 1, 4), substr(as_date(date), 6, 7), substr(as_date(date), 9, 10))
+    run_predictions(date)
   }
 }
 
@@ -15,14 +15,19 @@ automate_plotting <- function(startDate, endDate) { #YYYY-MM-DD format
 #today <- format(Sys.Date(), "%Y %b %d")
 plot_today <- function() {
   today <- Sys.Date()
-  year <- toString(year(today))
-  month <- toString(month(today))
-  day <- toString(day(today))
-  if (month(today) < 10) {
+
+  run_predictions(today)
+}
+
+
+date_parse <- function(date) {
+  year <- toString(year(date))
+  month <- toString(month(date))
+  day <- toString(day(date))
+  if (month(date) < 10) {
     month <- paste("0", month, sep = "")
   }
-  if (day(today) < 10) {
+  if (day(date) < 10) {
     day <- paste("0", day, sep = "")
   }
-  run_predictions(today)
 }
