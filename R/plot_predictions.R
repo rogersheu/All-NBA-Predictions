@@ -50,7 +50,7 @@ plot_predictions <- function(topCandidates, date)
   #dev.off()
   currPlot <- ggplot(data = topCandidates, aes(x = Player, y = RF)) + 
     theme_bw() + 
-    ggtitle(paste("All-League Classifications Predictions (", year, "-", month, "-", day, ")", sep = "")) + 
+    ggtitle(paste("All-League Probabilities (", year, "-", month, "-", day, ")", sep = "")) + 
     theme(axis.text.y = element_text(face = "bold")) +
     ylab("Model Probability") +
     xlab("") + 
