@@ -18,8 +18,8 @@ plot_predictions_clusters <- function(startDate, endDate) {
 
 
 plot_predictions_fixedsubset <- function(startDate, endDate, indices) { 
-  startIndex <- indices[0]
-  endIndex <- indices[1]
+  startIndex <- indices[1]
+  endIndex <- indices[2]
   data <- processing_predictions(startDate, endDate)
   plot_Nplayers(data, startIndex, endIndex, endDate, 0)
 }
