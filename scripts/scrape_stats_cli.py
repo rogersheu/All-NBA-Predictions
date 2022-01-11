@@ -131,7 +131,7 @@ def save_each_season_stats(statType, yearStart, yearEnd):
 
 def save_all_stats(statType, yearStart, yearEnd):
     if years_areValid(statType, yearStart, yearEnd):
-        yearList = list(range(yearStart, yearEnd + 1))
+        yearList = list(range(int(yearStart), int(yearEnd) + 1))
 
         typeKey = get_typeKey(statType)
 
