@@ -27,27 +27,28 @@ ui <- fluidPage(
       selectInput("date",
                 "Date:",
                 choices = seq(as_date("2021-12-01"), as_date(today), by = "day"),
+                width = "150px",
                 selected = as_date(today)
-      )
+                )
     ),
 
     fluidRow(align = "center",
-      plotOutput("probs", height = "9.75in", width = "12in")
+      plotOutput("probs", height = "6.5in", width = "8in")
     ),
     
     fluidRow(align = "center",
      sliderInput("topN", label = h3("Top Nth Players by Ensemble Probability"), min = 1, 
-                 max = nrow(processing_predictions(as_date("2021-12-01"), as_date(today))), value = c(1, 10))
+                 max = nrow(processing_predictions(as_date("2021-12-01"), as_date(today))), 
+                 step = 1,
+                 #ticks = FALSE, 
+                 width = "400px",
+                 value = c(1, 10)
+                 )
     ),
     
     fluidRow(align = "center",
-      plotOutput("lines", height = "9.75in", width = "12in")       
+      plotOutput("lines", height = "8in", width = "10in")       
     )
-    
-    # mainPanel(
-    #   plotOutput("probs", height = "9.75in", width = "12in")
-    # )
-    
 
 )
 
