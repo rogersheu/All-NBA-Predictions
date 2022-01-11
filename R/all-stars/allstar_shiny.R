@@ -26,33 +26,29 @@ ui <- fluidPage(
     fluidRow(align = "center",
       selectInput("date",
                 "Date:",
-                choices = seq(as_date(today), as_date("2021-12-01"), by = "day"),
+                choices = seq(as_date("2021-12-01"), as_date(today), by = "day"),
                 selected = as_date(today)
       )
     ),
 
+    fluidRow(align = "center",
+      plotOutput("probs", height = "9.75in", width = "12in")
+    ),
     
+    fluidRow(align = "center",
+     sliderInput("topN", label = h3("Top Nth Players by Ensemble Probability"), min = 1, 
+                 max = nrow(processing_predictions(as_date("2021-12-01"), as_date(today))), value = c(1, 10))
+    ),
     
-    mainPanel(
-      plotOutput("probs", height = "1000", width = "1000")
+    fluidRow(align = "center",
+      plotOutput("lines", height = "9.75in", width = "12in")       
     )
     
-        
-    # Sidebar with a slider input for date alternative
-    # sidebarLayout(
-    #     sidebarPanel(
-    #         sliderInput("date",
-    #                     "Date:",
-    #                     min = as_date("2021-12-01"),
-    #                     max = as_date(today),
-    #                     value = as_date(today))
-    #     ),
-    # 
-    #     # Show a plot of the generated distribution
-    #     mainPanel(
-    #        plotOutput("probs")
-    #     )
+    # mainPanel(
+    #   plotOutput("probs", height = "9.75in", width = "12in")
     # )
+    
+
 )
 
 # Define server logic required to draw a histogram
@@ -64,7 +60,10 @@ server <- function(input, output) {
   
   output$probs <- renderPlot({
     plot_predictions(plot_day(), input$date)
-    
+  })
+  
+  output$lines <- renderPlot({
+    plot_predictions_fixedsubset(as_date("2021-12-01"), as_date(today), input$topN)
   })
 }
 
