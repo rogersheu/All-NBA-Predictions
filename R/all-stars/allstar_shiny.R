@@ -1,16 +1,3 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
-# One slider would be for date to show individual date plot_predictions
-
-# One slider could be for current probability threshold
-
 library(shiny)
 library(lubridate)
 
@@ -21,7 +8,7 @@ today <- Sys.Date()
 ui <- fluidPage(
 
     # Application title
-    titlePanel("Tracking All-Star Probabilities"),
+    titlePanel(h1("Tracking All-Star Probabilities", align = "center")),
 
     fluidRow(align = "center",
       selectInput("date",
@@ -37,13 +24,17 @@ ui <- fluidPage(
     ),
     
     fluidRow(align = "center",
-     sliderInput("topN", label = h3("Top Nth Players by Ensemble Probability"), min = 1, 
+     sliderInput("topN", label = h3("Top Players by Ensemble Probability"), min = 1, 
                  max = nrow(processing_predictions(as_date("2021-12-01"), as_date(today))), 
                  step = 1,
                  #ticks = FALSE, 
                  width = "400px",
                  value = c(1, 10)
                  )
+    ),
+    
+    fluidRow(align = "center",
+             actionButton("update", "Update Player Range")      
     ),
     
     fluidRow(align = "center",
@@ -55,16 +46,20 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
+  playerRange <- eventReactive(input$update, {
+    input$topN
+  }, ignoreNULL = FALSE)
+  
   plot_day <- reactive({
     get_top_candidates(as_date(input$date))
   })
   
   output$probs <- renderPlot({
-    plot_predictions(plot_day(), input$date)
+    plot_predictions(plot_day(), input$date, FALSE)
   })
   
   output$lines <- renderPlot({
-    plot_predictions_fixedsubset(as_date("2021-12-01"), as_date(today), input$topN)
+    plot_predictions_fixedsubset(as_date("2021-12-01"), as_date(today), playerRange())
   })
 }
 
