@@ -115,9 +115,3 @@ processing_predictions <- function(startDate, endDate) { #YYYY-MM-DD format
   return(bestAvg)
   
 }
-
-
-
-get_nrow <- function(df) {
-  return(nrow(df))
-}
