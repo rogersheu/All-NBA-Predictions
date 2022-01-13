@@ -16,6 +16,7 @@ In ```./scripts/```:
 Modeling
 * ```daily_modeling.py``` (Runs the four models in the next bullet point)
 * ```RFmodeling.py SVMmodeling.py MLPmodeling.py XGBoostmodeling.py``` (scikit-learn, model execution, called from ```daily_modeling.py```, some matplotlib)
+* ```MLPinTFKeras.ipynb``` (TensorFlow and Keras implementation of a similar multilayer perceptron to the one in scikit-learn)
 
 Tuning (Training, Validating, Testing)
 * ```RFtuning.py MLPtuning.py``` (scikit-learn, GridSearchCV to tune hyperparameters, train_test_split)
