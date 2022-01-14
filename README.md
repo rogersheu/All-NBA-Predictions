@@ -4,7 +4,7 @@ For Recruiters
 -------
 For an example of my work, please peruse the following files.
 
-In ```/rogersheu/NBA-ML-Predictions/scripts/```:
+In ```./scripts/```:
 
 **Web scraping**
 
@@ -16,6 +16,7 @@ In ```/rogersheu/NBA-ML-Predictions/scripts/```:
 Modeling
 * ```daily_modeling.py``` (Runs the four models in the next bullet point)
 * ```RFmodeling.py SVMmodeling.py MLPmodeling.py XGBoostmodeling.py``` (scikit-learn, model execution, called from ```daily_modeling.py```, some matplotlib)
+* ```MLPinTFKeras.ipynb``` (TensorFlow and Keras implementation of a similar multilayer perceptron to the one in scikit-learn)
 
 Tuning (Training, Validating, Testing)
 * ```RFtuning.py MLPtuning.py``` (scikit-learn, GridSearchCV to tune hyperparameters, train_test_split)
@@ -29,13 +30,15 @@ Helper Functions
 
 **Databases**
 
-* Relational database of players: ```/rogersheu/NBA-ML-Predictions/baseData/allPlayerStats.db```
-* SQL functions: ```/rogersheu/NBA-ML-Predictions/scripts/SQL/```
+* Relational database of players: ```/baseData/allPlayerStats.db```
+* SQL functions: ```/scripts/SQL/```
 * ```players2022_dbeaver.sql``` (common table expressions, multiple joins, data filters via subqueries and LIMIT 1, aliases, and ensuring accuracy/readability of data using ROUND/CAST)
 
 **Visualizations**
 
-Under construction, both locally in R (locally referring to within this repository) and elsewhere in Tableau Public. Graphs can be shared upon request.
+* RShiny app ```/R/all-stars/allstar_shiny```, shows the probability for a given day and the trend over a range of a dates
+
+Still under construction, both locally in R (locally referring to within this repository) and elsewhere in Tableau Public. Graphs can be shared upon request.
 
 
 Objective/Motivation
