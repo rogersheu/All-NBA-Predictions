@@ -1,7 +1,8 @@
 ALTER TABLE playerstats RENAME TO playerstats_backup;
 
 CREATE TABLE playerstats_withtype 
-( "ID" INTEGER,
+( 
+"ID" INTEGER,
 "Player" VARCHAR(50),
 "PlayerID" VARCHAR(20),
 "Year" VARCHAR(5),
