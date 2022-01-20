@@ -41,7 +41,7 @@ plot_Nplayers <- function(data, startIndex, endIndex, endDate, saveFlag) {
   
   # Adjusts x-axis to be further out to accommodate directlabels
   lastDate <- melted_players[nrow(melted_players),2]
-  range <-  c(as.Date("2021-12-01") - 3, as.Date(endDate) + 3)
+  range <-  c(as.Date("2021-12-01") - 4, as.Date(endDate) + 4)
   
   lineplot <- ggplot(data=melted_players, aes(x=as.Date(variable), y=value, group=Player)) +
     geom_line(size=0.75, color = melted_players$color, group=melted_players$Player) + 
