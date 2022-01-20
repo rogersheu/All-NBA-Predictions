@@ -29,13 +29,15 @@ def save_each_season_stats_daily(statType, yearStart, yearEnd):
         return False
 
 
-def main():
+def daily_data_script():
     save_each_season_stats_daily('-tot', '2022', '2022')
     save_each_season_stats_daily('-adv', '2022', '2022')
     scrape_all_team_records((f"{mkdir}/teamStandings_{shortDate_nodash}.csv"), 2022, 2022)
     add_abbreviated_team_names((f"{mkdir}/teamStandings_{shortDate_nodash}.csv"))
     scrape_alladvanced(f"{mkdir}", '1980', '2022')
 
+def main():
+    daily_data_script()
 
 if __name__ == '__main__':
     main()
