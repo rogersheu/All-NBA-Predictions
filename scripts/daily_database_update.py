@@ -10,6 +10,7 @@ def database_pipeline():
     # See this for various ways to import CSV into sqlite using Python. Pandas used here because files are not prohibitively large.
     # https://stackoverflow.com/questions/2887878/importing-a-csv-file-into-a-sqlite3-database-table-using-python
 
+    print("SQL scripts starting...")
     # Drop old tables, might not be necessary since we're dropping them
     sql_file = open("./scripts/SQL/drop_old_tables.sql")
     try:
@@ -49,6 +50,7 @@ def database_pipeline():
     print(df_output)
     df_output.to_csv(f'{path}/stats_{date}.csv', index = False)
 
+    print("SQL scripts complete.")
 
 
 
