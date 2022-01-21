@@ -2,7 +2,7 @@ import sqlite3
 from transfer_data import *
 from os import listdir
 
-def database_pipeline():
+def database_pipeline(path):
     connection = sqlite3.connect("./baseData/allPlayerStats.db")
 
     cursor = connection.cursor()
@@ -21,7 +21,6 @@ def database_pipeline():
         pass
 
     # Decide whether to have user pick path or just set it automatically...
-    path = pick_path()
     for fileName in listdir(path):
         if fileName.endswith('.csv'): #Avoid any accidents
             df = pd.read_csv(f'{path}/{fileName}')
@@ -56,7 +55,8 @@ def database_pipeline():
 
 
 def main():
-    database_pipeline()
+    data_path = pick_path()
+    database_pipeline(data_path)
 
 if __name__ == '__main__':
     main()
