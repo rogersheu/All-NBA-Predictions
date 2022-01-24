@@ -36,7 +36,7 @@ Helper Functions
 
 **Visualizations**
 
-* RShiny app ```/R/all-stars/allstar_shiny```, shows the probability for a given day and the trend over a range of a dates
+* RShiny app ```/R/all-stars/allstar_shiny.R```, shows the probability for a given day and the trend over a range of a dates
 
 Still under construction, both locally in R (locally referring to within this repository) and elsewhere in Tableau Public. Graphs can be shared upon request.
 
@@ -137,13 +137,13 @@ The statistics used were the following.
 | Win Shares per 48 minutes (WS/48) |
 | Team Winning Percentage (Perc) |
 
-Predictor: I call it ```All-League Selection```, which is the intersection of All-Star picks and All-NBA picks. This makes sure some players who made one or the other are not excluded. 24 All-Star are picked every season (with possibility a few more with injury replacements), while 15 players are selected for All-NBA. Most of the time, All-NBA players are selected as All-Stars in the same season, while the opposite occurs less often (e.g., Rudy Gobert in 2017 and 2019). Soemtimes, this discrepancy occurs because of positional limits. All-Stars have since shifted to a frontcourt/backcourt voting approach, while All-NBA selections remain on the guards/forwards/centers categories. Other times, it's a result of the relevant schedule period. All-Stars are picked around halfway into the season, so players who get injured or falter later on can miss the All-NBA teams. Alternatively, players who outperform their first half can elevate into an All-NBA pick if others fade.
+Predictor: I call it ```All-League Selection```, which is the intersection of All-Star picks and All-NBA picks. This makes sure some players who made one or the other are not excluded. 24 All-Stars are picked every season (with possibility a few more with injury replacements), while 15 players are selected for All-NBA teams. Most of the time, All-NBA players are selected as All-Stars in the same season, while the opposite occurs less often (e.g., Rudy Gobert in 2017 and 2019). Soemtimes, this discrepancy occurs because of positional limits. All-Stars have since shifted to a frontcourt/backcourt voting approach, while All-NBA selections remain on the guards/forwards/centers categories. Other times, it's a result of the relevant schedule period. All-Stars are picked around halfway into the season, so players who get injured or falter later on can miss the All-NBA teams. Alternatively, players who outperform their first half can elevate into an All-NBA pick if others fade.
 
 Example Output
 ========
 Example #1, plot_predictions.R
 --------
-For example, the following figure shows the status of these players through 12/21/2021. We are still quite a ways away from the all-star or all-NBA selections (almost 30 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
+For example, the following figure shows the status of these players through 12/21/2021. We are still quite a ways away from the All-Star or all-NBA selections (almost 30 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
 
 <p align="center" width="100%">
     <img width="75%" src="https://user-images.githubusercontent.com/78449574/147544645-a8bdab79-d8da-407b-8a7a-f857308c12f9.png">
@@ -161,6 +161,10 @@ For example, here are the trends for the 24st-28th highest players as of 12/27/2
 <p align="center" width="100%">
     <img width="75%" src="https://user-images.githubusercontent.com/78449574/147544678-f48e0933-ea62-4897-8e42-63d41bf24ee2.png">
 </p>
+
+Example #3, RShiny application
+------------
+
 
 
 Hyperparameter Tuning
