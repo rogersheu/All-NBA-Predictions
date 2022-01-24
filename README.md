@@ -36,7 +36,7 @@ Helper Functions
 
 **Visualizations**
 
-* RShiny app ```/R/all-stars/allstar_shiny```, shows the probability for a given day and the trend over a range of a dates
+* RShiny app ```/R/all-stars/allstar_shiny.R```, shows the probability for a given day and the trend over a range of a dates
 
 Still under construction, both locally in R (locally referring to within this repository) and elsewhere in Tableau Public. Graphs can be shared upon request.
 
@@ -161,6 +161,10 @@ For example, here are the trends for the 24st-28th highest players as of 12/27/2
 <p align="center" width="100%">
     <img width="75%" src="https://user-images.githubusercontent.com/78449574/147544678-f48e0933-ea62-4897-8e42-63d41bf24ee2.png">
 </p>
+
+Example #3, RShiny application
+------------
+
 
 
 Hyperparameter Tuning
