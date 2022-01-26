@@ -1,5 +1,16 @@
 # Predicting All-Star/All-NBA Selections
 
+Table of Contents
+===========
+* For Recruiters
+* Objective/Motivation
+* Installation/Instructions
+* Machine Learning Models
+* Methodology
+* Example Output
+* Hyperparameter Tuning
+* Related Work
+
 For Recruiters
 -------
 For an example of my work, please peruse the following files.
@@ -85,7 +96,7 @@ Visualization (```RStudio```)
 ```plot_predictions_line_graph(startDate, endDate)``` and ```plot_Nplayers(startIndex, endIndex)``` - Creates a line graph time series across from the ```startDate``` to the ```endDate```.
 
 
-Models
+Machine Learning Models
 ===========
 **Currently implemented**
 * [Support Vector Machine (SVM)](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html)
@@ -214,3 +225,14 @@ An increase in ```alpha``` or ```lambda``` makes the model more conservative, wh
 I also looked at `gamma`, the `min_split_loss`. A tree would only split a leaf if the loss was higher than this threshold set by `gamma`. Therefore, raising this threshold would lead to less splitting, discouraging potential overfitting, but potentially reducing the accuracy of the model. `Gamma` is defaulted at 0, implying no such threshold. However, I found that a higher gamma was slightly better than a gamma of 0, which may potentially be because of the nature of the data (imbalanced toward 0 in a binary classification), which would reward conservative models.
 
 Finally, I looked at ```eta```. I had tried a wide range of values for `eta`, ranging from 0.01 to 1. The danger of too high an `eta` is completely skipping over the desired minimum loss. However, in the other direction, too low of a learning rate may lead to performance issues and much slower training speeds. A good middle ground was found at the default of 0.3, though pretty much any value between 0.1 and 0.3 was perfectly valid.
+
+
+Related Work
+===========
+[Three Point Progression: Chasing Curry](https://public.tableau.com/app/profile/roger3881/viz/NBA3PTProgression-ActivePlayers/ChasingCurry)
+
+A Tableau dashboard of the three point revolution in the NBA, and the highly-acclaimed player leading the movement.
+
+<p align="center" width="100%">
+    <img width="75%" src="https://user-images.githubusercontent.com/78449574/151091437-c984ca3c-a1ba-4a97-a766-ac36a949d934.png">
+</p>
