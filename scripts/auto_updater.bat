@@ -1,0 +1,1 @@
+C:\Users\Roger\AppData\Local\Programs\Python\Python310.exe "C:/Users/Roger/Documents/GitHub/All-Star-Predictions/scripts/NBA_pipeline.py"
