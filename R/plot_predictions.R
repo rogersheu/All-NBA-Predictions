@@ -87,3 +87,12 @@ plot_predictions <- function(topCandidates, date, saveFlag)
   
 }
 
+
+#today <- format(Sys.Date(), "%Y %b %d")
+plot_today <- function() {
+  today <- Sys.Date()
+  
+  run_predictions(today)
+}
+
+plot_today()

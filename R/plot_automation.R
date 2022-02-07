@@ -9,17 +9,6 @@ automate_plotting <- function(startDate, endDate) { #YYYY-MM-DD format
 
 #automate_plotting("2021-12-07", "2021-12-08")
 
-
-
-
-#today <- format(Sys.Date(), "%Y %b %d")
-plot_today <- function() {
-  today <- Sys.Date()
-
-  run_predictions(today)
-}
-
-
 date_parse <- function(date) {
   year <- toString(year(date))
   month <- toString(month(date))
