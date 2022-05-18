@@ -154,14 +154,16 @@ Example Output
 ========
 Example #1, plot_predictions.R
 --------
-For example, the following figure shows the status of these players through 12/21/2021. We are still quite a ways away from the All-Star or all-NBA selections (almost 30 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
+For example, the following figure shows the All-Star/all-NBA probabilities at the end of the season. We are still quite a ways away from the All-Star or all-NBA selections (almost 30 games into the season), but a lot of the players who we have come to expect to be yearly candidates for these spots have risen to expectations.
 
 <p align="center" width="100%">
-    <img width="75%" src="https://user-images.githubusercontent.com/78449574/147544645-a8bdab79-d8da-407b-8a7a-f857308c12f9.png">
+    <img width="75%" src="https://user-images.githubusercontent.com/78449574/168996227-a3819d7e-7e81-4764-a433-91e3396cbdf7.png">
 </p>
 
 
-It is worth noting that all four of these models are being used as a classifier models and not as regressor models. That means these values are the probability of these player being classified as a 1 (receiving all-star or all-NBA recognition) vs. a 0.
+It is worth noting that all four of these models are being used as a classifier models and not as regressor models. That means these values are the probability of these player being classified as a 1 (receiving all-star or all-NBA recognition) vs.a 0.
+
+Though variance in the second half of the 2021-22 NBA season leads to some of these probabilities shifting, most All-Stars selected had at least a probability of 0.4, with the only exceptions being Jarrett Allen and All-Star starter Andrew Wiggins. The top 14 players by probability made the All-Star game, along with 16 out of the top 17. Pascal Siakam had a notably strong second half of the season and may be in consideration for an All-NBA team as a result. Other players above Darius Garland who did not receive such recognition are Bam Adebayo, Jaylen Brown, and Deandre Ayton. On the day NBA All-Star voting closed, January 22, Bam had missed too many games to be qualified and his chances were thus significantly affected. Deandre Ayton was a solid candidate but the improbable ascension of Andrew Wiggins meant the team did not have an extra spot for him. Jaylen Brown had a slightly lower chance than Ayton, but the Celtics started off the season rather slowly, being merely 23-24 (23 wins, 24 losses) when the All-Star voting period ended. Voters could not justify sending two Celtics players, with his teammate Jayson Tatum already receiving a nomination.
 
 Example #2, plot_predictions_line_graph.R
 --------
