@@ -1,6 +1,10 @@
 import sqlite3
-from transfer_data import *
 from os import listdir
+
+import pandas as pd
+
+from transfer_data import pick_path
+
 
 def database_pipeline(path):
     connection = sqlite3.connect("./baseData/allPlayerStats.db")
@@ -17,17 +21,18 @@ def database_pipeline(path):
         sql_as_string = sql_file.read()
         cursor.executescript(sql_as_string)
         sql_file.close()
-    except:
+    except Exception:
         pass
 
     # Decide whether to have user pick path or just set it automatically...
     for fileName in listdir(path):
-        if fileName.endswith('.csv'): #Avoid any accidents
+        if fileName.endswith('.csv'):  # Avoid any accidents
             df = pd.read_csv(f'{path}/{fileName}')
-            df.to_sql(f'{fileName.replace(".csv","").split("_")[0]}', connection, if_exists='replace', index=False)
+            df.to_sql(
+                f'{fileName.replace(".csv","").split("_")[0]}', connection, if_exists='replace', index=False)
             try:
                 date = f'{fileName.replace(".csv","").split("_")[1]}'
-            except:
+            except Exception:
                 pass
 
     # Make changes to tables
@@ -35,28 +40,27 @@ def database_pipeline(path):
     try:
         sql_as_string = sql_file.read()
         cursor.executescript(sql_as_string)
-    except:
+    except Exception:
         pass
 
     sql_file.close()
 
     # Extract this season's qualified players
     sql_file = open("./scripts/SQL/players2022_dbeaver.sql")
-    df_output = pd.read_sql_query(sql_file.read(),connection)
+    df_output = pd.read_sql_query(sql_file.read(), connection)
     sql_file.close()
-    #sql_as_string = sql_file.read()
-    #cursor.executescript(sql_as_string)
+    # sql_as_string = sql_file.read()
+    # cursor.executescript(sql_as_string)
     print(df_output)
-    df_output.to_csv(f'{path}/stats_{date}.csv', index = False)
+    df_output.to_csv(f'{path}/stats_{date}.csv', index=False)
 
     print("SQL scripts complete.")
-
-
 
 
 def main():
     data_path = pick_path()
     database_pipeline(data_path)
+
 
 if __name__ == '__main__':
     main()

@@ -5,19 +5,24 @@ from MLPmodeling import MLP
 from GBMmodeling import GBM
 from XGBoostmodeling import XGBoost
 
-from transfer_data import *
+import pandas as pd
+from transfer_data import get_all_player_stats, pick_file
 import sys
 import warnings
-from datetime import datetime
+
 
 def warn(*args, **kwargs):
     pass
+
+
 warnings.warn = warn
+
 
 def file_load(filePath):
     X, y = get_all_player_stats()
     X_2022 = get_2022_stats(filePath)
     return X, y, X_2022
+
 
 def ensemble_modeling(srcFile, X, y, X_2022):
     df = pd.read_csv(srcFile)
@@ -29,19 +34,22 @@ def ensemble_modeling(srcFile, X, y, X_2022):
     df['XGB'] = XGBoost(X, y, X_2022)
     return df
 
+
 def model_one_file():
     print("Pick your file containing this season's stats for prediction.")
     filePath = pick_file()
     X, y, X_2022 = file_load(filePath)
     df = ensemble_modeling(filePath, X, y, X_2022)
 
-    newFileName = filePath.replace(".csv","")
+    newFileName = filePath.replace(".csv", "")
     newFileName = f"{newFileName}_modeled.csv"
     df.to_csv(newFileName)
     postprocessing(newFileName)
 
+
 def automated_modeling(startDate, endDate):
-    for date in pd.date_range(start=startDate, end=endDate): # pd.date_range is inclusive
+    # pd.date_range is inclusive
+    for date in pd.date_range(start=startDate, end=endDate):
         date_str = date.strftime("%Y-%m-%d")
         date_nodash = date_str.replace("-", "")
         filePath = f"./baseData/dailystats/{date_str}/stats_{date_nodash}.csv"
@@ -49,11 +57,11 @@ def automated_modeling(startDate, endDate):
             X, y, X_2022 = file_load(filePath)
         except FileNotFoundError:
             continue
-        
+
         print(f"Starting ensemble learning for {date_str}.")
         df = ensemble_modeling(filePath, X, y, X_2022)
-        
-        newFileName = filePath.replace(".csv","")
+
+        newFileName = filePath.replace(".csv", "")
         newFileName = f"{newFileName}_modeled.csv"
         df.to_csv(newFileName)
         postprocessing(newFileName)
@@ -61,6 +69,8 @@ def automated_modeling(startDate, endDate):
 
 # Expects either no argument (asks user to pick a file) OR -range YYYY-MM-DD YYYY-MM-DD (no quotes needed)
 # Potential improvement: -quiet to hide classification matrices
+
+
 def main():
     args = sys.argv[1:]
     # if args[0] == '-single':
@@ -71,6 +81,7 @@ def main():
     else:
         print("Please enter the correct arguments.")
         return False
+
 
 if __name__ == "__main__":
     main()

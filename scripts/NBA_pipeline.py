@@ -8,6 +8,7 @@ today = date_today.strftime("%Y-%m-%d")
 
 data_path = f'./baseData/dailystats/{today}'
 
+
 def full_pipeline():
 
     daily_data_script()
@@ -15,10 +16,9 @@ def full_pipeline():
     automated_modeling(today, today)
 
 
-
-
 def main():
     full_pipeline()
+
 
 if __name__ == '__main__':
     main()

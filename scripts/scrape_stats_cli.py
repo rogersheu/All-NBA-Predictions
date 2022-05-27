@@ -12,9 +12,11 @@ import sys
 
 headerExists = False
 
+
 def get_singleseason_stats(year: str, URL: str, fileName: str, repeatHeader: bool):
     dataPage = requests.get(URL)
-    dataSoup = BeautifulSoup(dataPage.content, "html.parser", from_encoding="utf-8")
+    dataSoup = BeautifulSoup(
+        dataPage.content, "html.parser", from_encoding="utf-8")
     dataTable = dataSoup.find("table", class_="sortable")
 
     # This special i in Omer Asik was the only character in the database not caught by remove_accents.
@@ -25,16 +27,16 @@ def get_singleseason_stats(year: str, URL: str, fileName: str, repeatHeader: boo
         header = [headerElement.text for headerElement in dataHeader]
         # Removes the initial entries for play-by-play.
         if re.search(r"play-by-play", fileName) is not None:
-            header = header[9 : len(header)]
+            header = header[9: len(header)]
         else:
-            header = header[1 : len(header)]
+            header = header[1: len(header)]
 
         header.insert(1, "PlayerID")
         header.insert(2, "Year")
 
         if re.search(r"advanced", fileName):
             header.pop(20)
-            header.pop(24) 
+            header.pop(24)
 
         if repeatHeader is False:
             global headerExists
@@ -72,6 +74,8 @@ def get_singleseason_stats(year: str, URL: str, fileName: str, repeatHeader: boo
         return False
 
 # Handle weird characters, like Doncic, Zydrunas Ilgauskas, Omer Asik, and more.
+
+
 def remove_accents(input_str):
     nfkd_form = unicodedata.normalize("NFKD", input_str)
     return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
@@ -84,7 +88,6 @@ def years_areValid(statType, yearStart, yearEnd):
 
     yearStart = int(yearStart)
     yearEnd = int(yearEnd)
-
 
     if (yearStart or yearEnd) < 1947 or (yearStart or yearEnd) > 2022:
         print("Please enter valid years.")
@@ -110,7 +113,7 @@ def years_areValid(statType, yearStart, yearEnd):
 
 def save_each_season_stats(statType, yearStart, yearEnd):
     if years_areValid(statType, yearStart, yearEnd):
-        
+
         yearList = list(range(int(yearStart), int(yearEnd) + 1))
 
         typeKey = get_typeKey(statType)
@@ -119,11 +122,14 @@ def save_each_season_stats(statType, yearStart, yearEnd):
         make_dir_if_nonexistent(mkdir)
 
         for year in yearList:
-            URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
-            fileName = (f"baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv")
+            URL = (
+                f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
+            fileName = (
+                f"baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv")
             reset_csv(fileName)
             get_singleseason_stats(year, URL, fileName, True)
-            print(f"Finished populating season {year - 1}-{year}, {typeKey} data.")
+            print(
+                f"Finished populating season {year - 1}-{year}, {typeKey} data.")
 
     else:
         return False
@@ -137,17 +143,20 @@ def save_all_stats(statType, yearStart, yearEnd):
 
         fileName = f"baseData/{typeKey}_allyears.csv"
         reset_csv(fileName)
-        
+
         for year in yearList:
-            URL = (f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
+            URL = (
+                f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
             get_singleseason_stats(year, URL, fileName, False)
-            print(f"Finished populating season {year-1}-{year}, {typeKey} data.")
+            print(
+                f"Finished populating season {year-1}-{year}, {typeKey} data.")
 
     else:
         return True
 
 # REQUIRES PYTHON 3.10, EARLIER VERSIONS CANNOT RUN STRUCTURAL PATTERN MATCHING, LIKE BELOW
 # REPLACE WITH IF/ELIF IF NEEDED
+
 
 def get_typeKey(statType):
     match statType:
@@ -161,7 +170,6 @@ def get_typeKey(statType):
             return False
 
     return typeKey
-
 
 
 # args[0] is -tot/-adv/-pbp
@@ -178,6 +186,7 @@ def main():
     else:
         print("Please enter 4 arguments.")
         return False
+
 
 if __name__ == '__main__':
     main()
