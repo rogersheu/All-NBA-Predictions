@@ -93,7 +93,7 @@ def postprocessing(fileName):
 
 
 def calculateAvg(df):
-    df['Avg'] = (df['RF'] + df['SVM'] + df['GBM'] + df['XGB'] + df['MLP'])/5
+    df['Avg'] = (df['RF'] + df['SVM'] + df['GBM'] + df['XGB'] + df['MLP']) / 5
     return df
 
 
@@ -113,7 +113,7 @@ def sortCSV_historical(fileName):
 
 
 def average_and_deviation(df: pd.DataFrame):
-    df['Avg'] = (df['RF'] + df['SVM'] + df['kNN'] + df['MLP'])/4
-    df['Deviation'] = (df['Avg']-df['allLeague'])
+    df['Avg'] = (df['RF'] + df['SVM'] + df['kNN'] + df['MLP']) / 4
+    df['Deviation'] = (df['Avg'] - df['allLeague'])
 
     return df
