@@ -2,7 +2,6 @@
 import collections
 
 import pandas as pd
-
 import team_mapping
 
 fileName = 'baseData/teamStandings.csv'

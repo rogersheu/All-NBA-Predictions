@@ -1,11 +1,11 @@
 from datetime import datetime
 
-from utils.abbreviate_team_names import add_abbreviated_team_names
 from scraping.scrape_advancedteamstats import scrape_alladvanced
 from scraping.scrape_stats_cli import get_singleseason_stats
 from scraping.scrape_stats_cli import get_typeKey
 from scraping.scrape_stats_cli import years_areValid
 from scraping.scrape_teamrecords import scrape_all_team_records
+from utils.abbreviate_team_names import add_abbreviated_team_names
 from utils.csv_functions import make_dir_if_nonexistent
 from utils.csv_functions import reset_csv
 
