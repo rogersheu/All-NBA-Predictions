@@ -105,10 +105,6 @@ def XGBoost(X, y):
     print(classification_report(y_true, y_pred))
 
 
-def main():
+if __name__ == '__main__':
     X, y = get_all_player_stats()
     XGBoost(X, y)
-
-
-if __name__ == '__main__':
-    main()

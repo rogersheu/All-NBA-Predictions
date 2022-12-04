@@ -40,9 +40,5 @@ def get_bdays(playerID):
     return playerBday, age
 
 
-def main():
-    import_playerIDs()
-
-
 if __name__ == '__main__':
-    main()
+    import_playerIDs()

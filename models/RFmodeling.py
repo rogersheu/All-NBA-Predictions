@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import pandas as pd
 from sklearn.calibration import calibration_curve
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
@@ -47,11 +48,7 @@ def featureimportance(randomforest, X):
     print(feature_imp)
 
 
-def main():
+if __name__ == '__main__':
     X, y = get_all_player_stats()
     X_2022 = get_2022_stats()
     RF(X, y, X_2022)
-
-
-if __name__ == '__main__':
-    main()

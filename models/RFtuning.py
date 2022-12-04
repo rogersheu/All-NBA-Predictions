@@ -50,10 +50,6 @@ def RF_hyperparameter_tuning(X, y):  # Change to take in a csv and output a csv
         print()
 
 
-def main():
+if __name__ == '__main__':
     X, y = get_all_player_stats()
     RF_hyperparameter_tuning(X, y)
-
-
-if __name__ == '__main__':
-    main()

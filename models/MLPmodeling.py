@@ -55,11 +55,7 @@ def MLP(X, y, X_2022):
     # addtodf_savetoCSV(fileName, 'allLeague', y_2022, 'allLeague_prob', predictions[:,1], 'MLP')
 
 
-def main():
+if __name__ == '__main__':
     X, y = get_all_player_stats()
     X_2022 = get_2022_stats()
     MLP(X, y, X_2022)
-
-
-if __name__ == '__main__':
-    main()

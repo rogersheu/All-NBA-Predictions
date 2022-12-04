@@ -48,11 +48,7 @@ def SVM(X, y, X_2022):
     return predictions[:, 1]
 
 
-def main():
+if __name__ == '__main__':
     X, y = get_all_player_stats()
     X_2022 = get_2022_stats()
     SVM(X, y, X_2022)
-
-
-if __name__ == '__main__':
-    main()

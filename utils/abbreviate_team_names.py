@@ -21,9 +21,5 @@ def add_abbreviated_team_names(fileName):
     df.to_csv(fileName.replace('Standings', 'StandingsAbbrev'))
 
 
-def main():
-    add_abbreviated_team_names(fileName)
-
-
 if __name__ == '__main__':
-    main()
+    add_abbreviated_team_names(fileName)

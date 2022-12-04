@@ -33,11 +33,7 @@ def GBM(X, y, X_2022):
     return df.mean(axis=1)  # Average of the <iteration> trials.
 
 
-def main():
+if __name__ == '__main__':
     X, y = get_all_player_stats()
     X_2022 = get_2022_stats()
     GBM(X, y, X_2022)
-
-
-if __name__ == '__main__':
-    main()

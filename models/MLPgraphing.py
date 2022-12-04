@@ -91,10 +91,6 @@ def MLP_graphing(X, y):
 #     ax.grid('on')
 
 
-def main():
+if __name__ == '__main__':
     X, y = get_all_player_stats()
     MLP_graphing(X, y)
-
-
-if __name__ == '__main__':
-    main()

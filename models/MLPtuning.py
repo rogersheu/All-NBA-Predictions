@@ -92,10 +92,6 @@ def MLP_tuning(X, y):
     plt.show()
 
 
-def main():
+if __name__ == '__main__':
     X, y = get_all_player_stats()
     MLP_tuning(X, y)
-
-
-if __name__ == '__main__':
-    main()

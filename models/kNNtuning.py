@@ -59,10 +59,6 @@ def kNN(X, y):
         print()
 
 
-def main():
+if __name__ == '__main__':
     X, y = get_all_player_stats()
     kNN(X, y)
-
-
-if __name__ == '__main__':
-    main()
