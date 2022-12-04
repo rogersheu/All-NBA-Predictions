@@ -3,7 +3,7 @@ from os import listdir
 
 import pandas as pd
 
-from utils.transfer_data import pick_path
+from src.utils.transfer_data import pick_path
 
 
 def database_pipeline(path):

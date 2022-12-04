@@ -1,6 +1,6 @@
 from datetime import date
 
-from daily_data_script import daily_data_script
+from scraping.daily_data_script import daily_data_script
 from daily_database_update import database_pipeline
 from daily_modeling import automated_modeling
 

@@ -2,7 +2,7 @@ import re
 
 import pandas as pd
 
-from utils.csv_functions import write_to_csv
+from src.utils.csv_functions import write_to_csv
 
 
 # Looks for 2019-2020, for example.
