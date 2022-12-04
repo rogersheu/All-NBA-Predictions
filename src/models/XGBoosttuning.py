@@ -1,14 +1,8 @@
-import matplotlib.pyplot as plt
-import pandas as pd
 import xgboost as xgb
 from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import PrecisionRecallDisplay
 from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import RandomizedSearchCV
 from sklearn.model_selection import train_test_split
 
-from src.utils.transfer_data import get_2022_stats
 from src.utils.transfer_data import get_all_player_stats
 
 

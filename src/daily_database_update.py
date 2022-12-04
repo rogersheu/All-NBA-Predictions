@@ -1,10 +1,9 @@
-from __future__ import annotations
-
 import sqlite3
 from os import listdir
 
 import pandas as pd
-from transfer_data import pick_path
+
+from utils.transfer_data import pick_path
 
 
 def database_pipeline(path):

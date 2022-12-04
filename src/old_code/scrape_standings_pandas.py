@@ -3,7 +3,6 @@ from __future__ import annotations
 import pandas as pd
 import requests
 from csv_functions import reset_csv
-from csv_functions import write_to_csv
 
 
 def get_standings():

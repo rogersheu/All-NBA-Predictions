@@ -1,17 +1,16 @@
-from __future__ import annotations
-
 import sys
 import warnings
 
 import pandas as pd
-from GBMmodeling import GBM
-from kNNmodeling import kNN
-from MLPmodeling import MLP
-from RFmodeling import RF
-from SVMmodeling import SVM
-from transfer_data import get_all_player_stats
-from transfer_data import pick_file
-from XGBoostmodeling import XGBoost
+
+from models.GBMmodeling import GBM
+from models.kNNmodeling import kNN
+from models.MLPmodeling import MLP
+from models.RFmodeling import RF
+from models.SVMmodeling import SVM
+from models.XGBoostmodeling import XGBoost
+from utils.transfer_data import get_all_player_stats
+from utils.transfer_data import pick_file
 
 
 def warn(*args, **kwargs):

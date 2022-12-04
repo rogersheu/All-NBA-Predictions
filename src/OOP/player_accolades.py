@@ -1,8 +1,3 @@
-import decimal
-from dataclasses import dataclass
-
-import pandas as pd
-
 
 class PlayerAccolades:
     name: str = ""

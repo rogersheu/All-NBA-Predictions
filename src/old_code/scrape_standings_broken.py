@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import requests
 from bs4 import BeautifulSoup
-from bs4 import Comment
 from csv_functions import reset_csv
 from csv_functions import write_to_csv
 

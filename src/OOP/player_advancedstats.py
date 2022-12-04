@@ -1,8 +1,5 @@
 import decimal
 from dataclasses import dataclass
-from decimal import *
-
-import pandas as pd
 
 
 @dataclass
