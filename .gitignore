@@ -3,6 +3,7 @@
 *.csv
 *.xlsx
 *.png
+baseData/
 
 # Jupyter
 *.ipynb_checkpoints
@@ -30,6 +31,3 @@ __pycache__/
 .venv
 env/
 venv/
-ENV/
-env.bak/
-venv.bak/
