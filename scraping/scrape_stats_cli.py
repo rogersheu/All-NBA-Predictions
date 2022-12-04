@@ -183,7 +183,7 @@ def get_type_key(stat_type):
 # args[1] is yearStart
 # args[2] is yearEnd
 # args[3] determines which code to run, YEARLY or ALL
-def main():
+def stat_scraper():
     args = sys.argv[1:]
     if len(args) == 4:
         if args[3] == 'yearly':
@@ -196,4 +196,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    stat_scraper()

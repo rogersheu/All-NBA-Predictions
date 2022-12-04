@@ -71,13 +71,11 @@ def automated_modeling(startDate, endDate):
         postprocessing(newFileName)
         print(f'Ensemble learning for {date_str} complete.')
 
+
 # Expects either no argument (asks user to pick a file) OR -range YYYY-MM-DD YYYY-MM-DD (no quotes needed)
 # Potential improvement: -quiet to hide classification matrices
-
-
-def main():
+def model_handler():
     args = sys.argv[1:]
-    # if args[0] == '-single':
     if len(args) == 0:
         model_one_file()
     elif args[0] == '-range':
@@ -88,4 +86,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    model_handler()

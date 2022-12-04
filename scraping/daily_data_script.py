@@ -51,9 +51,5 @@ def daily_data_script():
     scrape_advanced_all(f'{mkdir}', '1980', '2022')
 
 
-def main():
-    daily_data_script()
-
-
 if __name__ == '__main__':
-    main()
+    daily_data_script()

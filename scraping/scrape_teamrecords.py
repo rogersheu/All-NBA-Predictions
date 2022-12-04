@@ -46,9 +46,5 @@ def scrape_all_team_records(filename, start_year, end_year):
         scrape_teamrecords(filename, year)
 
 
-def main():
-    scrape_all_team_records(filename)
-
-
 if __name__ == '__main__':
-    main()
+    scrape_all_team_records(filename)

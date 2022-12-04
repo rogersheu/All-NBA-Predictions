@@ -46,9 +46,5 @@ def scrape_advanced_all(path_name, start_year, end_year):
     print(f'Finished populating {start_year}-{end_year}, team advanced stats.')
 
 
-def main():
-    scrape_advanced_all(f'{mkdir}', '1980', '2022')
-
-
 if __name__ == '__main__':
-    main()
+    scrape_advanced_all(f'{mkdir}', '1980', '2022')

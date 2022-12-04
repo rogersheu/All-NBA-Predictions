@@ -39,9 +39,5 @@ def process_allstars():
     print(df)
 
 
-def main():
-    process_allstars()
-
-
 if __name__ == '__main__':
-    main()
+    process_allstars()

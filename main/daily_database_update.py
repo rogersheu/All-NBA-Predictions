@@ -58,10 +58,6 @@ def database_pipeline(path):
     print('SQL scripts complete.')
 
 
-def main():
+if __name__ == '__main__':
     data_path = pick_path()
     database_pipeline(data_path)
-
-
-if __name__ == '__main__':
-    main()

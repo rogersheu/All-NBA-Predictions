@@ -12,15 +12,10 @@ data_path = f'./baseData/dailystats/{today}'
 
 
 def full_pipeline():
-
     daily_data_script()
     database_pipeline(data_path)
     automated_modeling(today, today)
 
 
-def main():
-    full_pipeline()
-
-
 if __name__ == '__main__':
-    main()
+    full_pipeline()
