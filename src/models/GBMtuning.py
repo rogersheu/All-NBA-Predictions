@@ -1,12 +1,13 @@
-from __future__ import annotations
-
 import matplotlib.pyplot as plt
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
-from transfer_data import *
+
+from src.utils.transfer_data import get_2022_stats
+from src.utils.transfer_data import get_all_player_stats
+
 
 # Results from different hyperparameter combinations (perhaps randomized) to form an ensemble
 # Wenzel et al. 2020, Hyperparameter Ensembles for Robustness and Uncertainty Quantification, https://arxiv.org/abs/2006.13570

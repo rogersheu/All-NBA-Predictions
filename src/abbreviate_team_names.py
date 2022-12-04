@@ -1,6 +1,4 @@
 # Adds abbreviated team names (e.g., Los Angeles Lakers -> LAL) from team_mapping.py to the indicated csv
-from __future__ import annotations
-
 import collections
 
 import pandas as pd

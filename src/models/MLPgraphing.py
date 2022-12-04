@@ -12,7 +12,10 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
-from transfer_data import *
+
+from src.utils.transfer_data import get_2022_stats
+from src.utils.transfer_data import get_all_player_stats
+
 
 # As a personal reminder, activation refers to the output function behavior
 #   logistic is logistic: 1/(1+e^-x)

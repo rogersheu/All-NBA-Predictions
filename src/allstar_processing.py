@@ -1,9 +1,8 @@
-from __future__ import annotations
-
 import re
 
 import pandas as pd
-from csv_functions import *
+from utils.csv_functions import write_to_csv
+
 
 # Looks for 2019-2020, for example.
 yearPattern = re.compile(r'^([0-9]{4})-?([0-9]{4})?$')

@@ -1,16 +1,15 @@
 # Scraping all season total data from the 1979-1980 season to the
 # current season.
-from __future__ import annotations
-
 import re
 import sys
 import unicodedata
 
 import requests
 from bs4 import BeautifulSoup
-from csv_functions import make_dir_if_nonexistent
-from csv_functions import reset_csv
-from csv_functions import write_to_csv
+
+from src.utils.csv_functions import make_dir_if_nonexistent
+from src.utils.csv_functions import reset_csv
+from src.utils.csv_functions import write_to_csv
 
 # tablePattern = re.compile(r"(full_table|italic-text partial-table")
 

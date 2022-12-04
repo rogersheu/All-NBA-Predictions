@@ -1,4 +1,3 @@
-from __future__ import annotations
 activeTeams = {
     'Atlanta Hawks': 'ATL',
     'Boston Celtics': 'BOS',

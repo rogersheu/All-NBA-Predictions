@@ -1,7 +1,5 @@
 # Potential improvements: Refining of hyperparameters, hidden layer sizes, alpha, learning rate, etc.
 # Tried implementing MLP in Keras/Tensorflow BUT Python 3.10 not supported for Tensorflow yet (only up to 3.8)
-from __future__ import annotations
-
 import pandas as pd
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
@@ -10,7 +8,10 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
-from transfer_data import *
+
+from src.utils.transfer_data import get_2022_stats
+from src.utils.transfer_data import get_all_player_stats
+
 
 # MLP = Multi-layer perceptron
 

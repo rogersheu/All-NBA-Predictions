@@ -1,12 +1,12 @@
-from __future__ import annotations
-
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
-from transfer_data import *
+
+from src.utils.transfer_data import get_2022_stats
+from src.utils.transfer_data import get_all_player_stats
 
 
 def RF_hyperparameter_tuning(X, y):  # Change to take in a csv and output a csv

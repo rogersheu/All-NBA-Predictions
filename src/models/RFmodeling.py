@@ -1,12 +1,12 @@
-from __future__ import annotations
-
 import matplotlib.pyplot as plt
 from sklearn.calibration import calibration_curve
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
-from transfer_data import *
+
+from src.utils.transfer_data import get_2022_stats
+from src.utils.transfer_data import get_all_player_stats
 
 
 # Next thing to implement is GridSearchCV

@@ -1,11 +1,11 @@
-from __future__ import annotations
-
 from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from csv_functions import *
-from transfer_data import *
+
+from src.utils.csv_functions import reset_csv
+from src.utils.csv_functions import write_to_csv
+
 
 shortDate = datetime.today().strftime('%Y-%m-%d')
 shortDate_nodash = shortDate.replace('-', '')
