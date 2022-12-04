@@ -11,7 +11,9 @@ headerCheck = False
 def scrape_teamstats(fileName, year):
     yearURL = (f'https://www.basketball-reference.com/leagues/NBA_{year}.html')
     yearPage = requests.get(yearURL)
-    yearSoup = BeautifulSoup(yearPage.content, 'html.parser', from_encoding='utf-8')
+    yearSoup = BeautifulSoup(
+        yearPage.content, 'html.parser', from_encoding='utf-8',
+    )
 
     teamTable = yearSoup.find('table', id='per_game-team')
     header = []

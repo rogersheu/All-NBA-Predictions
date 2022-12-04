@@ -12,7 +12,9 @@ fileName = 'baseData/teamStandings.csv'
 def add_abbreviated_team_names(fileName):
     df = pd.read_csv(fileName, delimiter=',')
 
-    chainMap = collections.ChainMap(team_mapping.activeTeams, team_mapping.tradedPlayers, team_mapping.defunctTeams)
+    chainMap = collections.ChainMap(
+        team_mapping.activeTeams, team_mapping.tradedPlayers, team_mapping.defunctTeams,
+    )
 
     tm = [chainMap[df.iloc[row, 0]] for row in range(len(df.index))]
 

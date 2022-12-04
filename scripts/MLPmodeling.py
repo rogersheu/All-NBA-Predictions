@@ -25,7 +25,9 @@ def MLP(X, y, X_2022):
     # Max_iter was changed from its default of 200 to 1000. May need to be changed in the future.
     # Activation of 'tanh' was just a tad better than 'relu'
     for i in range(iterations):
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y)
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, stratify=y,
+        )
 
         # MLP are sensitive to feature scaling
 

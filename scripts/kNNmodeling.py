@@ -10,7 +10,9 @@ from transfer_data import *
 
 
 def kNN(X, y, X_2022):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=0,
+    )
 
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)

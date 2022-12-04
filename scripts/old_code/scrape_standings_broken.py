@@ -22,7 +22,9 @@ def get_team_standings():
         )
 
         standingsPage = requests.get(URL)
-        standingsSoup = BeautifulSoup(standingsPage.content, 'html.parser', from_encoding='utf-8')
+        standingsSoup = BeautifulSoup(
+            standingsPage.content, 'html.parser', from_encoding='utf-8',
+        )
         # standingsTable = standingsSoup.find('div', id="expanded_standings_sh")
 
         for team in teamList:

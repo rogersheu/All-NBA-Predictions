@@ -17,7 +17,9 @@ mkdir = (f'{directory}/{shortDate}')
 def scrape_teamadvanced(fileName, year):
     yearURL = (f'https://www.basketball-reference.com/leagues/NBA_{year}.html')
     yearPage = requests.get(yearURL)
-    yearSoup = BeautifulSoup(yearPage.content, 'html.parser', from_encoding='utf-8')
+    yearSoup = BeautifulSoup(
+        yearPage.content, 'html.parser', from_encoding='utf-8',
+    )
 
     teamTable = yearSoup.find('table', id='advanced-team')
     leagueAvg = teamTable.find('tfoot').find_all('td')

@@ -11,8 +11,12 @@ fileName = 'baseData/allNBA.csv'
 
 
 def scrape_allnbateam(fileName, year):
-    seasonPage = requests.get(f'https://www.basketball-reference.com/leagues/NBA_{year}.html')
-    seasonSoup = BeautifulSoup(seasonPage.content, 'html.parser', from_encoding='utf-8')
+    seasonPage = requests.get(
+        f'https://www.basketball-reference.com/leagues/NBA_{year}.html',
+    )
+    seasonSoup = BeautifulSoup(
+        seasonPage.content, 'html.parser', from_encoding='utf-8',
+    )
 
     allNBATable = seasonSoup.find('div', id='all_all-nba')
 

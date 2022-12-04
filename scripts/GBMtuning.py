@@ -16,7 +16,9 @@ from transfer_data import *
 
 def gradientboosted_tuning(X, y):
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, stratify=y,
+    )
 
     parameter_space = {
         # "learning_rate" : [0.05, 0.1, 0.25, 0.5], # 0.05, 0.1, and 0.25 were all fine. 0.1 is default.
@@ -37,7 +39,8 @@ def gradientboosted_tuning(X, y):
         print('# Tuning hyper-parameters for %s' % score)
         print()
 
-        clf = GridSearchCV(gbm_model, parameter_space, scoring='f1')  # "%s_macro" % score, cv = 5)
+        # "%s_macro" % score, cv = 5)
+        clf = GridSearchCV(gbm_model, parameter_space, scoring='f1')
         clf.fit(X_train, y_train)
 
         print('Best parameters set found on development set:\n')
