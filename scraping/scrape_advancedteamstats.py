@@ -15,7 +15,9 @@ mkdir = (f'{directory}/{short_date}')
 
 
 def scrape_teamadvanced(filename, year):
-    year_url = (f'https://www.basketball-reference.com/leagues/NBA_{year}.html')
+    year_url = (
+        f'https://www.basketball-reference.com/leagues/NBA_{year}.html'
+    )
     year_page = requests.get(year_url)
     year_soup = BeautifulSoup(
         year_page.content, 'html.parser', from_encoding='utf-8',
