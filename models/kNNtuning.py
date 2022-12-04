@@ -1,20 +1,29 @@
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
 
-from src.utils.transfer_data import get_all_player_stats
+from utils.transfer_data import get_all_player_stats
 
 
-def RF_hyperparameter_tuning(X, y):  # Change to take in a csv and output a csv
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+def kNN(X, y):
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=0,
+    )
 
+    scaler = StandardScaler()
+    X_train = scaler.fit_transform(X_train)
+    X_test = scaler.transform(X_test)
+
+    # [n_neighbors, p] = 81, 1 best for precision
+    # [n_neighbors, p] = 5, 2 best for recall
     parameter_space = {
-        'max_depth': [2, 5, 10, 20, None],  # default is None
-        'max_leaf_nodes': [5, 10, None],  # default is None
+        'n_neighbors': list(range(1, 101, 1)),
+        'p': [1, 2],  # p=1 is Manhattan distance, p=2 is Euclidean, p=2 is default
     }
 
-    randomforest = RandomForestClassifier(n_estimators=100, random_state=0)
+    kNNmodel = KNeighborsClassifier()
 
     scores = ['precision', 'recall']
 
@@ -23,7 +32,7 @@ def RF_hyperparameter_tuning(X, y):  # Change to take in a csv and output a csv
         print()
 
         clf = GridSearchCV(
-            randomforest, parameter_space,
+            kNNmodel, parameter_space,
             scoring='%s_macro' % score, n_jobs=-1, cv=3,
         )
         clf.fit(X_train, y_train)
@@ -52,7 +61,7 @@ def RF_hyperparameter_tuning(X, y):  # Change to take in a csv and output a csv
 
 def main():
     X, y = get_all_player_stats()
-    RF_hyperparameter_tuning(X, y)
+    kNN(X, y)
 
 
 if __name__ == '__main__':

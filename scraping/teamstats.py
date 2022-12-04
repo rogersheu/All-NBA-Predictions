@@ -1,9 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 
-from src.utils.csv_functions import reset_csv
-from src.utils.csv_functions import write_to_csv
-from src.utils.transfer_data import pick_path
+from utils.csv_functions import reset_csv
+from utils.csv_functions import write_to_csv
+from utils.transfer_data import pick_path
 
 
 headerCheck = False

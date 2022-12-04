@@ -7,8 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 
-from src.utils.transfer_data import get_2022_stats
-from src.utils.transfer_data import get_all_player_stats
+from utils.transfer_data import get_2022_stats
+from utils.transfer_data import get_all_player_stats
 
 
 # MLP = Multi-layer perceptron

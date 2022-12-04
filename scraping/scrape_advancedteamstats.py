@@ -3,8 +3,8 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from src.utils.csv_functions import reset_csv
-from src.utils.csv_functions import write_to_csv
+from utils.csv_functions import reset_csv
+from utils.csv_functions import write_to_csv
 
 
 shortDate = datetime.today().strftime('%Y-%m-%d')

@@ -9,9 +9,9 @@ from models.MLPmodeling import MLP
 from models.RFmodeling import RF
 from models.SVMmodeling import SVM
 from models.XGBoostmodeling import XGBoost
-from src.utils.transfer_data import get_2022_stats, postprocessing
-from src.utils.transfer_data import get_all_player_stats
-from src.utils.transfer_data import pick_file
+from utils.transfer_data import get_2022_stats, postprocessing
+from utils.transfer_data import get_all_player_stats
+from utils.transfer_data import pick_file
 
 
 def warn(*args, **kwargs):

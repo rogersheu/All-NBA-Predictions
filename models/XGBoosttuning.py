@@ -3,7 +3,7 @@ from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 
-from src.utils.transfer_data import get_all_player_stats
+from utils.transfer_data import get_all_player_stats
 
 
 # Most important hyperparameters, according to https://towardsdatascience.com/mastering-xgboost-2eb6bce6bc76

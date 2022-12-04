@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 
-from src.utils.transfer_data import get_all_player_stats
+from utils.transfer_data import get_all_player_stats
 
 
 # As a personal reminder, activation refers to the output function behavior

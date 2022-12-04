@@ -7,9 +7,9 @@ import unicodedata
 import requests
 from bs4 import BeautifulSoup
 
-from src.utils.csv_functions import make_dir_if_nonexistent
-from src.utils.csv_functions import reset_csv
-from src.utils.csv_functions import write_to_csv
+from utils.csv_functions import make_dir_if_nonexistent
+from utils.csv_functions import reset_csv
+from utils.csv_functions import write_to_csv
 
 # tablePattern = re.compile(r"(full_table|italic-text partial-table")
 

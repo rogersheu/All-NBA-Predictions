@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from abbreviate_team_names import add_abbreviated_team_names
+from utils.abbreviate_team_names import add_abbreviated_team_names
 from scraping.scrape_advancedteamstats import scrape_alladvanced
 from scraping.scrape_stats_cli import get_singleseason_stats
 from scraping.scrape_stats_cli import get_typeKey
