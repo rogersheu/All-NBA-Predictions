@@ -25,7 +25,10 @@ def RF_hyperparameter_tuning(X, y):  # Change to take in a csv and output a csv
         print('# Tuning hyper-parameters for %s' % score)
         print()
 
-        clf = GridSearchCV(randomforest, parameter_space, scoring='%s_macro' % score, n_jobs=-1, cv=3)
+        clf = GridSearchCV(
+            randomforest, parameter_space,
+            scoring='%s_macro' % score, n_jobs=-1, cv=3,
+        )
         clf.fit(X_train, y_train)
 
         print('Best parameters set found on development set:')

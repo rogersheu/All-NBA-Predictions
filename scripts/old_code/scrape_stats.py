@@ -18,7 +18,9 @@ headerExists = False
 
 def get_singleseason_stats(year, URL, fileName):
     dataPage = requests.get(URL)
-    dataSoup = BeautifulSoup(dataPage.content, 'html.parser', from_encoding='utf-8')
+    dataSoup = BeautifulSoup(
+        dataPage.content, 'html.parser', from_encoding='utf-8',
+    )
     dataTable = dataSoup.find('table', class_='sortable')
 
     # This special i in Omer Asik was the only character in the database not caught by remove_accents.
@@ -88,7 +90,9 @@ def get_each_season_totals():
     print('Example 2: Entering 1980 and 2022 gives seasons 1979-1980 through 2021-2022.')
     yearStart = input('Starting Year:  ')
 
-    yearEnd = input("Please provide the last year's worth of data you would like. \nEnding Year:  ")
+    yearEnd = input(
+        "Please provide the last year's worth of data you would like. \nEnding Year:  ",
+    )
 
     # Limiting user inputs to valid options.
     # Checks for numeric inputs, followed by valid years.
@@ -117,7 +121,8 @@ def get_each_season_totals():
         return False
 
     else:
-        yearList = list(range(yearStart, yearEnd + 1))  # Added [] around range to save a line.
+        # Added [] around range to save a line.
+        yearList = list(range(yearStart, yearEnd + 1))
 
         if statType == 'A':
             typeKey = 'totals'
@@ -147,13 +152,19 @@ def get_each_season_totals():
             os.makedirs(mkdir)
 
         for year in yearList:
-            URL = (f'https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html')
-            fileName = (f'baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv')  # f-stringed
+            URL = (
+                f'https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html'
+            )
+            # f-stringed
+            fileName = (
+                f'baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv'
+            )
 
             reset_csv(fileName)
 
             get_singleseason_stats(year, URL, fileName)
-            print(f'Finished populating season {year - 1}-{year}.')  # f-stringed
+            # f-stringed
+            print(f'Finished populating season {year - 1}-{year}.')
 
 
 def main():

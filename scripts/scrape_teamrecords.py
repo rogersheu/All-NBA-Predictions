@@ -9,9 +9,12 @@ fileName = 'baseData/teamStandings.csv'
 
 
 def scrape_teamrecords(fileName, year):
-    yearURL = 'https://www.basketball-reference.com/leagues/NBA_' + str(year) + '.html'
+    yearURL = 'https://www.basketball-reference.com/leagues/NBA_' + \
+        str(year) + '.html'
     yearPage = requests.get(yearURL)
-    yearSoup = BeautifulSoup(yearPage.content, 'html.parser', from_encoding='utf-8')
+    yearSoup = BeautifulSoup(
+        yearPage.content, 'html.parser', from_encoding='utf-8',
+    )
 
     teamTable = yearSoup.find('table', id='advanced-team')
     leagueAvg = teamTable.find('tbody').find_all('tr')
@@ -27,7 +30,9 @@ def scrape_teamrecords(fileName, year):
 
         teamWL.insert(1, year)
 
-        teamWL.append(round(int(teamWL[2]) / (int(teamWL[2]) + int(teamWL[3])), 3))
+        teamWL.append(
+            round(int(teamWL[2]) / (int(teamWL[2]) + int(teamWL[3])), 3),
+        )
         write_to_csv(fileName, teamWL)
     print(f'Finished populating season {year - 1}-{year}, team standings.')
 

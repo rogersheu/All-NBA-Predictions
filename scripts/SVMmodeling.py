@@ -12,7 +12,9 @@ from transfer_data import *
 
 
 def SVM(X, y, X_2022):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0, stratify=y)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=0, stratify=y,
+    )
 
     # Scaling to bring all columns to mean of 0 and unit variance
     scaler = StandardScaler()

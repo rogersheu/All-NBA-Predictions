@@ -11,7 +11,9 @@ from transfer_data import *
 
 
 def kNN(X, y):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=0,
+    )
 
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
@@ -32,7 +34,10 @@ def kNN(X, y):
         print('# Tuning hyper-parameters for %s' % score)
         print()
 
-        clf = GridSearchCV(kNNmodel, parameter_space, scoring='%s_macro' % score, n_jobs=-1, cv=3)
+        clf = GridSearchCV(
+            kNNmodel, parameter_space,
+            scoring='%s_macro' % score, n_jobs=-1, cv=3,
+        )
         clf.fit(X_train, y_train)
 
         print('Best parameters set found on development set:')

@@ -30,7 +30,3 @@ repos:
     rev: v2.0.0
     hooks:
     -   id: autopep8
--   repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
-    hooks:
-    -   id: flake8

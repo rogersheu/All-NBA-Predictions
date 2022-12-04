@@ -11,7 +11,10 @@ fileName = 'allstar_full.csv'
 
 
 def process_allstars():
-    df = pd.read_csv(r'.\baseData\allstar_raw.csv', delimiter=',', engine='python', encoding='utf-8')
+    df = pd.read_csv(
+        r'.\baseData\allstar_raw.csv',
+        delimiter=',', engine='python', encoding='utf-8',
+    )
 
     for row in range(len(df)):
         yearsRaw = str(df.iloc[row][1])

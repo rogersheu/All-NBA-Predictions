@@ -3,7 +3,7 @@
 *.csv
 *.xlsx
 *.png
-baseData/
+data/
 
 # Jupyter
 *.ipynb_checkpoints
@@ -21,6 +21,9 @@ baseData/
 
 # Database
 .dbeaver
+
+# Config
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
