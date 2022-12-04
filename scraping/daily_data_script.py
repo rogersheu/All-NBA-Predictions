@@ -1,36 +1,36 @@
 from datetime import datetime
 
-from scraping.scrape_advancedteamstats import scrape_alladvanced
+from scraping.scrape_advancedteamstats import scrape_advanced_all
 from scraping.scrape_stats_cli import get_singleseason_stats
-from scraping.scrape_stats_cli import get_typeKey
-from scraping.scrape_stats_cli import years_areValid
+from scraping.scrape_stats_cli import get_type_key
+from scraping.scrape_stats_cli import years_valid
 from scraping.scrape_teamrecords import scrape_all_team_records
 from utils.abbreviate_team_names import add_abbreviated_team_names
 from utils.csv_functions import make_dir_if_nonexistent
 from utils.csv_functions import reset_csv
 
-shortDate = datetime.today().strftime('%Y-%m-%d')
-shortDate_nodash = shortDate.replace('-', '')
+short_date = datetime.today().strftime('%Y-%m-%d')
+start_date_nodash = short_date.replace('-', '')
 
-directory = './baseData/dailystats'
-mkdir = (f'{directory}/{shortDate}')
+directory = './data/dailystats'
+mkdir = (f'{directory}/{short_date}')
 make_dir_if_nonexistent(mkdir)
 
 
-def save_each_season_stats_daily(statType, yearStart, yearEnd):
+def save_each_season_stats_daily(stat_type, year_start, year_end):
 
-    if years_areValid(statType, yearStart, yearEnd):
-        yearList = list(range(int(yearStart), int(yearEnd) + 1))
-        typeKey = get_typeKey(statType)
+    if years_valid(stat_type, year_start, year_end):
+        yearList = list(range(int(year_start), int(year_end) + 1))
+        typeKey = get_type_key(stat_type)
 
         for year in yearList:
             URL = (
                 f'https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html'
             )
             # f-stringed
-            fileName = (f'{mkdir}/{typeKey}_{shortDate_nodash}.csv')
-            reset_csv(fileName)
-            get_singleseason_stats(year, URL, fileName, True)
+            filename = (f'{mkdir}/{typeKey}_{start_date_nodash}.csv')
+            reset_csv(filename)
+            get_singleseason_stats(year, URL, filename, True)
             # f-stringed
             print(
                 (f'Finished populating season {year - 1}-{year}, {typeKey} data.'),
@@ -43,12 +43,12 @@ def daily_data_script():
     save_each_season_stats_daily('-tot', '2022', '2022')
     save_each_season_stats_daily('-adv', '2022', '2022')
     scrape_all_team_records(
-        (f'{mkdir}/teamStandings_{shortDate_nodash}.csv'), 2022, 2022,
+        (f'{mkdir}/teamStandings_{start_date_nodash}.csv'), 2022, 2022,
     )
     add_abbreviated_team_names(
-        (f'{mkdir}/teamStandings_{shortDate_nodash}.csv'),
+        (f'{mkdir}/teamStandings_{start_date_nodash}.csv'),
     )
-    scrape_alladvanced(f'{mkdir}', '1980', '2022')
+    scrape_advanced_all(f'{mkdir}', '1980', '2022')
 
 
 def main():

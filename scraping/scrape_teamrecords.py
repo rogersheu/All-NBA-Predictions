@@ -5,49 +5,49 @@ from utils.csv_functions import reset_csv
 from utils.csv_functions import write_to_csv
 
 
-fileName = 'baseData/teamStandings.csv'
+filename = 'data/teamStandings.csv'
 
 
-def scrape_teamrecords(fileName, year):
-    yearURL = 'https://www.basketball-reference.com/leagues/NBA_' + \
+def scrape_teamrecords(filename, year):
+    year_url = 'https://www.basketball-reference.com/leagues/NBA_' + \
         str(year) + '.html'
-    yearPage = requests.get(yearURL)
-    yearSoup = BeautifulSoup(
-        yearPage.content, 'html.parser', from_encoding='utf-8',
+    year_page = requests.get(year_url)
+    year_soup = BeautifulSoup(
+        year_page.content, 'html.parser', from_encoding='utf-8',
     )
 
-    teamTable = yearSoup.find('table', id='advanced-team')
-    leagueAvg = teamTable.find('tbody').find_all('tr')
+    team_table = year_soup.find('table', id='advanced-team')
+    league_avg = team_table.find('tbody').find_all('tr')
 
-    for seasonWL in leagueAvg:
-        eachTeam = seasonWL.find_all('td')
-        teamWL = []
+    for season_wl in league_avg:
+        each_team = season_wl.find_all('td')
+        team_wl = []
 
-        for col in eachTeam:
-            teamWL.append(col.text)
+        for col in each_team:
+            team_wl.append(col.text)
 
-        teamWL = teamWL[0:1] + teamWL[2:4]
+        team_wl = team_wl[0:1] + team_wl[2:4]
 
-        teamWL.insert(1, year)
+        team_wl.insert(1, year)
 
-        teamWL.append(
-            round(int(teamWL[2]) / (int(teamWL[2]) + int(teamWL[3])), 3),
+        team_wl.append(
+            round(int(team_wl[2]) / (int(team_wl[2]) + int(team_wl[3])), 3),
         )
-        write_to_csv(fileName, teamWL)
+        write_to_csv(filename, team_wl)
     print(f'Finished populating season {year - 1}-{year}, team standings.')
 
 
-def scrape_all_team_records(fileName, startYear, endYear):
-    yearList = range(int(startYear), int(endYear) + 1)
-    reset_csv(fileName)
+def scrape_all_team_records(filename, start_year, end_year):
+    yearList = range(int(start_year), int(end_year) + 1)
+    reset_csv(filename)
 
-    write_to_csv(fileName, ['Team', 'Year', 'Wins', 'Losses', 'Perc'])
+    write_to_csv(filename, ['Team', 'Year', 'Wins', 'Losses', 'Perc'])
     for year in yearList:
-        scrape_teamrecords(fileName, year)
+        scrape_teamrecords(filename, year)
 
 
 def main():
-    scrape_all_team_records(fileName)
+    scrape_all_team_records(filename)
 
 
 if __name__ == '__main__':
