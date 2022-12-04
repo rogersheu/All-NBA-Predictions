@@ -1,14 +1,17 @@
-from SVMmodeling import SVM
-from kNNmodeling import kNN
-from RFmodeling import RF
-from MLPmodeling import MLP
-from GBMmodeling import GBM
-from XGBoostmodeling import XGBoost
+from __future__ import annotations
 
-import pandas as pd
-from transfer_data import get_all_player_stats, pick_file
 import sys
 import warnings
+
+import pandas as pd
+from GBMmodeling import GBM
+from kNNmodeling import kNN
+from MLPmodeling import MLP
+from RFmodeling import RF
+from SVMmodeling import SVM
+from transfer_data import get_all_player_stats
+from transfer_data import pick_file
+from XGBoostmodeling import XGBoost
 
 
 def warn(*args, **kwargs):
@@ -41,8 +44,8 @@ def model_one_file():
     X, y, X_2022 = file_load(filePath)
     df = ensemble_modeling(filePath, X, y, X_2022)
 
-    newFileName = filePath.replace(".csv", "")
-    newFileName = f"{newFileName}_modeled.csv"
+    newFileName = filePath.replace('.csv', '')
+    newFileName = f'{newFileName}_modeled.csv'
     df.to_csv(newFileName)
     postprocessing(newFileName)
 
@@ -50,22 +53,22 @@ def model_one_file():
 def automated_modeling(startDate, endDate):
     # pd.date_range is inclusive
     for date in pd.date_range(start=startDate, end=endDate):
-        date_str = date.strftime("%Y-%m-%d")
-        date_nodash = date_str.replace("-", "")
-        filePath = f"./baseData/dailystats/{date_str}/stats_{date_nodash}.csv"
+        date_str = date.strftime('%Y-%m-%d')
+        date_nodash = date_str.replace('-', '')
+        filePath = f'./baseData/dailystats/{date_str}/stats_{date_nodash}.csv'
         try:
             X, y, X_2022 = file_load(filePath)
         except FileNotFoundError:
             continue
 
-        print(f"Starting ensemble learning for {date_str}.")
+        print(f'Starting ensemble learning for {date_str}.')
         df = ensemble_modeling(filePath, X, y, X_2022)
 
-        newFileName = filePath.replace(".csv", "")
-        newFileName = f"{newFileName}_modeled.csv"
+        newFileName = filePath.replace('.csv', '')
+        newFileName = f'{newFileName}_modeled.csv'
         df.to_csv(newFileName)
         postprocessing(newFileName)
-        print(f"Ensemble learning for {date_str} complete.")
+        print(f'Ensemble learning for {date_str} complete.')
 
 # Expects either no argument (asks user to pick a file) OR -range YYYY-MM-DD YYYY-MM-DD (no quotes needed)
 # Potential improvement: -quiet to hide classification matrices
@@ -79,9 +82,9 @@ def main():
     elif args[0] == '-range':
         automated_modeling(args[1], args[2])
     else:
-        print("Please enter the correct arguments.")
+        print('Please enter the correct arguments.')
         return False
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

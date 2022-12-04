@@ -1,26 +1,28 @@
-from bs4 import BeautifulSoup, Comment
-import requests
-from csv_functions import write_to_csv
-from csv_functions import reset_csv
+from __future__ import annotations
 
+import requests
+from bs4 import BeautifulSoup
+from bs4 import Comment
+from csv_functions import reset_csv
+from csv_functions import write_to_csv
 
 
 def get_team_standings():
     yearList = range(1980, 2022)
-    fileName = "baseData/teamStandings.csv"
+    fileName = 'baseData/teamStandings.csv'
     reset_csv(fileName)
 
-    write_to_csv(fileName, ['Team', 'Wins','Losses','WL%','Season'])
+    write_to_csv(fileName, ['Team', 'Wins', 'Losses', 'WL%', 'Season'])
 
     for year in yearList:
         URL = (
-            "https://www.basketball-reference.com/leagues/NBA_"
+            'https://www.basketball-reference.com/leagues/NBA_'
             + str(year)
-            + "_standings.html"
+            + '_standings.html'
         )
 
         standingsPage = requests.get(URL)
-        standingsSoup = BeautifulSoup(standingsPage.content, "html.parser", from_encoding="utf-8")
+        standingsSoup = BeautifulSoup(standingsPage.content, 'html.parser', from_encoding='utf-8')
         # standingsTable = standingsSoup.find('div', id="expanded_standings_sh")
 
         for team in teamList:
@@ -33,7 +35,6 @@ def get_team_standings():
             losses = int(wl[1])
             wl_perc = wins / (wins + losses)
             write_to_csv(fileName, [teamName, wl[0], wl[1], wl_perc, year])
-
 
 
 get_team_standings()

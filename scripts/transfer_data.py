@@ -1,6 +1,9 @@
-import pandas as pd
+from __future__ import annotations
+
 import tkinter as tk
 from tkinter import filedialog
+
+import pandas as pd
 
 
 # Dialog asks user to pick a file
@@ -11,10 +14,10 @@ def pick_file():
 
         filePathName = filedialog.askopenfilename()
 
-        print("Thank you for picking a file!")
+        print('Thank you for picking a file!')
         return filePathName
     except FileNotFoundError:
-        print("Please pick a valid file.")
+        print('Please pick a valid file.')
         return False
 
 # Dialog asks user to pick a path
@@ -26,11 +29,11 @@ def pick_path():
         root.withdraw()
         pathName = filedialog.askdirectory()
 
-        print("Thank you for picking a file path!")
+        print('Thank you for picking a file path!')
         return pathName
 
     except ValueError:
-        print("Please pick a valid path.")
+        print('Please pick a valid path.')
         return False
 
 # Loads stats from all seasons dating back to 1979-1980
@@ -68,8 +71,8 @@ def addtodf_savetoCSV(fileName: str, classifierName: str, classifierData: pd.Ser
     df[classifierName] = classifierData.round(2)
     df[classifierProbName] = classifierProbData.round(2)
     df.sort_values(by=classifierProbName, ascending=False, inplace=True)
-    fileName = fileName.replace(".csv", "")
-    fileName = f"{fileName}_{modelType}.csv"
+    fileName = fileName.replace('.csv', '')
+    fileName = f'{fileName}_{modelType}.csv'
     df.to_csv(fileName)
 
 
@@ -88,7 +91,8 @@ def postprocessing(fileName):
     df = calculateAvg(df)
     df = sortbyAvg(df)
     df[['RF', 'SVM', 'MLP', 'GBM', 'XGB', 'Avg']] = df[[
-        'RF', 'SVM', 'MLP', 'GBM', 'XGB', 'Avg']].round(3)
+        'RF', 'SVM', 'MLP', 'GBM', 'XGB', 'Avg',
+    ]].round(3)
     df.to_csv(fileName, index=False)
 
 
@@ -108,7 +112,8 @@ def sortCSV_historical(fileName):
     df = average_and_deviation(df)
     df.sort_values(by='Avg', ascending=False, inplace=True)
     df[['SVM', 'kNN', 'MLP', 'Avg']] = df[[
-        'SVM', 'kNN', 'MLP', 'Avg']].round(3)
+        'SVM', 'kNN', 'MLP', 'Avg',
+    ]].round(3)
     df.to_csv(fileName, index=False)
 
 

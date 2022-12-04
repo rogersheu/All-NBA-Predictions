@@ -1,12 +1,16 @@
 # Scraping all season total data from the 1979-1980 season to the
 # current season.
+from __future__ import annotations
 
-from bs4 import BeautifulSoup
-import requests
-from csv_functions import write_to_csv, reset_csv, make_dir_if_nonexistent
-import unicodedata
 import re
 import sys
+import unicodedata
+
+import requests
+from bs4 import BeautifulSoup
+from csv_functions import make_dir_if_nonexistent
+from csv_functions import reset_csv
+from csv_functions import write_to_csv
 
 # tablePattern = re.compile(r"(full_table|italic-text partial-table")
 
@@ -16,25 +20,26 @@ headerExists = False
 def get_singleseason_stats(year: str, URL: str, fileName: str, repeatHeader: bool):
     dataPage = requests.get(URL)
     dataSoup = BeautifulSoup(
-        dataPage.content, "html.parser", from_encoding="utf-8")
-    dataTable = dataSoup.find("table", class_="sortable")
+        dataPage.content, 'html.parser', from_encoding='utf-8',
+    )
+    dataTable = dataSoup.find('table', class_='sortable')
 
     # This special i in Omer Asik was the only character in the database not caught by remove_accents.
-    turkishCharacters = str.maketrans("ı", "i")
+    turkishCharacters = str.maketrans('ı', 'i')
 
     if dataTable is not None:
-        dataHeader = dataTable.find("thead").find_all("th")
+        dataHeader = dataTable.find('thead').find_all('th')
         header = [headerElement.text for headerElement in dataHeader]
         # Removes the initial entries for play-by-play.
-        if re.search(r"play-by-play", fileName) is not None:
+        if re.search(r'play-by-play', fileName) is not None:
             header = header[9: len(header)]
         else:
             header = header[1: len(header)]
 
-        header.insert(1, "PlayerID")
-        header.insert(2, "Year")
+        header.insert(1, 'PlayerID')
+        header.insert(2, 'Year')
 
-        if re.search(r"advanced", fileName):
+        if re.search(r'advanced', fileName):
             header.pop(20)
             header.pop(24)
 
@@ -48,7 +53,7 @@ def get_singleseason_stats(year: str, URL: str, fileName: str, repeatHeader: boo
             write_to_csv(fileName, header)
 
         # Include "italic text" if you want information from players who switched teams.
-        dataList = dataTable.find_all("tr", class_=["full_table"])
+        dataList = dataTable.find_all('tr', class_=['full_table'])
         # dataList = dataTable.find_all("tr", class_=["full_table", "italic_text"])
 
         # Pull players who were traded mid-season and just do a check for
@@ -58,14 +63,14 @@ def get_singleseason_stats(year: str, URL: str, fileName: str, repeatHeader: boo
         # basketball-reference.com/players/a/<playerID>/gamelog/<year>
 
         for player in dataList:
-            playerList = player.find_all("td")
+            playerList = player.find_all('td')
             data = [dataItem.text for dataItem in playerList]
-            data.insert(1, playerList[0]["data-append-csv"])
+            data.insert(1, playerList[0]['data-append-csv'])
             data.insert(2, str(year))
             data[0] = remove_accents(data[0])
             data[0] = data[0].translate(turkishCharacters)
-            data[0] = data[0].replace("*", "")
-            if re.search(r"advanced", fileName):
+            data[0] = data[0].replace('*', '')
+            if re.search(r'advanced', fileName):
                 data.pop(20)
                 data.pop(24)
             write_to_csv(fileName, data)
@@ -77,32 +82,32 @@ def get_singleseason_stats(year: str, URL: str, fileName: str, repeatHeader: boo
 
 
 def remove_accents(input_str):
-    nfkd_form = unicodedata.normalize("NFKD", input_str)
-    return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
+    nfkd_form = unicodedata.normalize('NFKD', input_str)
+    return ''.join([c for c in nfkd_form if not unicodedata.combining(c)])
 
 
 def years_areValid(statType, yearStart, yearEnd):
     if not yearStart.isdigit() or not yearEnd.isdigit():
-        print("Please enter integer values.")
+        print('Please enter integer values.')
         return False
 
     yearStart = int(yearStart)
     yearEnd = int(yearEnd)
 
     if (yearStart or yearEnd) < 1947 or (yearStart or yearEnd) > 2022:
-        print("Please enter valid years.")
+        print('Please enter valid years.')
         return False
 
     if (yearStart or yearEnd) < 1980:
-        print("Warning. Picking seasons before the 1979-1980 season will skew data because of the introducton of the 3 point line in 1979.")
+        print('Warning. Picking seasons before the 1979-1980 season will skew data because of the introducton of the 3 point line in 1979.')
         return False
 
     if yearStart > yearEnd:
-        print("Please pick an ending year AFTER your starting year.")
+        print('Please pick an ending year AFTER your starting year.')
         return False
 
-    if statType == "-pbp" and yearStart < 1997:
-        print("Play-by-play data only started in the 1996-1997 season.")
+    if statType == '-pbp' and yearStart < 1997:
+        print('Play-by-play data only started in the 1996-1997 season.')
         return False
 
     else:
@@ -118,18 +123,21 @@ def save_each_season_stats(statType, yearStart, yearEnd):
 
         typeKey = get_typeKey(statType)
 
-        mkdir = (f"baseData/{typeKey}")
+        mkdir = (f'baseData/{typeKey}')
         make_dir_if_nonexistent(mkdir)
 
         for year in yearList:
             URL = (
-                f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
+                f'https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html'
+            )
             fileName = (
-                f"baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv")
+                f'baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv'
+            )
             reset_csv(fileName)
             get_singleseason_stats(year, URL, fileName, True)
             print(
-                f"Finished populating season {year - 1}-{year}, {typeKey} data.")
+                f'Finished populating season {year - 1}-{year}, {typeKey} data.',
+            )
 
     else:
         return False
@@ -141,15 +149,17 @@ def save_all_stats(statType, yearStart, yearEnd):
 
         typeKey = get_typeKey(statType)
 
-        fileName = f"baseData/{typeKey}_allyears.csv"
+        fileName = f'baseData/{typeKey}_allyears.csv'
         reset_csv(fileName)
 
         for year in yearList:
             URL = (
-                f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html")
+                f'https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html'
+            )
             get_singleseason_stats(year, URL, fileName, False)
             print(
-                f"Finished populating season {year-1}-{year}, {typeKey} data.")
+                f'Finished populating season {year-1}-{year}, {typeKey} data.',
+            )
 
     else:
         return True
@@ -161,11 +171,11 @@ def save_all_stats(statType, yearStart, yearEnd):
 def get_typeKey(statType):
     match statType:
         case '-tot':
-            typeKey = "totals"
+            typeKey = 'totals'
         case '-adv':
-            typeKey = "advanced"
+            typeKey = 'advanced'
         case '-pbp':
-            typeKey = "play-by-play"
+            typeKey = 'play-by-play'
         case _:
             return False
 
@@ -184,7 +194,7 @@ def main():
         if args[3] == 'all':
             save_all_stats(args[0], args[1], args[2])
     else:
-        print("Please enter 4 arguments.")
+        print('Please enter 4 arguments.')
         return False
 
 

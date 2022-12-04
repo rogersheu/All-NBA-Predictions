@@ -69,7 +69,7 @@ Scraping data (```Python 3.10```)
 2. Windows instructions: Go into ```Command Prompt```, change directory to this repository's folder in the GitHub folder (not any of the subfolders) using ```cd <this repository's path>```.
 3. Go into your virtualenv. Install any missing packages using ```pip install```.
 4. Get the full historical data set (back to 1979-1980) by running ```python .\scripts\scrape_stats_cli.py -tot 1980 2022 all```, ```python .\scripts\scrape_stats_cli.py -adv 1980 2022 all```, and ```python .\scripts\scrape_teamrecords.py```. Warning: This script and the one in Step 5 use Structural Python Matching, which was introduced in Python 3.10. If you do not have Python 3.10, either update to it or change lines 152-163 in ```scrape_stats_cli.py``` to be a series of ```if-elif```.
-5. Every day you want data, run the ```.\scripts\daily_data_script.py``` program to get the 2022 data. 
+5. Every day you want data, run the ```.\scripts\daily_data_script.py``` program to get the 2022 data.
 
 Database (```DBeaver```, ```SQLite3```)
 --------
@@ -84,7 +84,7 @@ Machine Learning (```Python```, ```scikit-learn```)
 
 Visualization (```RStudio```)
 ----------
-11. Your resulting file should be in the same path as you chose in Step 8. Open RStudio, set your your working directory (I would recommend ```~/GitHub/All-Star-Predictions/All-Star-Predictions/R``` and change any paths you need to change in the relevant functions. 
+11. Your resulting file should be in the same path as you chose in Step 8. Open RStudio, set your your working directory (I would recommend ```~/GitHub/All-Star-Predictions/All-Star-Predictions/R``` and change any paths you need to change in the relevant functions.
 12. Install and load the necessary libraries, copy the functions into the Console and run them, and then run your function. I would recommend ```plot_predictions``` and ```plot_predictions_line_graph```.
 
 ```plot_predictions(year, month, day)``` - Plots the machine learning modeling output in a convenient-to-read form.
@@ -138,7 +138,7 @@ Feature requirements:
 
 The statistics used were the following.
 
-| Features | 
+| Features |
 | --- |
 | Points Per Game (PPG) |
 | Rebounds Per Game (RPG) |
@@ -182,7 +182,7 @@ This section is under construction.
 
 Hyperparameter Tuning
 ===========
-Hyperparameter tuning was conducted on the four models, as can be seen in the files ```MLPtuning.py / MLPgraphing.py```, ```RFtuning.py```, and within ```SVMmodeling.py``` in the scripts folder. A ```GridSearch``` was carried out for RF and MLP. 
+Hyperparameter tuning was conducted on the four models, as can be seen in the files ```MLPtuning.py / MLPgraphing.py```, ```RFtuning.py```, and within ```SVMmodeling.py``` in the scripts folder. A ```GridSearch``` was carried out for RF and MLP.
 
 Random Forest & Random Forest Tuning
 -------------
@@ -194,7 +194,7 @@ Multilayer Perceptron & Multilayer Perceptron Tuning
 ---------
 Multilayer perceptron is a feedforward artificial neural network. The one used here is a "vanilla" neural network, indicating that it has one hidden layer. MLPs have at least three layers: an input layer (here, 7 features: PPG, RPG, APG, SBPG, TS%, WS48, and Team Winning Percentage), one or more hidden layers (here, a single layer of 4 nodes), and an output layer (here, a single node that's either on or off).
 
-For MLP, varied parameters included ```hidden_layer_sizes```, ```solver```, ```activation```, ```alpha```, and ```learning_rate```. 
+For MLP, varied parameters included ```hidden_layer_sizes```, ```solver```, ```activation```, ```alpha```, and ```learning_rate```.
 
 Hidden layer sizes for the 7 input and 1 output node were varied between a single hidden layer of 1-10 nodes, inclusive, two hidden layers with various sizes, maxing out at (4,4), and three relatively small hidden layers, such as (1,2,1), (1,3,1), (2,2,2), etc. A [rule-of-thumb found on stats stackexchange](https://stats.stackexchange.com/questions/181/how-to-choose-the-number-of-hidden-layers-and-nodes-in-a-feedforward-neural-netw) suggested that a single hidden layer of 4 nodes would be a good starting point, hence the other choices.
 
@@ -220,7 +220,7 @@ I tried a few different ```objective```s, including ```reg:squarederror```, ```r
 
 I also tried a few different `eval_metric`s, including `rmse`, `logloss`, `error`, and `aucpr`. The default, `logloss`, was selected for superior performance.
 
-With those out of the way, I then did a GridSearch on ```eta```, ```alpha```, ```lambda```, and ```gamma```, which stand for the learning rate, L1 regularization parameter, the L2 regularization parameter, and the ```min_split_loss```, respectively, and have defaults of 0.3 (eta), 0 (alpha), 1 (lambda), and 0 (gamma), respectively. 
+With those out of the way, I then did a GridSearch on ```eta```, ```alpha```, ```lambda```, and ```gamma```, which stand for the learning rate, L1 regularization parameter, the L2 regularization parameter, and the ```min_split_loss```, respectively, and have defaults of 0.3 (eta), 0 (alpha), 1 (lambda), and 0 (gamma), respectively.
 
 An increase in ```alpha``` or ```lambda``` makes the model more conservative, which means such a model is less likely to deviate from safe majority choices. Surprisingly, while changing both of these had little effect, a higher `lambda` was incrementally better than its default of 1. Thus, a `lambda` of 5 was chosen. An `alpha` of 0 was kept as the default.
 

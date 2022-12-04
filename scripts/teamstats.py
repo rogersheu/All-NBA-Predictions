@@ -1,16 +1,19 @@
-from bs4 import BeautifulSoup
+from __future__ import annotations
+
 import requests
+from bs4 import BeautifulSoup
 from csv_functions import *
 from transfer_data import *
 
 headerCheck = False
 
+
 def scrape_teamstats(fileName, year):
     yearURL = (f'https://www.basketball-reference.com/leagues/NBA_{year}.html')
     yearPage = requests.get(yearURL)
-    yearSoup = BeautifulSoup(yearPage.content, 'html.parser', from_encoding = 'utf-8')
+    yearSoup = BeautifulSoup(yearPage.content, 'html.parser', from_encoding='utf-8')
 
-    teamTable = yearSoup.find('table', id="per_game-team")
+    teamTable = yearSoup.find('table', id='per_game-team')
     header = []
     headings = teamTable.find('thead').find_all('th')
 
@@ -25,26 +28,24 @@ def scrape_teamstats(fileName, year):
         headerCheck = True
 
     leagueAvg = teamTable.find('tfoot').find_all('td')
-    
+
     averages = []
     for col in leagueAvg:
         averages.append(col.text)
-    
+
     averages.insert(1, year)
     write_to_csv(fileName, averages)
 
 
-
 def scrape_alltotals(startYear, endYear):
     pathName = pick_path()
-    fileName = (f"{pathName}/teamstats.csv")
+    fileName = (f'{pathName}/teamstats.csv')
     yearList = range(int(startYear), int(endYear) + 1)
     reset_csv(fileName)
-    
+
     for year in yearList:
         scrape_teamstats(fileName, year)
-    print("Finished populating {startYear}-{endYear}, team stats.")
-
+    print('Finished populating {startYear}-{endYear}, team stats.')
 
 
 def main():

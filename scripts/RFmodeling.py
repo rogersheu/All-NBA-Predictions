@@ -1,9 +1,12 @@
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix
-from transfer_data import *
-from sklearn.calibration import calibration_curve
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
+from sklearn.calibration import calibration_curve
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import train_test_split
+from transfer_data import *
 
 
 # Next thing to implement is GridSearchCV
@@ -30,14 +33,17 @@ def RF(X, y, X_2022):  # Change to take in a csv and output a csv
 
 def calcurve(randomforest: RandomForestClassifier, X_test, y_pred):
     y_means, proba_means = calibration_curve(
-        y_pred, randomforest.predict_proba(X_test)[:, 1], n_bins=7, strategy='uniform')
+        y_pred, randomforest.predict_proba(X_test)[:, 1], n_bins=7, strategy='uniform',
+    )
     plt.plot([0, 1], [0, 1], linestyle='--', label='Perfect calibration')
     plt.plot(proba_means, y_means)
 
 
 def featureimportance(randomforest, X):
-    feature_imp = pd.Series(randomforest.feature_importances_,
-                            index=X.columns.values).sort_values(ascending=False)
+    feature_imp = pd.Series(
+        randomforest.feature_importances_,
+        index=X.columns.values,
+    ).sort_values(ascending=False)
     print(feature_imp)
 
 
@@ -47,5 +53,5 @@ def main():
     RF(X, y, X_2022)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

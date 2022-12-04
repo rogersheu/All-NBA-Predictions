@@ -1,15 +1,18 @@
+from __future__ import annotations
 
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from transfer_data import *
-from sklearn.metrics import classification_report, confusion_matrix
 # from sklearn.metrics import accuracy_score
 # import seaborn as sn
 # import matplotlib.pyplot as plt
 
+
 def SVM(X, y, X_2022):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0, stratify = y)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0, stratify=y)
 
     # Scaling to bring all columns to mean of 0 and unit variance
     scaler = StandardScaler()
@@ -18,7 +21,7 @@ def SVM(X, y, X_2022):
 
     # Tried rbf (Gaussian), but linear was still more accurate.
     # Tried a variety of C from 10^-5 to 1000 and 0.1 was the most accurate
-    linSVCmodel = SVC(kernel = 'linear', C = 0.1, probability = True, random_state = 0)
+    linSVCmodel = SVC(kernel='linear', C=0.1, probability=True, random_state=0)
     linSVCmodel.fit(X_train, y_train)
     y_pred = linSVCmodel.predict(X_test)
 
@@ -39,8 +42,7 @@ def SVM(X, y, X_2022):
 
     predictions = linSVCmodel.predict_proba(X_2022)
 
-    return predictions[:,1]
-
+    return predictions[:, 1]
 
 
 def main():
@@ -48,5 +50,6 @@ def main():
     X_2022 = get_2022_stats()
     SVM(X, y, X_2022)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     main()

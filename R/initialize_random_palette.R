@@ -4,7 +4,7 @@ palette_initialization <- function() {
   #col_vector <- unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
   palette <- distinctColorPalette(n)
   col_vector <- unname(distinctColorPalette(n))
-  
+
   return(col_vector)
   #pie(rep(1,n), col=sample(col_vector, n))
 }

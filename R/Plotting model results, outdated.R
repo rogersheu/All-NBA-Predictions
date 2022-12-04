@@ -16,17 +16,17 @@ attach(topCandidates)
 topCandidates <- topCandidates[order(-Avg),]
 detach(topCandidates)
 
-ggplot(topCandidates, aes(x=Player, y=RF)) + 
-  theme_bw() + 
+ggplot(topCandidates, aes(x=Player, y=RF)) +
+  theme_bw() +
   theme(axis.text.y = element_text(face = "bold")) +
   ylab("Model Probability") +
-  xlab("") + 
+  xlab("") +
   scale_y_continuous(breaks=seq(0,1,0.1)) +
   scale_x_discrete(limits = rev(c(topCandidates$Player))) +
   coord_flip() +
-  geom_point(aes(x=Player, y=RF, color = "RF"), position = position_jitter(w=.1), size = 3, alpha = 0.25) + 
-  geom_point(aes(x=Player, y=SVM, color = "SVM"), position = position_jitter(w=.1), size = 3, alpha = 0.25) + 
-  geom_point(aes(x=Player, y=kNN, color = "kNN"), position = position_jitter(w=.1), size = 3, alpha = 0.25) + 
+  geom_point(aes(x=Player, y=RF, color = "RF"), position = position_jitter(w=.1), size = 3, alpha = 0.25) +
+  geom_point(aes(x=Player, y=SVM, color = "SVM"), position = position_jitter(w=.1), size = 3, alpha = 0.25) +
+  geom_point(aes(x=Player, y=kNN, color = "kNN"), position = position_jitter(w=.1), size = 3, alpha = 0.25) +
   geom_point(aes(x=Player, y=MLP, color = "MLP"), position = position_jitter(w=.1), size = 3, alpha = 0.25) +
   geom_point(aes(x=Player, y=Avg, color = "Avg"), size = 3, alpha = 1) +
   scale_color_manual(values = c("RF" = "springgreen", "SVM" = "goldenrod", "kNN" = "firebrick1", "MLP" = "royalblue", "Avg" = "gray24"))

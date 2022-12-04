@@ -1,7 +1,7 @@
 ALTER TABLE playerstats RENAME TO playerstats_backup;
 
-CREATE TABLE playerstats_withtype 
-( 
+CREATE TABLE playerstats_withtype
+(
 "ID" INTEGER,
 "Player" VARCHAR(50),
 "PlayerID" VARCHAR(20),
@@ -76,5 +76,3 @@ INSERT INTO playerstats ("ID", "Player","PlayerID", "Year", "Pos", "Age", "Tm", 
 	"PF", "PTS", "PER", "TS%", "3PAr", "FTr", "ORB%", "DRB%", "TRB%", "AST%", "STL%", "BLK%", "TOV%", "USG%", "OWS", "DWS", "WS", "WS/48", "OBPM", "DBPM", "BPM", "VORP", "PG%", "SG%", "SF%", "PF%", "C%", "OnCourt",
 	"On-Off", "BadPass", "LostBall", "Fouls Committed - Shooting", "Fouls Committed - Offensive" , "Fouls Drawn - Shooting", "Fouls Drawn - Offensive", "PGA", "And1", "Blkd"
 	FROM playerstats_backup;
-
-

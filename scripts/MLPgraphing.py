@@ -1,51 +1,59 @@
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, plot_precision_recall_curve, average_precision_score, precision_recall_curve, auc
-from transfer_data import *
-from sklearn.model_selection import GridSearchCV
-import matplotlib.pyplot as plt
+from __future__ import annotations
 
-    # As a personal reminder, activation refers to the output function behavior
-    #   logistic is logistic: 1/(1+e^-x)
-    #   tanh is just the trig function
-    #   relu is the piecewise x negative -> 0, x positive -> x
-    # Solver refers to the algorithm used
-    # Alpha is the L2 penalty hyperparameter factor. L2 is the penalty assigned
-    #   to the error term, given by the L2 norm (sqrt of the residual sums squared)
-    #
-    # Learning rate: adaptive adjusts the learning rate (presumably the impulse generated
-    # from the gradient descent) lower if it is shooting too far.
-    #
-    # parameter_space = { 
-    #     'hidden_layer_sizes': [(25,20,25), (10,50,10), (100,)], # does not need to be this large for this particular data set
-    #     'activation': ('tanh', 'relu'), # Relu seems to be the preferred method nowadays
-    #     'solver': ('lbfgs', 'sgd', 'adam'),
-    #     'alpha': [0.0001, 0.05],
-    #     'learning_rate': ('constant','adaptive')
-    # }
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import auc
+from sklearn.metrics import average_precision_score
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import plot_precision_recall_curve
+from sklearn.metrics import precision_recall_curve
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import StandardScaler
+from transfer_data import *
+
+# As a personal reminder, activation refers to the output function behavior
+#   logistic is logistic: 1/(1+e^-x)
+#   tanh is just the trig function
+#   relu is the piecewise x negative -> 0, x positive -> x
+# Solver refers to the algorithm used
+# Alpha is the L2 penalty hyperparameter factor. L2 is the penalty assigned
+#   to the error term, given by the L2 norm (sqrt of the residual sums squared)
+#
+# Learning rate: adaptive adjusts the learning rate (presumably the impulse generated
+# from the gradient descent) lower if it is shooting too far.
+#
+# parameter_space = {
+#     'hidden_layer_sizes': [(25,20,25), (10,50,10), (100,)], # does not need to be this large for this particular data set
+#     'activation': ('tanh', 'relu'), # Relu seems to be the preferred method nowadays
+#     'solver': ('lbfgs', 'sgd', 'adam'),
+#     'alpha': [0.0001, 0.05],
+#     'learning_rate': ('constant','adaptive')
+# }
 
 
 def MLP_graphing(X, y):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
-    # parameter_space = { 
+    # parameter_space = {
     #     "hidden_layer_sizes" : [(4), (6), (8), (10), (3,3)],
     #     "activation" : ['tanh', 'relu'],
     #     "alpha" : [0.0001, 0.001],
     #     "learning_rate" : ['constant', 'invscaling', 'adaptive']
     # }
-    
+
     # MLPmodel = MLPClassifier(max_iter = 2000)
 
-    # clf = GridSearchCV(MLPmodel, parameter_space, n_jobs = -1, cv = 3) 
+    # clf = GridSearchCV(MLPmodel, parameter_space, n_jobs = -1, cv = 3)
     # clf.fit(X_train, y_train)
 
-    clf = MLPClassifier(max_iter = 1000, hidden_layer_sizes = (4))
+    clf = MLPClassifier(max_iter=1000, hidden_layer_sizes=(4))
     clf.fit(X_train, y_train)
 
     y_score = clf.predict_proba(X_test)[:, 1]
@@ -87,14 +95,10 @@ def MLP_graphing(X, y):
 #     ax.grid('on')
 
 
-
-
 def main():
     X, y = get_all_player_stats()
     MLP_graphing(X, y)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     main()
-
-
-
