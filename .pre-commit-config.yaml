@@ -18,15 +18,20 @@ repos:
 -   repo: https://github.com/asottile/reorder_python_imports
     rev: v3.9.0
     hooks:
-    -   id: reorder-python-imports
-        exclude: ^(pre_commit/resources/|testing/resources/python3_hooks_repo/)
-        args: [--py37-plus, --add-import, 'from __future__ import annotations']
+    - id: reorder-python-imports
+      exclude: ^(pre_commit/resources/|testing/resources/python3_hooks_repo/)
+      args: [--py310-plus, "--application-directories=.:src"]
 -   repo: https://github.com/asottile/add-trailing-comma
     rev: v2.3.0
     hooks:
-    -   id: add-trailing-comma
-        args: [--py36-plus]
+    - id: add-trailing-comma
+      args: [--py36-plus]
 -   repo: https://github.com/pre-commit/mirrors-autopep8
     rev: v2.0.0
     hooks:
-    -   id: autopep8
+    - id: autopep8
+-   repo: https://github.com/PyCQA/autoflake
+    rev: v2.0.0
+    hooks:
+    - id: autoflake
+      args: ["--in-place", "--expand-star-imports", "--remove-all-unused-imports"]
