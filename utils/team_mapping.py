@@ -1,4 +1,4 @@
-activeTeams = {
+active_teams = {
     'Atlanta Hawks': 'ATL',
     'Boston Celtics': 'BOS',
     'Brooklyn Nets': 'BRK',
@@ -31,9 +31,9 @@ activeTeams = {
     'Washington Wizards': 'WAS',
 }
 
-tradedPlayers = {'Total': 'TOT'}
+traded_players = {'Total': 'TOT'}
 
-defunctTeams = {
+defunct_teams = {
     'Charlotte Bobcats': 'CHA',
     'Charlotte Hornets': 'CHH',  # 1989 to 2002
     'New Jersey Nets': 'NJN',
