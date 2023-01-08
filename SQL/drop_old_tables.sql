@@ -2,6 +2,6 @@ DROP TABLE totals;
 
 DROP TABLE advanced;
 
-DROP TABLE teamWL2022;
+DROP TABLE teamWL2023;
 
 DROP TABLE teamadv;
