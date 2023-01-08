@@ -40,12 +40,12 @@ def daily_data_script():
     save_each_season_stats_daily('-tot', '2023', '2023')
     save_each_season_stats_daily('-adv', '2023', '2023')
     scrape_all_team_records(
-        (f'{today_dir}/teamStandings_{start_date_nodash}.csv'), 20223, 2023,
+        (f'{today_dir}/teamStandings_{start_date_nodash}.csv'), 2023, 2023,
     )
     add_abbreviated_team_names(
         (f'{today_dir}/teamStandings_{start_date_nodash}.csv'),
     )
-    scrape_advanced_all(f'{today_dir}', '1980', '2023')
+    scrape_advanced_all(f'{today_dir}', '2023', '2023')
 
 
 if __name__ == '__main__':
