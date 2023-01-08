@@ -1,9 +1,6 @@
 from datetime import date
 
-from daily_database_update import database_pipeline
 from daily_modeling import automated_modeling
-
-from daily_data_script import daily_data_script
 
 date_today = date.today()
 today = date_today.strftime('%Y-%m-%d')
