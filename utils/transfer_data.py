@@ -43,8 +43,8 @@ def get_all_player_stats():
     # df = pd.read_csv(pick_file())
     #####
 
-    fileName = './baseData/ML/all_stats_20211201.csv'
-    df = pd.read_csv(fileName)
+    filename = './data/ML/all_stats_20211201.csv'
+    df = pd.read_csv(filename)
     print('All players data loaded.')
 
     X = df[['RPG', 'APG', 'SBPG', 'PPG', 'TS', 'WS48', 'Perc']]
@@ -83,15 +83,15 @@ def probabilityonly_toCSV(fileName: str, probName: str, probData: pd.Series):
 # Sorts by best model (by average proba)
 
 
-def postprocessing(fileName):
-    df = pd.read_csv(fileName)
+def postprocessing(filename):
+    df = pd.read_csv(filename)
     df = df.iloc[:, 1:]
     df = calculateAvg(df)
     df = sortbyAvg(df)
     df[['RF', 'SVM', 'MLP', 'GBM', 'XGB', 'Avg']] = df[[
         'RF', 'SVM', 'MLP', 'GBM', 'XGB', 'Avg',
     ]].round(3)
-    df.to_csv(fileName, index=False)
+    df.to_csv(filename, index=False)
 
 
 def calculateAvg(df):

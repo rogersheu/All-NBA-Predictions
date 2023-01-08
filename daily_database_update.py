@@ -7,7 +7,7 @@ from utils.transfer_data import pick_path
 
 
 def database_pipeline(path):
-    connection = sqlite3.connect('./baseData/allPlayerStats.db')
+    connection = sqlite3.connect('./data/allPlayerStats.db')
 
     cursor = connection.cursor()
 
@@ -16,7 +16,7 @@ def database_pipeline(path):
 
     print('SQL scripts starting...')
     # Drop old tables, might not be necessary since we're dropping them
-    sql_file = open('./scripts/SQL/drop_old_tables.sql')
+    sql_file = open('./SQL/drop_old_tables.sql')
     try:
         sql_as_string = sql_file.read()
         cursor.executescript(sql_as_string)
@@ -37,17 +37,17 @@ def database_pipeline(path):
                 pass
 
     # Make changes to tables
-    sql_file = open('./scripts/SQL/prep_tables_for_extraction.sql')
+    sql_file = open('./SQL/prep_tables_for_extraction.sql')
     try:
         sql_as_string = sql_file.read()
         cursor.executescript(sql_as_string)
-    except Exception:
+    except Exception as e:
         pass
 
     sql_file.close()
 
     # Extract this season's qualified players
-    sql_file = open('./scripts/SQL/players2022_dbeaver.sql')
+    sql_file = open('./SQL/players2023_dbeaver.sql')
     df_output = pd.read_sql_query(sql_file.read(), connection)
     sql_file.close()
     # sql_as_string = sql_file.read()

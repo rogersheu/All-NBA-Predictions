@@ -8,12 +8,12 @@ from daily_data_script import daily_data_script
 date_today = date.today()
 today = date_today.strftime('%Y-%m-%d')
 
-data_path = f'./baseData/dailystats/{today}'
+data_path = f'./data/dailystats/{today}'
 
 
 def full_pipeline():
-    daily_data_script()
-    database_pipeline(data_path)
+    # daily_data_script()
+    # database_pipeline(data_path)
     automated_modeling(today, today)
 
 
