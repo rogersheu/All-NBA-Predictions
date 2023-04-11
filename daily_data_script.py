@@ -13,42 +13,39 @@ short_date = datetime.today().strftime('%Y-%m-%d')
 start_date_nodash = short_date.replace('-', '')
 
 directory = './data/dailystats'
-mkdir = (f'{directory}/{short_date}')
-make_dir_if_nonexistent(mkdir)
+today_dir = (f'{directory}/{short_date}')
+make_dir_if_nonexistent(today_dir)
 
 
 def save_each_season_stats_daily(stat_type, year_start, year_end):
-
     if years_valid(stat_type, year_start, year_end):
-        yearList = list(range(int(year_start), int(year_end) + 1))
-        typeKey = get_type_key(stat_type)
+        year_list = list(range(int(year_start), int(year_end) + 1))
+        type_key = get_type_key(stat_type)
 
-        for year in yearList:
+        for year in year_list:
             URL = (
-                f'https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html'
+                f'https://www.basketball-reference.com/leagues/NBA_{year}_{type_key}.html'
             )
-            # f-stringed
-            filename = (f'{mkdir}/{typeKey}_{start_date_nodash}.csv')
+            filename = (f'{today_dir}/{type_key}_{start_date_nodash}.csv')
             reset_csv(filename)
             get_singleseason_stats(year, URL, filename, True)
-            # f-stringed
             print(
-                (f'Finished populating season {year - 1}-{year}, {typeKey} data.'),
+                (f'Finished populating season {year - 1}-{year}, {type_key} data.'),
             )
     else:
         return False
 
 
 def daily_data_script():
-    save_each_season_stats_daily('-tot', '2022', '2022')
-    save_each_season_stats_daily('-adv', '2022', '2022')
+    save_each_season_stats_daily('-tot', '2023', '2023')
+    save_each_season_stats_daily('-adv', '2023', '2023')
     scrape_all_team_records(
-        (f'{mkdir}/teamStandings_{start_date_nodash}.csv'), 2022, 2022,
+        (f'{today_dir}/teamStandings_{start_date_nodash}.csv'), 2023, 2023,
     )
     add_abbreviated_team_names(
-        (f'{mkdir}/teamStandings_{start_date_nodash}.csv'),
+        (f'{today_dir}/teamStandings_{start_date_nodash}.csv'),
     )
-    scrape_advanced_all(f'{mkdir}', '1980', '2022')
+    scrape_advanced_all(f'{today_dir}', '2023', '2023')
 
 
 if __name__ == '__main__':

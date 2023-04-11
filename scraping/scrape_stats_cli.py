@@ -91,7 +91,7 @@ def years_valid(stat_type, year_start, year_end):
     year_start = int(year_start)
     year_end = int(year_end)
 
-    if (year_start or year_end) < 1947 or (year_start or year_end) > 2022:
+    if (year_start or year_end) < 1947 or (year_start or year_end) > 2023:
         print('Please enter valid years.')
         return False
 

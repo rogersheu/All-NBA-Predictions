@@ -28,7 +28,7 @@ def file_load(filePath):
     return X, y, X_2022
 
 
-def ensemble_modeling(srcFile, X, y, X_2022):
+def full_modeling(srcFile, X, y, X_2022):
     df = pd.read_csv(srcFile)
     df['RF'] = RF(X, y, X_2022)
     df['SVM'] = SVM(X, y, X_2022)
@@ -41,34 +41,34 @@ def ensemble_modeling(srcFile, X, y, X_2022):
 
 def model_one_file():
     print("Pick your file containing this season's stats for prediction.")
-    filePath = pick_file()
-    X, y, X_2022 = file_load(filePath)
-    df = ensemble_modeling(filePath, X, y, X_2022)
+    file_path = pick_file()
+    X, y, X_2022 = file_load(file_path)
+    df = full_modeling(file_path, X, y, X_2022)
 
-    newFileName = filePath.replace('.csv', '')
-    newFileName = f'{newFileName}_modeled.csv'
-    df.to_csv(newFileName)
-    postprocessing(newFileName)
+    dest_filename = file_path.replace('.csv', '')
+    dest_filename = f'{dest_filename}_modeled.csv'
+    df.to_csv(dest_filename)
+    postprocessing(dest_filename)
 
 
-def automated_modeling(startDate, endDate):
+def automated_modeling(start_date, end_date):
     # pd.date_range is inclusive
-    for date in pd.date_range(start=startDate, end=endDate):
+    for date in pd.date_range(start=start_date, end=end_date):
         date_str = date.strftime('%Y-%m-%d')
         date_nodash = date_str.replace('-', '')
-        filePath = f'./baseData/dailystats/{date_str}/stats_{date_nodash}.csv'
+        file_path = f'./data/dailystats/{date_str}/stats_{date_nodash}.csv'
         try:
-            X, y, X_2022 = file_load(filePath)
+            X, y, X_2022 = file_load(file_path)
         except FileNotFoundError:
             continue
 
-        print(f'Starting ensemble learning for {date_str}.')
-        df = ensemble_modeling(filePath, X, y, X_2022)
+        print(f'Starting model voting system for {date_str}.')
+        df = full_modeling(file_path, X, y, X_2022)
 
-        newFileName = filePath.replace('.csv', '')
-        newFileName = f'{newFileName}_modeled.csv'
-        df.to_csv(newFileName)
-        postprocessing(newFileName)
+        dest_filename = file_path.replace('.csv', '')
+        dest_filename = f'{dest_filename}_modeled.csv'
+        df.to_csv(dest_filename)
+        postprocessing(dest_filename)
         print(f'Ensemble learning for {date_str} complete.')
 
 
