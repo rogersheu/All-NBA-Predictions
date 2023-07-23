@@ -2,7 +2,6 @@
 
 Table of Contents
 ===========
-* For Recruiters
 * Objective/Motivation
 * Installation/Instructions
 * Machine Learning Models
@@ -10,58 +9,18 @@ Table of Contents
 * Example Output
 * Hyperparameter Tuning
 * Related Work
-
-For Recruiters
--------
-For an example of my work, please peruse the following files.
-
-In ```./scripts/```:
-
-**Web scraping**
-
-* ```daily_data_scrape.py``` and ```scrape_stats_cli.py``` (BeautifulSoup, data cleaning, text manipulation and basic NLP, test cases, functions with arguments)
-* ```get_player_birthdates.py``` (Scraping data and manipulating web elements with Selenium)
-
-**Machine Learning**
-
-Modeling
-* ```daily_modeling.py``` (Runs the four models in the next bullet point)
-* ```RFmodeling.py SVMmodeling.py MLPmodeling.py XGBoostmodeling.py``` (scikit-learn, model execution, called from ```daily_modeling.py```, some matplotlib)
-* ```MLPinTFKeras.ipynb``` (TensorFlow and Keras implementation of a similar multilayer perceptron to the one in scikit-learn)
-
-Tuning (Training, Validating, Testing)
-* ```RFtuning.py MLPtuning.py``` (scikit-learn, GridSearchCV to tune hyperparameters, train_test_split)
-* ```MLPgraphing.py``` (scikit-learn, matplotlib of recall vs. precision)
-
-**Code Management**
-
-Helper Functions
-* ```csv_functions.py``` (writes to CSV files, deletes a CSV file to ensure clean start)
-* ```transfer_data.py``` (pandas and tkinter to pick paths/files from directory, includes quick data operations)
-
-**Databases**
-
-* Relational database of players: ```/baseData/allPlayerStats.db```
-* SQL functions: ```/scripts/SQL/```
-* ```players2022_dbeaver.sql``` (common table expressions, multiple joins, data filters via subqueries and LIMIT 1, aliases, and ensuring accuracy/readability of data using ROUND/CAST)
-
-**Visualizations**
-
-* RShiny app ```/R/all-stars/allstar_shiny.R```, shows the probability for a given day and the trend over a range of a dates
-
-Still under construction, both locally in R (locally referring to within this repository) and elsewhere in Tableau Public. Graphs can be shared upon request.
-
+* Potential Refinements
 
 Objective/Motivation
 ===========
-Using machine learning and deep learning models, identify players most likely to be selected onto either the NBA all-star team (halfway through the season) or an all-NBA team (at the end of the season). Inspiration and/or methodology from [here](https://www.reddit.com/r/nba/comments/bcdpls/oc_using_machine_learning_to_predict_the_2019_mvp/). Only the overarching information in that post was used. The code was written from scratch or sourced from unrelated analyses found online, especially scikit-learn's documentation.
+Using machine learning and deep learning models, identify players most likely to be selected onto either the NBA all-star team (halfway through the season) or an all-NBA team (at the end of the season). Inspiration and/or methodology from [here](https://www.reddit.com/r/nba/comments/bcdpls/oc_using_machine_learning_to_predict_the_2019_mvp/). Only the overarching information in that post was used. The code was written from scratch or sourced from unrelated analyses found in scikit-learn's documentation or otherwise.
 
-Plenty of NBA aficionados try to predict who they think will be all-stars and all-NBA players. However, opinions vary widely between fans, and they often use any number of metrics (or lack thereof). People fall into various biases, including recency bias and letting their emotions cloud their better judgment. On the other hand, the human element is critical for accurate evaluation of performance, since while data collection is extensive, the big picture may still remain incomplete. In this project, I take inspiration from a previous attempt at this endeavor and make some improvements of my own. I hope to provide a statistical foundation upon which opinions can then be tweaked and crystallzied. I also wish to track each candidate's progress over time, since time is an important dimension to these analyses.
+Plenty of NBA aficionados propose their list of All-Stars and All-NBA players. However, opinions vary widely between fans, and they often use any number of metrics (or lack thereof). People fall into various biases, including recency bias and letting their emotions cloud their better judgment. On the other hand, the human element is critical for accurate evaluation of performance, since while data collection is extensive, the big picture may still remain incomplete. In this project, I take inspiration from a previous attempt at this endeavor and make some improvements of my own. I hope to provide a statistical foundation upon which opinions can then be tweaked and crystallzied. I also wish to track each candidate's progress over time, since time is an important dimension to these analyses.
 
 
 Installation/Instructions
 ===========
-Prerequisites: ```Python 3.10```, ```sqlite3```, ```DBeaver```, ```R (RStudio)```
+Software Prerequisites: ```Python 3.10```, ```sqlite3```, ```DBeaver```, ```R (RStudio)```
 
 Scraping data (```Python 3.10```)
 -------
@@ -238,3 +197,10 @@ A Tableau dashboard of the three point revolution in the NBA, and the highly-acc
 <p align="center" width="100%">
     <img width="75%" src="https://user-images.githubusercontent.com/78449574/151091437-c984ca3c-a1ba-4a97-a766-ac36a949d934.png">
 </p>
+
+
+Potential Refinements
+===========
+1. With game-by-game data, some extra weight could be placed on more recent player performance.
+2. Instead of a hard cut-off for % of games or minutes played, perhaps a player could be penalized but not completely removed.
+3. Players with significant legacy could be provided a slight boost, since they are more likely to be voted in even with a slight drop in statistical production.
