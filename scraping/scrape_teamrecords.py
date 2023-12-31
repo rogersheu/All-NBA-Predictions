@@ -44,7 +44,3 @@ def scrape_all_team_records(filename, start_year, end_year):
     write_to_csv(filename, ['Team', 'Year', 'Wins', 'Losses', 'Perc'])
     for year in yearList:
         scrape_teamrecords(filename, year)
-
-
-if __name__ == '__main__':
-    scrape_all_team_records(filename)

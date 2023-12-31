@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from utils.csv_functions import make_dir_if_nonexistent
 from utils.csv_functions import reset_csv
 from utils.csv_functions import write_to_csv
+from utils.vars import curr_season
 
 header_exists = False
 
@@ -91,7 +92,7 @@ def years_valid(stat_type, year_start, year_end):
     year_start = int(year_start)
     year_end = int(year_end)
 
-    if (year_start or year_end) < 1947 or (year_start or year_end) > 2023:
+    if (year_start or year_end) < 1947 or (year_start or year_end) > curr_season:
         print('Please enter valid years.')
         return False
 
@@ -110,8 +111,6 @@ def years_valid(stat_type, year_start, year_end):
     else:
         return True
 
-
-# Goes from 1979-1980 to 2021-2022 (current season)
 
 def save_each_season_stats(stat_type, year_start, year_end):
     if years_valid(stat_type, year_start, year_end):

@@ -11,6 +11,8 @@ filename = 'data/teamStandings.csv'
 def add_abbreviated_team_names(filename):
     df = pd.read_csv(filename, delimiter=',')
 
+    df["Team"] = [team.replace("*", "") for team in df["Team"]]
+
     chainMap = collections.ChainMap(
         team_mapping.active_teams, team_mapping.traded_players, team_mapping.defunct_teams,
     )

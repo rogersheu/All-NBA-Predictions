@@ -1,5 +1,5 @@
 -- FOR DAILY UPDATES
-WITH Players2023 AS
+WITH Players2024 AS
 (
 	SELECT
         stats.Player,
@@ -16,25 +16,25 @@ WITH Players2023 AS
         adv.TS - teamadv.TS AS rTS,
         --stats.'3PAr', stats.FTr,
         adv.WS48,-- stats.BPM, stats.VORP,
-        teamWL2023.Perc--,
+        teamWL2024.Perc--,
         --1 - (1 - COALESCE(allstars.Status, 0)) * (1 - COALESCE(allNBA.Status, 0)) AS allLeague
 		FROM totals AS stats
 	LEFT JOIN advanced AS adv ON (stats.Player = adv.Player AND stats.Year = adv.Year)
 	LEFT JOIN allstars ON (stats.Player = allstars.Name AND stats.Year = allstars.Season)
 	LEFT JOIN allNBA ON (stats.Player = allNBA.Name AND stats.Year = allNBA.Season)
-	LEFT JOIN teamWL2023 ON (stats.Tm = teamWL2023.Tm AND stats.Year = teamWL2023.Year)
+	LEFT JOIN teamWL2024 ON (stats.Tm = teamWL2024.Tm AND stats.Year = teamWL2024.Year)
 	LEFT JOIN teamadv ON (stats.Year = teamadv.Season)
 )
-SELECT * FROM Players2023
-WHERE Year = 2023
+SELECT * FROM Players2024
+WHERE Year = 2024
 	AND Perc > 0
 	AND ((MPG > 25 AND
 		G > (SELECT G
-		FROM Players2023
+		FROM Players2024
 		ORDER BY G DESC
-		LIMIT 1) * 0.5)
+		LIMIT 1) * 0.65)
 	OR MP >
 	(SELECT MP
-		FROM Players2023
+		FROM Players2024
 		ORDER BY MP DESC
-		LIMIT 1) * 0.5);
+		LIMIT 1) * 0.65);

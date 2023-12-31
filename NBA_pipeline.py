@@ -1,5 +1,7 @@
 from datetime import date
 
+from daily_data_script import daily_data_script
+from daily_database_update import database_pipeline
 from daily_modeling import automated_modeling
 
 date_today = date.today()
@@ -9,8 +11,8 @@ data_path = f'./data/dailystats/{today}'
 
 
 def full_pipeline():
-    # daily_data_script()
-    # database_pipeline(data_path)
+    daily_data_script()
+    database_pipeline(data_path)
     automated_modeling(today, today)
 
 

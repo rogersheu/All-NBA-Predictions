@@ -15,12 +15,6 @@ repos:
     - id: mixed-line-ending
       args: [--fix=lf]
     - id: requirements-txt-fixer
--   repo: https://github.com/asottile/reorder_python_imports
-    rev: v3.9.0
-    hooks:
-    - id: reorder-python-imports
-      exclude: ^(pre_commit/resources/|testing/resources/python3_hooks_repo/)
-      args: [--py310-plus, "--application-directories=.:src"]
 -   repo: https://github.com/asottile/add-trailing-comma
     rev: v2.3.0
     hooks:
