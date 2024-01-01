@@ -1,31 +1,22 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
-    - id: trailing-whitespace
-    - id: end-of-file-fixer
-    - id: check-yaml
-    - id: check-json
-    - id: check-case-conflict
-    - id: check-symlinks
-    - id: destroyed-symlinks
-    - id: fix-byte-order-marker
-    - id: fix-encoding-pragma
-      args: [--remove]
-    - id: mixed-line-ending
-      args: [--fix=lf]
-    - id: requirements-txt-fixer
--   repo: https://github.com/asottile/add-trailing-comma
-    rev: v2.3.0
+      - id: check-case-conflict
+      - id: check-json
+      - id: check-symlinks
+      - id: check-yaml
+      - id: destroyed-symlinks
+      - id: end-of-file-fixer
+        exclude: docs/CNAME
+      - id: fix-byte-order-marker
+      - id: fix-encoding-pragma
+        args: [--remove]
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
     hooks:
-    - id: add-trailing-comma
-      args: [--py36-plus]
--   repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v2.0.0
-    hooks:
-    - id: autopep8
--   repo: https://github.com/PyCQA/autoflake
-    rev: v2.0.0
-    hooks:
-    - id: autoflake
-      args: ["--in-place", "--expand-star-imports", "--remove-all-unused-imports"]
+      - id: black

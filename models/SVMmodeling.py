@@ -14,7 +14,11 @@ from utils.transfer_data import get_all_player_stats
 
 def SVM(X, y, X_2022):
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=0, stratify=y,
+        X,
+        y,
+        test_size=0.2,
+        random_state=0,
+        stratify=y,
     )
 
     # Scaling to bring all columns to mean of 0 and unit variance
@@ -24,11 +28,11 @@ def SVM(X, y, X_2022):
 
     # Tried rbf (Gaussian), but linear was still more accurate.
     # Tried a variety of C from 10^-5 to 1000 and 0.1 was the most accurate
-    linSVCmodel = SVC(kernel='linear', C=0.1, probability=True, random_state=0)
+    linSVCmodel = SVC(kernel="linear", C=0.1, probability=True, random_state=0)
     linSVCmodel.fit(X_train, y_train)
     y_pred = linSVCmodel.predict(X_test)
 
-    print('Confusion matrix and classification report for SVM model.\n')
+    print("Confusion matrix and classification report for SVM model.\n")
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
 
@@ -48,7 +52,7 @@ def SVM(X, y, X_2022):
     return predictions[:, 1]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     X, y = get_all_player_stats()
     X_2022 = get_2022_stats()
     SVM(X, y, X_2022)

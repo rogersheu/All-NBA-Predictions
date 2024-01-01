@@ -13,6 +13,7 @@ from utils.transfer_data import get_all_player_stats
 # Next thing to implement is GridSearchCV
 # https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74
 
+
 def RF(X, y, X_2022):  # Change to take in a csv and output a csv
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
@@ -23,7 +24,7 @@ def RF(X, y, X_2022):  # Change to take in a csv and output a csv
 
     y_pred = randomforest.predict(X_test)
 
-    print('Confusion matrix and classification report for Random Forest model.\n')
+    print("Confusion matrix and classification report for Random Forest model.\n")
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
 
@@ -34,9 +35,12 @@ def RF(X, y, X_2022):  # Change to take in a csv and output a csv
 
 def calcurve(randomforest: RandomForestClassifier, X_test, y_pred):
     y_means, proba_means = calibration_curve(
-        y_pred, randomforest.predict_proba(X_test)[:, 1], n_bins=7, strategy='uniform',
+        y_pred,
+        randomforest.predict_proba(X_test)[:, 1],
+        n_bins=7,
+        strategy="uniform",
     )
-    plt.plot([0, 1], [0, 1], linestyle='--', label='Perfect calibration')
+    plt.plot([0, 1], [0, 1], linestyle="--", label="Perfect calibration")
     plt.plot(proba_means, y_means)
 
 
@@ -48,7 +52,7 @@ def featureimportance(randomforest, X):
     print(feature_imp)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     X, y = get_all_player_stats()
     X_2022 = get_2022_stats()
     RF(X, y, X_2022)

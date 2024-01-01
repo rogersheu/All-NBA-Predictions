@@ -30,7 +30,10 @@ from utils.transfer_data import get_all_player_stats
 
 def MLP_graphing(X, y):
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=0,
+        X,
+        y,
+        test_size=0.2,
+        random_state=0,
     )
 
     scaler = StandardScaler()
@@ -91,6 +94,6 @@ def MLP_graphing(X, y):
 #     ax.grid('on')
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     X, y = get_all_player_stats()
     MLP_graphing(X, y)

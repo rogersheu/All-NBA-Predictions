@@ -42,14 +42,16 @@ iterations = 10
 
 
 def XGBoost(X, y):
-
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, stratify=y,
+        X,
+        y,
+        test_size=0.2,
+        stratify=y,
     )
     xgb_model = xgb.XGBClassifier(
-        objective='binary:logistic',
-        tree_method='hist',
-        eval_metric='logloss',
+        objective="binary:logistic",
+        tree_method="hist",
+        eval_metric="logloss",
         use_label_encoder=False,
         n_estimators=100,
         # eta = 0.2,
@@ -61,10 +63,10 @@ def XGBoost(X, y):
         # "eval_metric" : ['rmse', 'logloss', 'error', 'aucpr'],
         # "n_estimators" : [25, 50, 100], #1
         # "max_depth" : [3, 4, 5, 6], #2
-        'learning_rate': [0.1, 0.15, 0.2, 0.25, 0.3],  # 3
+        "learning_rate": [0.1, 0.15, 0.2, 0.25, 0.3],  # 3
         # "reg_alpha" : [0, 0.1], #4
-        'reg_lambda': [0.1, 0.5, 1, 2, 5, 10],  # 4
-        'gamma': [0, 0.1, 0.2, 0.5, 1],  # 5
+        "reg_lambda": [0.1, 0.5, 1, 2, 5, 10],  # 4
+        "gamma": [0, 0.1, 0.2, 0.5, 1],  # 5
         # "min_child_weight" : [1, 3, 5, 7, 9] #6
     }
 
@@ -79,32 +81,32 @@ def XGBoost(X, y):
     # gamma has almost no effect on recall
     # n_estimators, more leads to higher recall in test set
 
-    print('# Tuning hyper-parameters.\n')
+    print("# Tuning hyper-parameters.\n")
 
-    clf = GridSearchCV(xgb_model, parameter_space, scoring='f1_macro', cv=5)
+    clf = GridSearchCV(xgb_model, parameter_space, scoring="f1_macro", cv=5)
     # clf = RandomizedSearchCV(xgb_model, parameter_space, n_iter = 100, scoring="%s_macro" % score, n_jobs = -1, cv = 3)
     clf.fit(X_train, y_train)
 
-    print('Best parameters set found on development set:\n')
+    print("Best parameters set found on development set:\n")
     print(clf.best_params_)
     print()
-    print('Grid scores on development set:\n')
+    print("Grid scores on development set:\n")
 
-    means = clf.cv_results_['mean_test_score']
-    stds = clf.cv_results_['std_test_score']
-    params = clf.cv_results_['params']
+    means = clf.cv_results_["mean_test_score"]
+    stds = clf.cv_results_["std_test_score"]
+    params = clf.cv_results_["params"]
 
     for mean, std, params in zip(means, stds, params):
-        print('{:0.3f} (+/-{:0.03f}) for {!r}'.format(mean, std * 2, params))
+        print("{:0.3f} (+/-{:0.03f}) for {!r}".format(mean, std * 2, params))
     print()
 
-    print('Detailed classification report:\n')
-    print('The model is trained on the full development set.')
-    print('The scores are computed on the full evaluation set.\n')
+    print("Detailed classification report:\n")
+    print("The model is trained on the full development set.")
+    print("The scores are computed on the full evaluation set.\n")
     y_true, y_pred = y_test, clf.predict(X_test)
     print(classification_report(y_true, y_pred))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     X, y = get_all_player_stats()
     XGBoost(X, y)

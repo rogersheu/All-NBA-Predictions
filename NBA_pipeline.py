@@ -5,9 +5,9 @@ from daily_database_update import database_pipeline
 from daily_modeling import automated_modeling
 
 date_today = date.today()
-today = date_today.strftime('%Y-%m-%d')
+today = date_today.strftime("%Y-%m-%d")
 
-data_path = f'./data/dailystats/{today}'
+data_path = f"./data/dailystats/{today}"
 
 
 def full_pipeline():
@@ -16,5 +16,5 @@ def full_pipeline():
     automated_modeling(today, today)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     full_pipeline()

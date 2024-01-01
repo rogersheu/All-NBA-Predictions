@@ -30,7 +30,10 @@ def database_pipeline(path):
         if fileName.endswith(".csv"):  # Avoid any accidents
             df = pd.read_csv(f"{path}/{fileName}")
             df.to_sql(
-                f'{fileName.replace(".csv","").split("_")[0]}', connection, if_exists="replace", index=False,
+                f'{fileName.replace(".csv","").split("_")[0]}',
+                connection,
+                if_exists="replace",
+                index=False,
             )
             try:
                 date = f'{fileName.replace(".csv","").split("_")[1]}'
