@@ -1,5 +1,7 @@
-import pandas as pd
 from datetime import datetime
+
+import pandas as pd
+
 from utils.team_mapping import conference_to_teams
 
 curr_dt = datetime.now().strftime("%Y-%m-%d")

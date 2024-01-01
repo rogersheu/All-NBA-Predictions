@@ -67,25 +67,22 @@ def MLP_tuning(X, y):
     scores = ["precision", "recall"]
 
     for score in scores:
-        print("# Tuning hyper-parameters for %s" % score)
-        print()
+        print(f"# Tuning hyper-parameters for {score}\n")
 
         clf = GridSearchCV(
             MLPmodel,
             parameter_space,
-            scoring="%s_macro" % score,
+            scoring=f"{score}_macro",
             n_jobs=-1,
             cv=3,
         )
         # clf = RandomizedSearchCV(MLPmodel, parameter_space, scoring="%s_macro" % score, n_jobs = -1, cv = 3)
         clf.fit(X_train, y_train)
 
-        print("Best parameters set found on development set:")
-        print()
+        print("Best parameters set found on development set:\n")
         print(clf.best_params_)
         print()
-        print("Grid scores on development set:")
-        print()
+        print("Grid scores on development set:\n")
         means = clf.cv_results_["mean_test_score"]
         if score == "precision":
             precision_means = means
@@ -93,17 +90,13 @@ def MLP_tuning(X, y):
             recall_means = means
         stds = clf.cv_results_["std_test_score"]
         for mean, std, params in zip(means, stds, clf.cv_results_["params"]):
-            print("{:0.3f} (+/-{:0.03f}) for {!r}".format(mean, std * 2, params))
-        print()
+            print(f"{mean:0.3f} (+/-{std*2:0.03f}) for {params}\n")
 
-        print("Detailed classification report:")
-        print()
+        print("Detailed classification report:\n")
         print("The model is trained on the full development set.")
-        print("The scores are computed on the full evaluation set.")
-        print()
+        print("The scores are computed on the full evaluation set.\n")
         y_true, y_pred = y_test, clf.predict(X_test)
         print(classification_report(y_true, y_pred))
-        print()
 
     plt.scatter(precision_means, recall_means)
     plt.show()

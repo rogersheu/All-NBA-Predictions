@@ -6,9 +6,6 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 
-from utils.transfer_data import get_2022_stats
-from utils.transfer_data import get_all_player_stats
-
 
 # Next thing to implement is GridSearchCV
 # https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74
@@ -50,9 +47,3 @@ def featureimportance(randomforest, X):
         index=X.columns.values,
     ).sort_values(ascending=False)
     print(feature_imp)
-
-
-if __name__ == "__main__":
-    X, y = get_all_player_stats()
-    X_2022 = get_2022_stats()
-    RF(X, y, X_2022)

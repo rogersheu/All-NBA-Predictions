@@ -17,13 +17,12 @@ def database_pipeline(path):
 
     print("SQL scripts starting...")
     # Drop old tables, might not be necessary since we're dropping them
-    sql_file = open("./SQL/drop_old_tables.sql")
-    try:
-        sql_as_string = sql_file.read()
-        cursor.executescript(sql_as_string)
-        sql_file.close()
-    except Exception:
-        pass
+    with open("./SQL/drop_old_tables.sql", encoding="utf-8") as f:
+        try:
+            sql_as_string = f.read()
+            cursor.executescript(sql_as_string)
+        except Exception:
+            pass
 
     # Decide whether to have user pick path or just set it automatically...
     for fileName in listdir(path):
@@ -41,19 +40,16 @@ def database_pipeline(path):
                 pass
 
     # Make changes to tables
-    sql_file = open("./SQL/prep_tables_for_extraction.sql")
-    try:
-        sql_as_string = sql_file.read()
-        cursor.executescript(sql_as_string)
-    except Exception as e:
-        raise (e)
-
-    sql_file.close()
+    with open("./SQL/prep_tables_for_extraction.sql", encoding="utf-8") as f:
+        try:
+            sql_as_string = f.read()
+            cursor.executescript(sql_as_string)
+        except Exception as e:
+            raise e
 
     # Extract this season's qualified players
-    sql_file = open(f"./SQL/players{curr_season_str}_dbeaver.sql")
-    df_output = pd.read_sql_query(sql_file.read(), connection)
-    sql_file.close()
+    with open(f"./SQL/players{curr_season_str}_dbeaver.sql", encoding="utf-8") as f:
+        df_output = pd.read_sql_query(f.read(), connection)
     print(df_output)
     df_output.to_csv(f"{path}/stats_{date}.csv", index=False)
 

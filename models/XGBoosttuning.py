@@ -97,8 +97,7 @@ def XGBoost(X, y):
     params = clf.cv_results_["params"]
 
     for mean, std, params in zip(means, stds, params):
-        print("{:0.3f} (+/-{:0.03f}) for {!r}".format(mean, std * 2, params))
-    print()
+        print(f"{mean:0.3f} (+/-{std*2:0.03f}) for {params}\n")
 
     print("Detailed classification report:\n")
     print("The model is trained on the full development set.")

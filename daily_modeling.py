@@ -84,7 +84,6 @@ def model_handler():
         automated_modeling(args[1], args[2])
     else:
         print("Please enter the correct arguments.")
-        return False
 
 
 if __name__ == "__main__":

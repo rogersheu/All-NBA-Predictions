@@ -52,12 +52,12 @@ def MLP_graphing(X, y):
     # clf = GridSearchCV(MLPmodel, parameter_space, n_jobs = -1, cv = 3)
     # clf.fit(X_train, y_train)
 
-    clf = MLPClassifier(max_iter=1000, hidden_layer_sizes=(4))
+    clf = MLPClassifier(max_iter=1000, hidden_layer_sizes=4)
     clf.fit(X_train, y_train)
 
     y_score = clf.predict_proba(X_test)[:, 1]
 
-    precision, recall, thresholds = precision_recall_curve(y_test, y_score)
+    precision, recall, _ = precision_recall_curve(y_test, y_score)
     plt.plot(recall, precision)
     plt.show()
     auc_precision_recall = auc(recall, precision)

@@ -4,13 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 
-from utils.transfer_data import get_2022_stats
-from utils.transfer_data import get_all_player_stats
-
-# from sklearn.metrics import accuracy_score
-# import seaborn as sn
-# import matplotlib.pyplot as plt
-
 
 def SVM(X, y, X_2022):
     X_train, X_test, y_train, y_test = train_test_split(
@@ -45,14 +38,8 @@ def SVM(X, y, X_2022):
 
     # Must scale prior to use
     X_2022 = scaler.transform(X_2022)
-    y_2022 = linSVCmodel.predict(X_2022)
+    _ = linSVCmodel.predict(X_2022)
 
     predictions = linSVCmodel.predict_proba(X_2022)
 
     return predictions[:, 1]
-
-
-if __name__ == "__main__":
-    X, y = get_all_player_stats()
-    X_2022 = get_2022_stats()
-    SVM(X, y, X_2022)

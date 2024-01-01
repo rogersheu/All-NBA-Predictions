@@ -2,10 +2,7 @@ from models.kNNmodeling import kNN
 from models.MLPmodeling import MLP
 from models.RFmodeling import RF
 from models.SVMmodeling import SVM
-from utils.transfer_data import get_all_player_stats
-from utils.transfer_data import pd
-from utils.transfer_data import pick_file
-from utils.transfer_data import sortCSV_historical
+from utils.transfer_data import get_all_player_stats, pd, pick_file, sortCSV_historical
 
 
 def main():

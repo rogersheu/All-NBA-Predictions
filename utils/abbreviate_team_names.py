@@ -3,7 +3,7 @@ import collections
 
 import pandas as pd
 
-import utils.team_mapping as team_mapping
+from utils import team_mapping
 
 filename = "data/teamStandings.csv"
 

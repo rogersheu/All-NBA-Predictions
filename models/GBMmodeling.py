@@ -4,17 +4,13 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 
-from utils.transfer_data import get_2022_stats
-from utils.transfer_data import get_all_player_stats
-
-
 iterations = 10
 
 
 def GBM(X, y, X_2022):
     prediction_trials = []
     # No scaling required
-    for i in range(iterations):
+    for _ in range(iterations):
         X_train, X_test, y_train, y_test = train_test_split(
             X,
             y,
@@ -28,16 +24,10 @@ def GBM(X, y, X_2022):
         prediction_trials.append(gbm_model.predict_proba(X_2022)[:, 1])
 
     print(
-        f"Confusion matrix and classification report for Gradient Boosted Trees model, final iteration.\n"
+        "Confusion matrix and classification report for Gradient Boosted Trees model, final iteration.\n"
     )
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
     df = pd.DataFrame(prediction_trials).transpose()
 
     return df.mean(axis=1)  # Average of the <iteration> trials.
-
-
-if __name__ == "__main__":
-    X, y = get_all_player_stats()
-    X_2022 = get_2022_stats()
-    GBM(X, y, X_2022)

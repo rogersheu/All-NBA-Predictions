@@ -36,7 +36,7 @@ def gradientboosted_tuning(X, y):
     scores = ["precision", "recall"]
 
     for score in scores:
-        print("# Tuning hyper-parameters for %s" % score)
+        print(f"# Tuning hyper-parameters for {score}")
         print()
 
         # "%s_macro" % score, cv = 5)
@@ -50,7 +50,7 @@ def gradientboosted_tuning(X, y):
         stds = clf.cv_results_["std_test_score"]
 
         for mean, std, params in zip(means, stds, clf.cv_results_["params"]):
-            print("{:0.3f} (+/-{:0.03f}) for {!r}".format(mean, std * 2, params))
+            print(f"{mean:0.3f} (+/-{std*2:0.03f}) for {params}")
         print()
 
         print("Detailed classification report:\n")

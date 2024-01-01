@@ -75,14 +75,9 @@ def get_singleseason_stats(year: str, url: str, filename: str, repeat_header: bo
                 data.pop(24)
             write_to_csv(filename, data)
 
-    else:
-        return False
-
-
-# Handle weird characters, like Doncic, Zydrunas Ilgauskas, Omer Asik, and more.
-
 
 def remove_accents(input_str):
+    # Handle weird characters, like Doncic, Zydrunas Ilgauskas, Omer Asik, and more.
     nfkd_form = unicodedata.normalize("NFKD", input_str)
     return "".join([c for c in nfkd_form if not unicodedata.combining(c)])
 
@@ -113,8 +108,7 @@ def years_valid(stat_type, year_start, year_end):
         print("Play-by-play data only started in the 1996-1997 season.")
         return False
 
-    else:
-        return True
+    return True
 
 
 def save_each_season_stats(stat_type, year_start, year_end):
@@ -135,9 +129,6 @@ def save_each_season_stats(stat_type, year_start, year_end):
                 f"Finished populating season {year - 1}-{year}, {typeKey} data.",
             )
 
-    else:
-        return False
-
 
 def save_all_stats(stat_type, year_start, year_end):
     if years_valid(stat_type, year_start, year_end):
@@ -155,9 +146,6 @@ def save_all_stats(stat_type, year_start, year_end):
                 f"Finished populating season {year-1}-{year}, {typeKey} data.",
             )
 
-    else:
-        return True
-
 
 # REQUIRES PYTHON 3.10, EARLIER VERSIONS CANNOT RUN STRUCTURAL PATTERN MATCHING, LIKE BELOW
 # REPLACE WITH IF/ELIF IF NEEDED
@@ -172,7 +160,7 @@ def get_type_key(stat_type):
         case "-pbp":
             type_key = "play-by-play"
         case _:
-            return False
+            type_key = ""
 
     return type_key
 
@@ -190,7 +178,6 @@ def stat_scraper():
             save_all_stats(args[0], args[1], args[2])
     else:
         print("Please enter 4 arguments.")
-        return False
 
 
 if __name__ == "__main__":

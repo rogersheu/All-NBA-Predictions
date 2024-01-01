@@ -4,9 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
 
-from utils.transfer_data import get_2022_stats
-from utils.transfer_data import get_all_player_stats
-
 
 def kNN(X, y, X_2022):
     X_train, X_test, y_train, y_test = train_test_split(
@@ -33,14 +30,8 @@ def kNN(X, y, X_2022):
 
     # Must scale prior to use
     X_2022 = scaler.transform(X_2022)
-    y_2022 = kNNmodel.predict(X_2022)
+    _ = kNNmodel.predict(X_2022)
 
     predictions = kNNmodel.predict_proba(X_2022)
 
     return predictions[:, 1]
-
-
-if __name__ == "__main__":
-    X, y = get_all_player_stats()
-    X_2022 = get_2022_stats()
-    kNN(X, y, X_2022)
