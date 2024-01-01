@@ -13,9 +13,11 @@ from utils.transfer_data import get_all_player_stats
 
 
 def gradientboosted_tuning(X, y):
-
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, stratify=y,
+        X,
+        y,
+        test_size=0.2,
+        stratify=y,
     )
 
     parameter_space = {
@@ -31,33 +33,33 @@ def gradientboosted_tuning(X, y):
     # Option to use HistGradientBoostingClassifier
     gbm_model = GradientBoostingClassifier()
 
-    scores = ['precision', 'recall']
+    scores = ["precision", "recall"]
 
     for score in scores:
-        print('# Tuning hyper-parameters for %s' % score)
+        print(f"# Tuning hyper-parameters for {score}")
         print()
 
         # "%s_macro" % score, cv = 5)
-        clf = GridSearchCV(gbm_model, parameter_space, scoring='f1')
+        clf = GridSearchCV(gbm_model, parameter_space, scoring="f1")
         clf.fit(X_train, y_train)
 
-        print('Best parameters set found on development set:\n')
+        print("Best parameters set found on development set:\n")
         print(clf.best_params_)
-        print('\nGrid scores on development set:\n')
-        means = clf.cv_results_['mean_test_score']
-        stds = clf.cv_results_['std_test_score']
+        print("\nGrid scores on development set:\n")
+        means = clf.cv_results_["mean_test_score"]
+        stds = clf.cv_results_["std_test_score"]
 
-        for mean, std, params in zip(means, stds, clf.cv_results_['params']):
-            print('{:0.3f} (+/-{:0.03f}) for {!r}'.format(mean, std * 2, params))
+        for mean, std, params in zip(means, stds, clf.cv_results_["params"]):
+            print(f"{mean:0.3f} (+/-{std*2:0.03f}) for {params}")
         print()
 
-        print('Detailed classification report:\n')
-        print('The model is trained on the full development set.')
-        print('The scores are computed on the full evaluation set.\n')
+        print("Detailed classification report:\n")
+        print("The model is trained on the full development set.")
+        print("The scores are computed on the full evaluation set.\n")
         y_true, y_pred = y_test, clf.predict(X_test)
         print(classification_report(y_true, y_pred))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     X, y = get_all_player_stats()
     gradientboosted_tuning(X, y)

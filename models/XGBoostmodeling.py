@@ -4,25 +4,24 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 
-from utils.transfer_data import get_2022_stats
-from utils.transfer_data import get_all_player_stats
-
 iterations = 10
 
 
 def XGBoost(X, y, X_2022):
-
     iterations = 10  # Number of trials
     prediction_trials = []
 
-    for i in range(iterations):
+    for _ in range(iterations):
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, stratify=y,
+            X,
+            y,
+            test_size=0.2,
+            stratify=y,
         )
         xgb_model = xgb.XGBClassifier(
-            objective='binary:logistic',
-            tree_method='hist',
-            eval_metric='logloss',
+            objective="binary:logistic",
+            tree_method="hist",
+            eval_metric="logloss",
             use_label_encoder=False,
             n_estimators=100,
             learning_rate=0.2,
@@ -40,15 +39,11 @@ def XGBoost(X, y, X_2022):
         predictions = xgb_model.predict_proba(X_2022)
         prediction_trials.append(predictions[:, 1])
 
-    print('Confusion matrix and classification report for XGBoost model, final iteration.\n')
+    print(
+        "Confusion matrix and classification report for XGBoost model, final iteration.\n"
+    )
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
 
     df = pd.DataFrame(prediction_trials).transpose()
     return df.mean(axis=1)
-
-
-if __name__ == '__main__':
-    X, y = get_all_player_stats()
-    X_2022 = get_2022_stats()
-    XGBoost(X, y, X_2022)

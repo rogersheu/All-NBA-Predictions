@@ -4,8 +4,6 @@
 
 ALTER TABLE advanced RENAME COLUMN "TS%" TO TS;
 ALTER TABLE advanced RENAME COLUMN "WS/48" TO WS48;
-ALTER TABLE teamStandingsAbbrev RENAME TO teamWL2023;
---ALTER TABLE teamadv_csv RENAME TO teamadv;
+ALTER TABLE teamStandingsAbbrev RENAME TO teamWL2024;
 ALTER TABLE teamadv RENAME COLUMN "TS%" TO TS;
 DROP TABLE teamStandings;
-DROP TABLE stats;

@@ -30,7 +30,10 @@ from utils.transfer_data import get_all_player_stats
 
 def MLP_tuning(X, y):
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=0,
+        X,
+        y,
+        test_size=0.2,
+        random_state=0,
     )
 
     scaler = StandardScaler()
@@ -44,54 +47,61 @@ def MLP_tuning(X, y):
     # Picked hidden layer of 2 nodes and solver as 'adam' after multiple iterations
     # Expecting precision near 0.89 and recall near 0.86
     parameter_space = {
-        'hidden_layer_sizes': [(2), (3), (4), (5), (2, 2), (2, 3), (3, 3), (2, 4), (3, 4), (4, 4)],
-        'solver': ['lbfgs', 'adam'],
+        "hidden_layer_sizes": [
+            (2),
+            (3),
+            (4),
+            (5),
+            (2, 2),
+            (2, 3),
+            (3, 3),
+            (2, 4),
+            (3, 4),
+            (4, 4),
+        ],
+        "solver": ["lbfgs", "adam"],
     }
 
     MLPmodel = MLPClassifier(max_iter=2000)
 
-    scores = ['precision', 'recall']
+    scores = ["precision", "recall"]
 
     for score in scores:
-        print('# Tuning hyper-parameters for %s' % score)
-        print()
+        print(f"# Tuning hyper-parameters for {score}\n")
 
         clf = GridSearchCV(
-            MLPmodel, parameter_space,
-            scoring='%s_macro' % score, n_jobs=-1, cv=3,
+            MLPmodel,
+            parameter_space,
+            scoring=f"{score}_macro",
+            n_jobs=-1,
+            cv=3,
         )
         # clf = RandomizedSearchCV(MLPmodel, parameter_space, scoring="%s_macro" % score, n_jobs = -1, cv = 3)
         clf.fit(X_train, y_train)
 
-        print('Best parameters set found on development set:')
-        print()
+        print("Best parameters set found on development set:\n")
         print(clf.best_params_)
         print()
-        print('Grid scores on development set:')
-        print()
-        means = clf.cv_results_['mean_test_score']
-        if score == 'precision':
+        print("Grid scores on development set:\n")
+        means = clf.cv_results_["mean_test_score"]
+        if score == "precision":
             precision_means = means
         else:
             recall_means = means
-        stds = clf.cv_results_['std_test_score']
-        for mean, std, params in zip(means, stds, clf.cv_results_['params']):
-            print('{:0.3f} (+/-{:0.03f}) for {!r}'.format(mean, std * 2, params))
-        print()
+        stds = clf.cv_results_["std_test_score"]
+        for mean, std, params in zip(means, stds, clf.cv_results_["params"]):
+            print(f"{mean:0.3f} (+/-{std*2:0.03f}) for {params}\n")
 
-        print('Detailed classification report:')
-        print()
-        print('The model is trained on the full development set.')
-        print('The scores are computed on the full evaluation set.')
-        print()
+        print("Detailed classification report:\n")
+        print("The model is trained on the full development set.")
+        print("The scores are computed on the full evaluation set.\n")
         y_true, y_pred = y_test, clf.predict(X_test)
         print(classification_report(y_true, y_pred))
-        print()
 
     plt.scatter(precision_means, recall_means)
     plt.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     X, y = get_all_player_stats()
     MLP_tuning(X, y)

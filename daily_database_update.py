@@ -4,32 +4,35 @@ from os import listdir
 import pandas as pd
 
 from utils.transfer_data import pick_path
+from utils.vars import curr_season_str
 
 
 def database_pipeline(path):
-    connection = sqlite3.connect('./data/allPlayerStats.db')
+    connection = sqlite3.connect("./data/allPlayerStats.db")
 
     cursor = connection.cursor()
 
     # See this for various ways to import CSV into sqlite using Python. Pandas used here because files are not prohibitively large.
     # https://stackoverflow.com/questions/2887878/importing-a-csv-file-into-a-sqlite3-database-table-using-python
 
-    print('SQL scripts starting...')
+    print("SQL scripts starting...")
     # Drop old tables, might not be necessary since we're dropping them
-    sql_file = open('./SQL/drop_old_tables.sql')
-    try:
-        sql_as_string = sql_file.read()
-        cursor.executescript(sql_as_string)
-        sql_file.close()
-    except Exception:
-        pass
+    with open("./SQL/drop_old_tables.sql", encoding="utf-8") as f:
+        try:
+            sql_as_string = f.read()
+            cursor.executescript(sql_as_string)
+        except Exception:
+            pass
 
     # Decide whether to have user pick path or just set it automatically...
     for fileName in listdir(path):
-        if fileName.endswith('.csv'):  # Avoid any accidents
-            df = pd.read_csv(f'{path}/{fileName}')
+        if fileName.endswith(".csv"):  # Avoid any accidents
+            df = pd.read_csv(f"{path}/{fileName}")
             df.to_sql(
-                f'{fileName.replace(".csv","").split("_")[0]}', connection, if_exists='replace', index=False,
+                f'{fileName.replace(".csv","").split("_")[0]}',
+                connection,
+                if_exists="replace",
+                index=False,
             )
             try:
                 date = f'{fileName.replace(".csv","").split("_")[1]}'
@@ -37,27 +40,22 @@ def database_pipeline(path):
                 pass
 
     # Make changes to tables
-    sql_file = open('./SQL/prep_tables_for_extraction.sql')
-    try:
-        sql_as_string = sql_file.read()
-        cursor.executescript(sql_as_string)
-    except Exception as e:
-        pass
-
-    sql_file.close()
+    with open("./SQL/prep_tables_for_extraction.sql", encoding="utf-8") as f:
+        try:
+            sql_as_string = f.read()
+            cursor.executescript(sql_as_string)
+        except Exception as e:
+            raise e
 
     # Extract this season's qualified players
-    sql_file = open('./SQL/players2023_dbeaver.sql')
-    df_output = pd.read_sql_query(sql_file.read(), connection)
-    sql_file.close()
-    # sql_as_string = sql_file.read()
-    # cursor.executescript(sql_as_string)
+    with open(f"./SQL/players{curr_season_str}_dbeaver.sql", encoding="utf-8") as f:
+        df_output = pd.read_sql_query(f.read(), connection)
     print(df_output)
-    df_output.to_csv(f'{path}/stats_{date}.csv', index=False)
+    df_output.to_csv(f"{path}/stats_{date}.csv", index=False)
 
-    print('SQL scripts complete.')
+    print("SQL scripts complete.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     data_path = pick_path()
     database_pipeline(data_path)
