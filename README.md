@@ -20,39 +20,36 @@ Plenty of NBA aficionados propose their list of All-Stars and All-NBA players. H
 
 Installation/Instructions
 ===========
-Software Prerequisites: ```Python 3.10```, ```sqlite3```, ```DBeaver```, ```R (RStudio)```
+Software Prerequisites: `Python 3.10+`, `sqlite3`, `DBeaver`, `R (RStudio)`
 
-Scraping data (```Python 3.10```)
+First Time Initialization
 -------
-1. In order to use this program, either ```Clone``` the repository or ```download the ZIP file```.
-2. Windows instructions: Go into ```Command Prompt```, change directory to this repository's folder in the GitHub folder (not any of the subfolders) using ```cd <this repository's path>```.
-3. Go into your virtualenv. Install any missing packages using ```pip install```.
-4. Get the full historical data set (back to 1979-1980) by running ```python .\scripts\scrape_stats_cli.py -tot 1980 2022 all```, ```python .\scripts\scrape_stats_cli.py -adv 1980 2022 all```, and ```python .\scripts\scrape_teamrecords.py```. Warning: This script and the one in Step 5 use Structural Python Matching, which was introduced in Python 3.10. If you do not have Python 3.10, either update to it or change lines 152-163 in ```scrape_stats_cli.py``` to be a series of ```if-elif```.
-5. Every day you want data, run the ```.\scripts\daily_data_script.py``` program to get the 2022 data.
+## Initial Setup
+1. In order to use this program, either `Clone` the repository or `download the ZIP file`.
+2. `cd <this repository's path>`
+3. Go into your virtual environment (venv, conda, etc.). Install any missing packages using `pip install -r requirements.txt`.
 
-Database (```DBeaver```, ```SQLite3```)
---------
-6. Install and open ```DBeaver``` for your operating system. Have it open a connection to the database ```allPlayerStats.db``` in this repository, after which you should import the files containing historical stats you scraped in step 4. Drop any outdated tables before import if they exist.
-7. Import the 2022 data as well by importing from ```\baseData\dailystats```. Steps 6 and 7 can likely be improved by a Python script that saves directly to a database.
-8. Run the ```allPlayers.sql``` and ```players2022_dbeaver.sql``` scripts, and ```table_modifiers_dbeaver.sql``` to extract and transform the relevant data and save them to CSV files. I personally like saving CSV files to the ```\baseData\dailystats\<date>``` folder under the name ```stats_${date}```.
-9. (Optional) If you are running this on consecutive days, you can run the ```auxiliary_functions.sql``` to drop relevant tables and ```table_modifiers_dbeaver.sql``` to keep table names and column names consistent.
+## Collection of Training Data
+4. **IN DEVELOPMENT**. I realized fairly recently that there were a number of manual and impossible to replicate steps, including but not limited to tabulating All-Star appearances, populating the DB, and more. As such, initial population of training data will be migrated to use the [NBA API](https://github.com/swar/nba_api) instead, since Basketball Reference rate imposed limits on scraping. When that development is finished, run `pipeline_init.py` to get these stats.
+5. (Optional) If you would like to better handle your data, install and open `DBeaver` or your favorite database administration tool. Have it open a connection to the database located at `./data/allPlayerStats.db`.
 
-Machine Learning (```Python```, ```scikit-learn```)
----------
-10. Load these files into Python and the models using ```python .\scripts\daily_modeling.py``` Follow the command line prompts.
+Daily Runs
+-------
+6. Every day you want data, run `python NBA_pipeline.py` program to get today's predictions. You can find the output data in `./data/dailystats/YYYY-MM-DD/stats_YYYYMMDD_modeled.csv.` Note: BBRef will still this daily update run because it's only making 4 calls (one for today's season total stats, one for the advanced stats, one for team records, one for league-wide advanced stats).
+7. Also, `python allstar_report.py` prints a JSON of predicted All-Star teams for today.
 
-Visualization (```RStudio```)
+Visualization (`RStudio`)
 ----------
-11. Your resulting file should be in the same path as you chose in Step 8. Open RStudio, set your your working directory (I would recommend ```~/GitHub/All-Star-Predictions/All-Star-Predictions/R``` and change any paths you need to change in the relevant functions.
-12. Install and load the necessary libraries, copy the functions into the Console and run them, and then run your function. I would recommend ```plot_predictions``` and ```plot_predictions_line_graph```.
+8. Your resulting file should be in the same path as you chose in Step 8. Open RStudio, set your working directory. I would recommend `~/GitHub/All-Star-Predictions/All-Star-Predictions/R` and change any paths you need to change in the relevant functions.
+9. Install and load the necessary libraries, copy the functions into the Console and run them, and then run your function. I would recommend `plot_predictions` and `plot_predictions_line_graph`.
 
-```plot_predictions(year, month, day)``` - Plots the machine learning modeling output in a convenient-to-read form.
+`plot_predictions(year, month, day)` - Plots the machine learning modeling output in a convenient-to-read form.
 
-```automate_plotting("startDate", "endDate")``` - Runs plot predictions for every date between startDate and endDate, inclusive.
+`automate_plotting("startDate", "endDate")` - Runs plot predictions for every date between startDate and endDate, inclusive.
 
-```plot_today()``` - Instead of running plot_predictions and manually entering in today's date, if you're just plotting today's data, run this.
+`plot_today()` - Instead of running plot_predictions and manually entering in today's date, if you're just plotting today's data, run this.
 
-```plot_predictions_line_graph(startDate, endDate)``` and ```plot_Nplayers(startIndex, endIndex)``` - Creates a line graph time series across from the ```startDate``` to the ```endDate```.
+`plot_predictions_line_graph(startDate, endDate)` and `plot_Nplayers(startIndex, endIndex)` - Creates a line graph time series across from the `startDate` to the `endDate`.
 
 
 Machine Learning Models
@@ -107,7 +104,7 @@ The statistics used were the following.
 | Win Shares per 48 minutes (WS/48) |
 | Team Winning Percentage (Perc) |
 
-Predictor: I call it ```All-League Selection```, which is the intersection of All-Star picks and All-NBA picks. This makes sure some players who made one or the other are not excluded. 24 All-Stars are picked every season (with possibility a few more with injury replacements), while 15 players are selected for All-NBA teams. Most of the time, All-NBA players are selected as All-Stars in the same season, while the opposite occurs less often (e.g., Rudy Gobert in 2017 and 2019). Soemtimes, this discrepancy occurs because of positional limits. All-Stars have since shifted to a frontcourt/backcourt voting approach, while All-NBA selections remain on the guards/forwards/centers categories. Other times, it's a result of the relevant schedule period. All-Stars are picked around halfway into the season, so players who get injured or falter later on can miss the All-NBA teams. Alternatively, players who outperform their first half can elevate into an All-NBA pick if others fade.
+Predictor: I call it `All-League Selection`, which is the intersection of All-Star picks and All-NBA picks. This makes sure some players who made one or the other are not excluded. 24 All-Stars are picked every season (with possibility a few more with injury replacements), while 15 players are selected for All-NBA teams. Most of the time, All-NBA players are selected as All-Stars in the same season, while the opposite occurs less often (e.g., Rudy Gobert in 2017 and 2019). Soemtimes, this discrepancy occurs because of positional limits. All-Stars have since shifted to a frontcourt/backcourt voting approach, while All-NBA selections remain on the guards/forwards/centers categories. Other times, it's a result of the relevant schedule period. All-Stars are picked around halfway into the season, so players who get injured or falter later on can miss the All-NBA teams. Alternatively, players who outperform their first half can elevate into an All-NBA pick if others fade.
 
 Example Output
 ========
@@ -141,31 +138,31 @@ This section is under construction.
 
 Hyperparameter Tuning
 ===========
-Hyperparameter tuning was conducted on the four models, as can be seen in the files ```MLPtuning.py / MLPgraphing.py```, ```RFtuning.py```, and within ```SVMmodeling.py``` in the scripts folder. A ```GridSearch``` was carried out for RF and MLP.
+Hyperparameter tuning was conducted on the four models, as can be seen in the files `MLPtuning.py / MLPgraphing.py`, `RFtuning.py`, and within `SVMmodeling.py` in the scripts folder. A `GridSearch` was carried out for RF and MLP.
 
 Random Forest & Random Forest Tuning
 -------------
 Random Forest modeling involves the randomized generation of many decision trees, which sorts objects between two outcomes based on where comparisons between the features in the training set are classified.
 
-The main parameters tested for random forests were ```n_estimators```, ```max_depth``` and ```max_leaf_nodes```. The default values for these are ```n_estimators = 100``` and ```None``` for the other two. Another rule-of-thumb for ```n_estimators``` is the square root of the number of training set items, which was around 75. Through some quick testing, the defaults were all found to be more than sufficient for this analysis.
+The main parameters tested for random forests were `n_estimators`, `max_depth` and `max_leaf_nodes`. The default values for these are `n_estimators = 100` and `None` for the other two. Another rule-of-thumb for `n_estimators` is the square root of the number of training set items, which was around 75. Through some quick testing, the defaults were all found to be more than sufficient for this analysis.
 
 Multilayer Perceptron & Multilayer Perceptron Tuning
 ---------
 Multilayer perceptron is a feedforward artificial neural network. The one used here is a "vanilla" neural network, indicating that it has one hidden layer. MLPs have at least three layers: an input layer (here, 7 features: PPG, RPG, APG, SBPG, TS%, WS48, and Team Winning Percentage), one or more hidden layers (here, a single layer of 4 nodes), and an output layer (here, a single node that's either on or off).
 
-For MLP, varied parameters included ```hidden_layer_sizes```, ```solver```, ```activation```, ```alpha```, and ```learning_rate```.
+For MLP, varied parameters included `hidden_layer_sizes`, `solver`, `activation`, `alpha`, and `learning_rate`.
 
 Hidden layer sizes for the 7 input and 1 output node were varied between a single hidden layer of 1-10 nodes, inclusive, two hidden layers with various sizes, maxing out at (4,4), and three relatively small hidden layers, such as (1,2,1), (1,3,1), (2,2,2), etc. A [rule-of-thumb found on stats stackexchange](https://stats.stackexchange.com/questions/181/how-to-choose-the-number-of-hidden-layers-and-nodes-in-a-feedforward-neural-netw) suggested that a single hidden layer of 4 nodes would be a good starting point, hence the other choices.
 
-As for the other parameters, solver was initially varied between ```lbfgs``` (Gaussian) and ```adam```. ```sgd``` was initially considered but discarded because it provided suboptimal results upon validation. The ```learning_rate``` only applies to ```sgd``` models so it was left at default as well. Finally, the ```activation``` was testing between ```tanh``` and ```relu```, but difference in results between these two were minimal, so the default of ```relu``` was selected.
+As for the other parameters, solver was initially varied between `lbfgs` (Gaussian) and `adam`. `sgd` was initially considered but discarded because it provided suboptimal results upon validation. The `learning_rate` only applies to `sgd` models so it was left at default as well. Finally, the `activation` was testing between `tanh` and `relu`, but difference in results between these two were minimal, so the default of `relu` was selected.
 
 Gradient Boosted Classifier (Gradient Boosted Machines, GBM) Tuning
 --------------
-The [GradientBoostingClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html) has quite a few hyperparameters. For the purpose of simplicity, I looked at three of the most important hyperparameters: ```learning_rate```, ```max_depth```, and ```n_estimators```. These have defaults of ```0.1```, ```3```, and ```100```, respectively. After using ```GridSearchCV``` to look at the recall and f1score outputs of these parameters with various other values, I came to the conclusion that the defaults were perfectly fine.
+The [GradientBoostingClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html) has quite a few hyperparameters. For the purpose of simplicity, I looked at three of the most important hyperparameters: `learning_rate`, `max_depth`, and `n_estimators`. These have defaults of `0.1`, `3`, and `100`, respectively. After using `GridSearchCV` to look at the recall and f1score outputs of these parameters with various other values, I came to the conclusion that the defaults were perfectly fine.
 
 XGBoost Tuning
 --------
-[XGBoost](https://xgboost.readthedocs.io/en/stable/parameter.html), on the other hand, has at least nine parameters that play a major role in the XGBoost output: ```objective```, ```eval_metric```, ```n_estimators```, ```max_depth```, ```eta```, ```alpha```, ```lambda```, ```gamma```, and ```min_child_weight```. A great resource for this can be found at [this site](https://shengyg.github.io/repository/machine%20learning/2017/02/25/Complete-Guide-to-Parameter-Tuning-xgboost.html). From the GBM classifier, I figured ```n_estimators=100``` and ```max_depth=3``` would be decent settings to begin with. ```eta```, the learning rate, is a significant metric, since it can prevent large jumps in descent that may skip the global loss minimum. However, I looked at that last, since I wanted to make sure other parameters were fixed, lest ```GridSearchCV``` have too many conditions to check. I also implemented ```RandomSearchCV```, but there were too many variables and trends in recall to keep track of. The general order should go something like the following list, from the page called [Complete Guide to Parameter Tunning xgboost](https://shengyg.github.io/repository/machine%20learning/2017/02/25/Complete-Guide-to-Parameter-Tuning-xgboost.html).
+[XGBoost](https://xgboost.readthedocs.io/en/stable/parameter.html), on the other hand, has at least nine parameters that play a major role in the XGBoost output: `objective`, `eval_metric`, `n_estimators`, `max_depth`, `eta`, `alpha`, `lambda`, `gamma`, and `min_child_weight`. A great resource for this can be found at [this site](https://shengyg.github.io/repository/machine%20learning/2017/02/25/Complete-Guide-to-Parameter-Tuning-xgboost.html). From the GBM classifier, I figured `n_estimators=100` and `max_depth=3` would be decent settings to begin with. `eta`, the learning rate, is a significant metric, since it can prevent large jumps in descent that may skip the global loss minimum. However, I looked at that last, since I wanted to make sure other parameters were fixed, lest `GridSearchCV` have too many conditions to check. I also implemented `RandomSearchCV`, but there were too many variables and trends in recall to keep track of. The general order should go something like the following list, from the page called [Complete Guide to Parameter Tunning xgboost](https://shengyg.github.io/repository/machine%20learning/2017/02/25/Complete-Guide-to-Parameter-Tuning-xgboost.html).
 
 `1. Choose a relatively high learning rate. Generally a learning rate of 0.1 works but somewhere between 0.05 to 0.3 should work for different problems. Determine the optimum number of trees for this learning rate. XGBoost has a very useful function called as “cv” which performs cross-validation at each boosting iteration and thus returns the optimum number of trees required.`
 
@@ -175,17 +172,17 @@ XGBoost Tuning
 
 `4. Lower the learning rate and decide the optimal parameters.`
 
-I tried a few different ```objective```s, including ```reg:squarederror```, ```reg:squaredlogerror```, `reg:logistic`, `binary:logistic` (the default), and `binary:logitraw`. Descriptions of these can be found at the XGBoost link above or [here](https://xgboost.readthedocs.io/en/stable/parameter.html). After a few permutations of other parameters and these objectives, I decided the default of `binary:logistic` was sufficient.
+I tried a few different `objective`s, including `reg:squarederror`, `reg:squaredlogerror`, `reg:logistic`, `binary:logistic` (the default), and `binary:logitraw`. Descriptions of these can be found at the XGBoost link above or [here](https://xgboost.readthedocs.io/en/stable/parameter.html). After a few permutations of other parameters and these objectives, I decided the default of `binary:logistic` was sufficient.
 
 I also tried a few different `eval_metric`s, including `rmse`, `logloss`, `error`, and `aucpr`. The default, `logloss`, was selected for superior performance.
 
-With those out of the way, I then did a GridSearch on ```eta```, ```alpha```, ```lambda```, and ```gamma```, which stand for the learning rate, L1 regularization parameter, the L2 regularization parameter, and the ```min_split_loss```, respectively, and have defaults of 0.3 (eta), 0 (alpha), 1 (lambda), and 0 (gamma), respectively.
+With those out of the way, I then did a GridSearch on `eta`, `alpha`, `lambda`, and `gamma`, which stand for the learning rate, L1 regularization parameter, the L2 regularization parameter, and the `min_split_loss`, respectively, and have defaults of 0.3 (eta), 0 (alpha), 1 (lambda), and 0 (gamma), respectively.
 
-An increase in ```alpha``` or ```lambda``` makes the model more conservative, which means such a model is less likely to deviate from safe majority choices. Surprisingly, while changing both of these had little effect, a higher `lambda` was incrementally better than its default of 1. Thus, a `lambda` of 5 was chosen. An `alpha` of 0 was kept as the default.
+An increase in `alpha` or `lambda` makes the model more conservative, which means such a model is less likely to deviate from safe majority choices. Surprisingly, while changing both of these had little effect, a higher `lambda` was incrementally better than its default of 1. Thus, a `lambda` of 5 was chosen. An `alpha` of 0 was kept as the default.
 
 I also looked at `gamma`, the `min_split_loss`. A tree would only split a leaf if the loss was higher than this threshold set by `gamma`. Therefore, raising this threshold would lead to less splitting, discouraging potential overfitting, but potentially reducing the accuracy of the model. `Gamma` is defaulted at 0, implying no such threshold. However, I found that a higher gamma was slightly better than a gamma of 0, which may potentially be because of the nature of the data (imbalanced toward 0 in a binary classification), which would reward conservative models.
 
-Finally, I looked at ```eta```. I had tried a wide range of values for `eta`, ranging from 0.01 to 1. The danger of too high an `eta` is completely skipping over the desired minimum loss. However, in the other direction, too low of a learning rate may lead to performance issues and much slower training speeds. A good middle ground was found at the default of 0.3, though pretty much any value between 0.1 and 0.3 was perfectly valid.
+Finally, I looked at `eta`. I had tried a wide range of values for `eta`, ranging from 0.01 to 1. The danger of too high an `eta` is completely skipping over the desired minimum loss. However, in the other direction, too low of a learning rate may lead to performance issues and much slower training speeds. A good middle ground was found at the default of 0.3, though pretty much any value between 0.1 and 0.3 was perfectly valid.
 
 
 Related Work

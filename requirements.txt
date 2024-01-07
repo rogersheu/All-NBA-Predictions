@@ -1,5 +1,7 @@
 BeautifulSoup
+nba_api
 numpy
 pandas
 requests
+scikit-learn
 tkinter

@@ -25,17 +25,17 @@ def database_pipeline(path):
             pass
 
     # Decide whether to have user pick path or just set it automatically...
-    for fileName in listdir(path):
-        if fileName.endswith(".csv"):  # Avoid any accidents
-            df = pd.read_csv(f"{path}/{fileName}")
+    for file_name in listdir(path):
+        if file_name.endswith(".csv"):  # Avoid any accidents
+            df = pd.read_csv(f"{path}/{file_name}")
             df.to_sql(
-                f'{fileName.replace(".csv","").split("_")[0]}',
+                f'{file_name.replace(".csv","").split("_")[0]}',
                 connection,
                 if_exists="replace",
                 index=False,
             )
             try:
-                date = f'{fileName.replace(".csv","").split("_")[1]}'
+                date = f'{file_name.replace(".csv","").split("_")[1]}'
             except Exception:
                 pass
 
