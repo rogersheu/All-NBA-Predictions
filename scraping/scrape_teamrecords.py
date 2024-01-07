@@ -5,11 +5,11 @@ from utils.csv_functions import reset_csv
 from utils.csv_functions import write_to_csv
 
 
-filename = "data/teamStandings.csv"
+team_standings_fname = "data/teamStandings.csv"
 
 
 def scrape_teamrecords(filename, year):
-    year_url = "https://www.basketball-reference.com/leagues/NBA_" + str(year) + ".html"
+    year_url = f"https://www.basketball-reference.com/leagues/NBA_{year}.html"
     year_page = requests.get(year_url)
     year_soup = BeautifulSoup(
         year_page.content,
@@ -39,9 +39,13 @@ def scrape_teamrecords(filename, year):
 
 
 def scrape_all_team_records(filename, start_year, end_year):
-    yearList = range(int(start_year), int(end_year) + 1)
+    year_list = range(int(start_year), int(end_year) + 1)
     reset_csv(filename)
 
     write_to_csv(filename, ["Team", "Year", "Wins", "Losses", "Perc"])
-    for year in yearList:
+    for year in year_list:
         scrape_teamrecords(filename, year)
+
+
+if __name__ == "__main__":
+    scrape_all_team_records()

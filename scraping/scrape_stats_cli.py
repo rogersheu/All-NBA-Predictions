@@ -7,9 +7,7 @@ import unicodedata
 import requests
 from bs4 import BeautifulSoup
 
-from utils.csv_functions import make_dir_if_nonexistent
-from utils.csv_functions import reset_csv
-from utils.csv_functions import write_to_csv
+from utils.csv_functions import make_dir_if_nonexistent, reset_csv, write_to_csv
 from utils.vars import curr_season
 
 header_exists = False
@@ -122,7 +120,7 @@ def save_each_season_stats(stat_type, year_start, year_end):
 
         for year in yearList:
             URL = f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html"
-            fileName = f"baseData/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv"
+            fileName = f"./data/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv"
             reset_csv(fileName)
             get_singleseason_stats(year, URL, fileName, True)
             print(
@@ -136,7 +134,7 @@ def save_all_stats(stat_type, year_start, year_end):
 
         typeKey = get_type_key(stat_type)
 
-        fileName = f"baseData/{typeKey}_allyears.csv"
+        fileName = f"./data/{typeKey}_allyears.csv"
         reset_csv(fileName)
 
         for year in year_list:
@@ -147,10 +145,8 @@ def save_all_stats(stat_type, year_start, year_end):
             )
 
 
-# REQUIRES PYTHON 3.10, EARLIER VERSIONS CANNOT RUN STRUCTURAL PATTERN MATCHING, LIKE BELOW
+# NOTE: REQUIRES PYTHON 3.10
 # REPLACE WITH IF/ELIF IF NEEDED
-
-
 def get_type_key(stat_type):
     match stat_type:
         case "-tot":
@@ -166,8 +162,8 @@ def get_type_key(stat_type):
 
 
 # args[0] is -tot/-adv/-pbp
-# args[1] is yearStart
-# args[2] is yearEnd
+# args[1] is year_start
+# args[2] is year_end
 # args[3] determines which code to run, YEARLY or ALL
 def stat_scraper():
     args = sys.argv[1:]
