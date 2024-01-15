@@ -81,7 +81,7 @@ def remove_accents(input_str):
 
 
 def years_valid(stat_type, year_start, year_end):
-    if not year_start.isdigit() or not year_end.isdigit():
+    if type(year_start) is not int or type(year_end) is not int:
         print("Please enter integer values.")
         return False
 
@@ -109,39 +109,18 @@ def years_valid(stat_type, year_start, year_end):
     return True
 
 
-def save_each_season_stats(stat_type, year_start, year_end):
-    if years_valid(stat_type, year_start, year_end):
-        yearList = list(range(int(year_start), int(year_end) + 1))
-
-        typeKey = get_type_key(stat_type)
-
-        mkdir = f"baseData/{typeKey}"
-        make_dir_if_nonexistent(mkdir)
-
-        for year in yearList:
-            URL = f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html"
-            fileName = f"./data/{typeKey}/{typeKey}_stats_{year - 1}_{year}.csv"
-            reset_csv(fileName)
-            get_singleseason_stats(year, URL, fileName, True)
-            print(
-                f"Finished populating season {year - 1}-{year}, {typeKey} data.",
-            )
-
-
-def save_all_stats(stat_type, year_start, year_end):
+def save_stats_yearbyyear(stat_type, year_start, year_end):
     if years_valid(stat_type, year_start, year_end):
         year_list = list(range(int(year_start), int(year_end) + 1))
-
-        typeKey = get_type_key(stat_type)
-
-        fileName = f"./data/{typeKey}_allyears.csv"
-        reset_csv(fileName)
+        type_key = get_type_key(stat_type)
 
         for year in year_list:
-            URL = f"https://www.basketball-reference.com/leagues/NBA_{year}_{typeKey}.html"
-            get_singleseason_stats(year, URL, fileName, False)
+            URL = f"https://www.basketball-reference.com/leagues/NBA_{year}_{type_key}.html"
+            file_name = f"./data/{type_key}/{type_key}_stats_{str(year-1)}_{str(year)}.csv"
+            reset_csv(file_name)
+            get_singleseason_stats(year, URL, file_name, False)
             print(
-                f"Finished populating season {year-1}-{year}, {typeKey} data.",
+                f"Finished populating season {year-1}-{year}, {type_key} data.",
             )
 
 
@@ -164,16 +143,12 @@ def get_type_key(stat_type):
 # args[0] is -tot/-adv/-pbp
 # args[1] is year_start
 # args[2] is year_end
-# args[3] determines which code to run, YEARLY or ALL
 def stat_scraper():
     args = sys.argv[1:]
-    if len(args) == 4:
-        if args[3] == "yearly":
-            save_each_season_stats(args[0], args[1], args[2])
-        if args[3] == "all":
-            save_all_stats(args[0], args[1], args[2])
+    if len(args) == 3:
+        save_stats_yearbyyear(args[0], args[1], args[2])
     else:
-        print("Please enter 4 arguments.")
+        print("Please enter 3 arguments.")
 
 
 if __name__ == "__main__":

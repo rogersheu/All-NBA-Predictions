@@ -22,9 +22,9 @@ def save_each_season_stats_daily(stat_type, year_start, year_end):
 
         for year in year_list:
             URL = f"https://www.basketball-reference.com/leagues/NBA_{year}_{type_key}.html"
-            filename = f"{today_dir}/{type_key}_{start_date_nodash}.csv"
-            reset_csv(filename)
-            get_singleseason_stats(year, URL, filename, True)
+            file_name = f"{today_dir}/{type_key}_{start_date_nodash}.csv"
+            reset_csv(file_name)
+            get_singleseason_stats(year, URL, file_name, True)
             print(
                 (f"Finished populating season {year - 1}-{year}, {type_key} data."),
             )

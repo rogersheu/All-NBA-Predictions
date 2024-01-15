@@ -1,3 +1,4 @@
+import argparse
 from datetime import datetime
 
 import pandas as pd
@@ -5,7 +6,6 @@ import pandas as pd
 from utils.team_mapping import conference_to_teams
 
 curr_dt = datetime.now().strftime("%Y-%m-%d")
-curr_dt_no_delim = curr_dt.replace("-", "")
 
 MIN_POS = {
     "frontcourt": 6,
@@ -22,12 +22,14 @@ TOTAL_PER_TEAM = 12
 EXTRA_FOR_INJURY = 3
 
 
-def generate_report():
+def generate_report(date: str):
+    dt_no_delim = date.replace("-", "")
+    
     df_modeled = pd.read_csv(
-        rf".\data\dailystats\{curr_dt}\stats_{curr_dt_no_delim}_modeled.csv",
+        rf".\data\dailystats\{date}\stats_{dt_no_delim}_modeled.csv",
     )
     df_genstat = pd.read_csv(
-        rf".\data\dailystats\{curr_dt}\totals_{curr_dt_no_delim}.csv",
+        rf".\data\dailystats\{date}\totals_{dt_no_delim}.csv",
     )
     player_to_team = dict(zip(df_genstat["Player"], df_genstat["Tm"]))
     player_to_position = dict(zip(df_genstat["Player"], df_genstat["Pos"]))
@@ -110,5 +112,14 @@ def make_teams(df: pd.DataFrame):
     print("Injury Replacements:", injury_replacements)
 
 
+
+def get_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--date", type=str, default=curr_dt)
+    args = parser.parse_args()
+    
+    return args
+
 if __name__ == "__main__":
-    generate_report()
+    args = get_arguments()
+    generate_report(args.date)
