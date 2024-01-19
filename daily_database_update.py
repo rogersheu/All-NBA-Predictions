@@ -1,5 +1,6 @@
 import sqlite3
-from os import listdir
+import os
+import os.path as osp
 
 import pandas as pd
 
@@ -25,9 +26,9 @@ def database_pipeline(path):
             pass
 
     # Decide whether to have user pick path or just set it automatically...
-    for file_name in listdir(path):
+    for file_name in os.listdir(path):
         if file_name.endswith(".csv"):  # Avoid any accidents
-            df = pd.read_csv(f"{path}/{file_name}")
+            df = pd.read_csv(osp.join(path, file_name))
             df.to_sql(
                 f'{file_name.replace(".csv","").split("_")[0]}',
                 connection,

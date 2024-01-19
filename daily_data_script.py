@@ -15,9 +15,11 @@ today_dir = f"{directory}/{short_date}"
 make_dir_if_nonexistent(today_dir)
 
 
-def save_each_season_stats_daily(stat_type, year_start, year_end):
+def save_each_season_stats_daily(stat_type: str, year_start: str, year_end: str):
+    year_start = int(year_start)
+    year_end = int(year_end)
     if years_valid(stat_type, year_start, year_end):
-        year_list = list(range(int(year_start), int(year_end) + 1))
+        year_list = list(range(year_start, year_end + 1))
         type_key = get_type_key(stat_type)
 
         for year in year_list:

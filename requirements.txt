@@ -1,7 +1,6 @@
-BeautifulSoup
+beautifulsoup4
 nba_api
 numpy
 pandas
 requests
 scikit-learn
-tkinter
